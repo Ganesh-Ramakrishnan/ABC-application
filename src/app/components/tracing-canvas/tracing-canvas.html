@@ -1,37 +1,37 @@
-<div class="min-h-screen bg-gradient-to-b from-sky-300 via-sky-400 to-green-200 p-4 md:p-8 relative overflow-hidden">
+<div class="min-h-screen bg-gradient-to-b from-sky-300 via-sky-400 to-green-200 p-2 md:p-4 relative overflow-hidden">
   <!-- Decorative Background -->
-  <div class="absolute top-10 left-10 text-4xl opacity-70 animate-bounce">🎈</div>
-  <div class="absolute top-20 right-20 text-3xl opacity-60 animate-bounce" style="animation-delay: 0.2s;">⭐</div>
-  <div class="absolute bottom-0 left-0 text-8xl opacity-60">🌳</div>
-  <div class="absolute bottom-0 right-0 text-8xl opacity-60">🌳</div>
+  <div class="absolute top-4 left-4 text-3xl opacity-70 animate-bounce">🎈</div>
+  <div class="absolute top-8 right-8 text-2xl opacity-60 animate-bounce" style="animation-delay: 0.2s;">⭐</div>
+  <div class="absolute bottom-0 left-0 text-6xl opacity-60">🌳</div>
+  <div class="absolute bottom-0 right-0 text-6xl opacity-60">🌳</div>
 
-  <div class="max-w-7xl mx-auto relative z-10">
+  <div class="max-w-4xl mx-auto relative z-10">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center justify-between mb-2">
       <button
         (click)="goBack()"
-        class="bg-gradient-to-br from-red-400 to-red-600 rounded-full p-4 shadow-xl border-4 border-red-700 hover:scale-110 transition-transform">
-        <span class="text-3xl text-white">←</span>
+        class="bg-gradient-to-br from-red-400 to-red-600 rounded-full p-2 md:p-3 shadow-xl border-3 border-red-700 hover:scale-110 transition-transform">
+        <span class="text-xl md:text-2xl text-white">←</span>
       </button>
 
       <div class="text-center">
-        <h1 class="text-4xl md:text-5xl font-kids text-white drop-shadow-lg">
+        <h1 class="text-2xl md:text-4xl font-kids text-white drop-shadow-lg">
           <ng-container *ngIf="isFreeWriting">Write: {{currentLetter}}</ng-container>
           <ng-container *ngIf="!isFreeWriting">Trace: {{currentLetter}}</ng-container>
         </h1>
       </div>
 
-      <div class="w-16 h-16"></div>
+      <div class="w-10 h-10 md:w-12 md:h-12"></div>
     </div>
 
     <!-- Progress Bar -->
-    <div class="mb-4 max-w-7xl mx-auto">
-      <div class="bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg">
-        <div class="relative h-8 bg-gray-200 rounded-full overflow-hidden">
+    <div class="mb-2 max-w-4xl mx-auto">
+      <div class="bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg">
+        <div class="relative h-5 md:h-6 bg-gray-200 rounded-full overflow-hidden">
           <div
-            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-3"
+            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-2"
             [style.width.%]="traceProgress">
-            <span class="text-white font-bold text-sm" *ngIf="traceProgress > 10">
+            <span class="text-white font-bold text-xs" *ngIf="traceProgress > 10">
               {{traceProgress}}%
             </span>
           </div>
@@ -45,8 +45,8 @@
     </div>
 
     <!-- SVG Tracing Canvas -->
-    <div class="bg-white rounded-3xl shadow-2xl p-4 md:p-8">
-      <div class="relative w-full" style="aspect-ratio: 1/1; max-width: 800px; margin: 0 auto;">
+    <div class="bg-white rounded-2xl shadow-2xl p-2 md:p-4">
+      <div class="relative w-full" style="aspect-ratio: 1/1; max-width: 500px; margin: 0 auto;">
 
         <!-- WRITING MODE: Block letter reference + free drawing canvas -->
         <div *ngIf="isFreeWriting" class="relative w-full h-full" style="aspect-ratio: 1/1;">
@@ -289,32 +289,26 @@
       </div>
 
       <!-- Instructions & Actions -->
-      <div class="mt-6 space-y-4">
+      <div class="mt-3 space-y-2">
         <div class="text-center">
-          <p class="text-2xl md:text-3xl font-bold text-gray-700 mb-2">
-            <span class="text-4xl">✏️</span> <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container><ng-container *ngIf="!isFreeWriting">Slide the pencil to trace!</ng-container>
-          </p>
-          <p class="text-lg md:text-xl text-gray-600" *ngIf="!isFreeWriting">
-            Drag from <span class="text-yellow-600 font-bold">🟡 Yellow</span> to <span class="text-green-600 font-bold">🟢 Green</span> - draw and see your strokes!
-          </p>
-          <p class="text-lg md:text-xl text-gray-600" *ngIf="isFreeWriting">
-            Draw anywhere on the canvas! <span class="text-purple-600 font-bold">Free writing!</span>
+          <p class="text-lg md:text-xl font-bold text-gray-700">
+            <span class="text-2xl">✏️</span> <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container><ng-container *ngIf="!isFreeWriting">Trace from 🟡 to 🟢</ng-container>
           </p>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-center gap-4">
+        <div class="flex justify-center gap-3">
           <button
             (click)="clearDrawing()"
-            class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full px-8 py-4 shadow-xl border-4 border-yellow-700 hover:scale-110 transition-transform">
-            <span class="text-2xl text-white font-bold">🔄 Clear</span>
+            class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full px-5 py-2 md:px-6 md:py-3 shadow-xl border-3 border-yellow-700 hover:scale-110 transition-transform">
+            <span class="text-lg md:text-xl text-white font-bold">🔄 Clear</span>
           </button>
 
           <button
             *ngIf="!isFreeWriting"
             (click)="showHint()"
-            class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full px-8 py-4 shadow-xl border-4 border-blue-700 hover:scale-110 transition-transform">
-            <span class="text-2xl text-white font-bold">💡 Hint</span>
+            class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full px-5 py-2 md:px-6 md:py-3 shadow-xl border-3 border-blue-700 hover:scale-110 transition-transform">
+            <span class="text-lg md:text-xl text-white font-bold">💡 Hint</span>
           </button>
         </div>
       </div>

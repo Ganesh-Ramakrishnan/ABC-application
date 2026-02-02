@@ -1,0 +1,43 @@
+.font-kids {
+  font-family: 'Fredoka One', cursive;
+}
+
+.border-3 {
+  border-width: 3px;
+}
+
+/* Letter tile hover effect */
+.letter-tile {
+  box-shadow:
+    0 8px 0 rgba(0, 0, 0, 0.2),
+    0 12px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.letter-tile:hover {
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.2),
+    0 8px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1) translateY(4px);
+}
+
+.letter-tile:active {
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.2),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05) translateY(6px);
+}
+
+/* Wiggle animation for animals */
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.animate-wiggle {
+  animation: wiggle 1s ease-in-out infinite;
+}

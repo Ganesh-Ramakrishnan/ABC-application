@@ -726,11 +726,16 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       guidePath.setAttribute('opacity', '0');
     }
 
-    // Create a temporary path element to track progress
+    // Create a temporary path element to track progress (completely invisible)
     this.currentStrokePathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     this.currentStrokePathElement.setAttribute('d', currentStroke.path);
-    svg.appendChild(this.currentStrokePathElement);
+    this.currentStrokePathElement.setAttribute('stroke', 'none');
+    this.currentStrokePathElement.setAttribute('fill', 'none');
+    this.currentStrokePathElement.setAttribute('opacity', '0');
     this.currentStrokePathElement.style.display = 'none';
+    this.currentStrokePathElement.style.visibility = 'hidden';
+    this.currentStrokePathElement.style.pointerEvents = 'none';
+    svg.appendChild(this.currentStrokePathElement);
 
     // Add small start and end point indicators INSIDE the letter (on stroke path)
     if (arrowsGroup) {
@@ -947,33 +952,18 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private drawTracingStroke(point: { x: number; y: number }) {
+    // In tracing mode, we don't draw on the canvas anymore
+    // The mask reveal system handles showing the magenta color
+    // This function now only updates the lastPoint for tracking
+
     const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
 
     // Convert SVG coordinates (400x400) to canvas coordinates
     const canvasX = (point.x / 400) * canvas.width;
     const canvasY = (point.y / 400) * canvas.height;
 
-    // Set drawing style
-    ctx.strokeStyle = '#D946A6'; // Magenta color
-    ctx.lineWidth = 6;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    if (!this.lastPoint) {
-      // Start new stroke
-      this.lastPoint = { x: canvasX, y: canvasY };
-      ctx.beginPath();
-      ctx.moveTo(canvasX, canvasY);
-    } else {
-      // Continue drawing
-      ctx.beginPath();
-      ctx.moveTo(this.lastPoint.x, this.lastPoint.y);
-      ctx.lineTo(canvasX, canvasY);
-      ctx.stroke();
-      this.lastPoint = { x: canvasX, y: canvasY };
-    }
+    // Just update lastPoint for tracking, no visible stroke
+    this.lastPoint = { x: canvasX, y: canvasY };
   }
 
   private drawFreeStroke(point: { x: number; y: number }) {

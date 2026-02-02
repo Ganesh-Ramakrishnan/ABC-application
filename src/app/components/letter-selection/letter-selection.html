@@ -1,18 +1,19 @@
 <!-- Jungle Background -->
 <div class="min-h-screen relative overflow-hidden bg-gradient-to-b from-cyan-400 via-teal-500 to-green-600">
 
-  <!-- Background Leaves -->
-  <div class="absolute top-0 left-0 text-7xl md:text-8xl opacity-60 -rotate-45">🌿</div>
-  <div class="absolute top-0 right-0 text-7xl md:text-8xl opacity-60 rotate-45 scale-x-[-1]">🌿</div>
-  <div class="absolute top-20 left-10 text-5xl md:text-6xl opacity-50">🍃</div>
-  <div class="absolute top-10 right-20 text-4xl md:text-5xl opacity-40">🍃</div>
+  <!-- Background Leaves with sway animation -->
+  <div class="absolute top-0 left-0 text-7xl md:text-8xl opacity-60 -rotate-45 animate-sway">🌿</div>
+  <div class="absolute top-0 right-0 text-7xl md:text-8xl opacity-60 rotate-45 scale-x-[-1] animate-sway" style="animation-delay: 0.5s;">🌿</div>
+  <div class="absolute top-20 left-10 text-5xl md:text-6xl opacity-50 animate-sway" style="animation-delay: 1s;">🍃</div>
+  <div class="absolute top-10 right-20 text-4xl md:text-5xl opacity-40 animate-sway" style="animation-delay: 1.5s;">🍃</div>
 
-  <!-- Stars -->
-  <div class="absolute top-16 right-1/3 text-3xl md:text-4xl animate-pulse">⭐</div>
-  <div class="absolute top-32 left-1/4 text-2xl md:text-3xl animate-pulse" style="animation-delay: 0.5s;">✨</div>
+  <!-- Stars with glow animation -->
+  <div class="absolute top-16 right-1/3 text-3xl md:text-4xl animate-glow">⭐</div>
+  <div class="absolute top-32 left-1/4 text-2xl md:text-3xl animate-sparkle" style="animation-delay: 0.5s;">✨</div>
+  <div class="absolute top-24 left-1/2 text-2xl md:text-3xl animate-glow" style="animation-delay: 1s;">⭐</div>
 
-  <!-- Giraffe on right side -->
-  <div class="absolute top-20 right-4 md:right-8 text-6xl md:text-8xl hidden md:block">🦒</div>
+  <!-- Giraffe on right side with float animation -->
+  <div class="absolute top-20 right-4 md:right-8 text-6xl md:text-8xl hidden md:block animate-float">🦒</div>
 
   <!-- Header -->
   <div class="relative z-10 flex items-center justify-between p-3 md:p-6">
@@ -23,24 +24,24 @@
       <span class="text-white text-xl md:text-3xl font-bold">←</span>
     </button>
 
-    <!-- Title -->
+    <!-- Title with bouncing letters -->
     <h1 class="flex-1 text-center">
       <span class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
-        <span class="text-red-500 drop-shadow-lg">T</span>
-        <span class="text-orange-500 drop-shadow-lg">R</span>
-        <span class="text-yellow-400 drop-shadow-lg">A</span>
-        <span class="text-green-500 drop-shadow-lg">C</span>
-        <span class="text-blue-500 drop-shadow-lg">E</span>
+        <span class="title-letter text-red-500 drop-shadow-lg">T</span>
+        <span class="title-letter text-orange-500 drop-shadow-lg">R</span>
+        <span class="title-letter text-yellow-400 drop-shadow-lg">A</span>
+        <span class="title-letter text-green-500 drop-shadow-lg">C</span>
+        <span class="title-letter text-blue-500 drop-shadow-lg">E</span>
         <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="text-purple-500 drop-shadow-lg">A</span>
+        <span class="title-letter text-purple-500 drop-shadow-lg">A</span>
         <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="text-pink-500 drop-shadow-lg">L</span>
-        <span class="text-red-400 drop-shadow-lg">E</span>
-        <span class="text-orange-400 drop-shadow-lg">T</span>
-        <span class="text-yellow-300 drop-shadow-lg">T</span>
-        <span class="text-green-400 drop-shadow-lg">E</span>
-        <span class="text-blue-400 drop-shadow-lg">R</span>
-        <span class="text-purple-400 drop-shadow-lg">!</span>
+        <span class="title-letter text-pink-500 drop-shadow-lg">L</span>
+        <span class="title-letter text-red-400 drop-shadow-lg">E</span>
+        <span class="title-letter text-orange-400 drop-shadow-lg">T</span>
+        <span class="title-letter text-yellow-300 drop-shadow-lg">T</span>
+        <span class="title-letter text-green-400 drop-shadow-lg">E</span>
+        <span class="title-letter text-blue-400 drop-shadow-lg">R</span>
+        <span class="title-letter text-purple-400 drop-shadow-lg">!</span>
       </span>
     </h1>
 
@@ -80,8 +81,9 @@
       <div
         *ngFor="let letter of filteredLetters; let i = index"
         (click)="selectLetter(letter.letter)"
-        class="letter-tile relative aspect-square rounded-xl sm:rounded-2xl md:rounded-3xl cursor-pointer transform hover:scale-110 transition-all duration-200 shadow-xl hover:shadow-2xl flex items-center justify-center border-3 md:border-4 border-white"
-        [ngClass]="getLetterGradient(i)">
+        class="letter-tile animate-pop-in relative aspect-square rounded-xl sm:rounded-2xl md:rounded-3xl cursor-pointer transform hover:scale-110 transition-all duration-200 shadow-xl hover:shadow-2xl flex items-center justify-center border-3 md:border-4 border-white"
+        [ngClass]="getLetterGradient(i)"
+        [style.animation-delay]="(i * 0.03) + 's'">
 
         <!-- Letter -->
         <span class="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg">
@@ -89,16 +91,17 @@
         </span>
 
         <!-- Completed Badge -->
-        <div *ngIf="letter.completed" class="absolute -top-1 -right-1 w-4 h-4 md:w-6 md:h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+        <div *ngIf="letter.completed" class="absolute -top-1 -right-1 w-4 h-4 md:w-6 md:h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
           <span class="text-white text-[8px] md:text-xs">✓</span>
         </div>
       </div>
     </div>
 
-    <!-- Decorative Animals on Grid -->
-    <div class="absolute top-8 md:top-12 left-0 md:left-2 text-3xl md:text-5xl hidden lg:block animate-wiggle">🐵</div>
-    <div class="absolute top-1/3 right-0 md:right-2 text-3xl md:text-5xl hidden lg:block">🦜</div>
+    <!-- Decorative Animals on Grid with animations -->
+    <div class="absolute top-8 md:top-12 left-0 md:left-2 text-3xl md:text-5xl hidden lg:block animate-hop">🐵</div>
+    <div class="absolute top-1/3 right-0 md:right-2 text-3xl md:text-5xl hidden lg:block animate-float" style="animation-delay: 0.3s;">🦜</div>
     <div class="absolute bottom-44 left-2 md:left-4 text-3xl md:text-5xl hidden lg:block animate-wiggle">🐍</div>
+    <div class="absolute top-1/2 left-0 md:left-2 text-2xl md:text-4xl hidden lg:block animate-bounce-soft" style="animation-delay: 0.6s;">🦋</div>
   </div>
 
   <!-- Bottom Section -->
@@ -106,27 +109,27 @@
     <!-- Grass -->
     <div class="absolute bottom-0 left-0 right-0 h-16 md:h-20 bg-gradient-to-t from-green-700 to-transparent"></div>
 
-    <!-- Flowers -->
-    <div class="absolute bottom-0 left-2 md:left-4 text-4xl md:text-6xl">🌺</div>
-    <div class="absolute bottom-2 left-12 md:left-16 text-3xl md:text-5xl">🌸</div>
-    <div class="absolute bottom-0 right-2 md:right-4 text-4xl md:text-6xl">🌸</div>
-    <div class="absolute bottom-2 right-12 md:right-16 text-3xl md:text-5xl">🌺</div>
+    <!-- Flowers with bounce animation -->
+    <div class="absolute bottom-0 left-2 md:left-4 text-4xl md:text-6xl animate-bounce-soft">🌺</div>
+    <div class="absolute bottom-2 left-12 md:left-16 text-3xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.3s;">🌸</div>
+    <div class="absolute bottom-0 right-2 md:right-4 text-4xl md:text-6xl animate-bounce-soft" style="animation-delay: 0.6s;">🌸</div>
+    <div class="absolute bottom-2 right-12 md:right-16 text-3xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.9s;">🌺</div>
 
-    <!-- Leaves -->
-    <div class="absolute bottom-6 md:bottom-8 left-20 md:left-24 text-3xl md:text-4xl">🌿</div>
-    <div class="absolute bottom-8 md:bottom-10 right-20 md:right-24 text-3xl md:text-4xl">🌿</div>
+    <!-- Leaves with sway -->
+    <div class="absolute bottom-6 md:bottom-8 left-20 md:left-24 text-3xl md:text-4xl animate-sway">🌿</div>
+    <div class="absolute bottom-8 md:bottom-10 right-20 md:right-24 text-3xl md:text-4xl animate-sway" style="animation-delay: 0.5s;">🌿</div>
 
-    <!-- Center Banner with Monkey -->
-    <div class="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white rounded-full px-4 md:px-6 py-2 md:py-3 shadow-2xl border-4 border-green-600">
-      <span class="text-2xl md:text-4xl">🐵</span>
+    <!-- Center Banner with Monkey - bouncing -->
+    <div class="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white rounded-full px-4 md:px-6 py-2 md:py-3 shadow-2xl border-4 border-green-600 animate-bounce-soft">
+      <span class="text-2xl md:text-4xl animate-wiggle">🐵</span>
       <div class="text-center">
         <p class="text-green-700 font-bold text-sm md:text-xl leading-tight">PICK A</p>
         <p class="text-green-700 font-bold text-sm md:text-xl leading-tight">LETTER!</p>
       </div>
     </div>
 
-    <!-- Tiger peeking -->
-    <div class="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 text-5xl md:text-7xl">🐯</div>
+    <!-- Tiger peeking with hop animation -->
+    <div class="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 text-5xl md:text-7xl animate-hop" style="animation-delay: 0.2s;">🐯</div>
   </div>
 
   <!-- Empty State -->

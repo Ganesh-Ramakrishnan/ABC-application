@@ -1,0 +1,169 @@
+<div class="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-4 md:p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <button
+        (click)="goBack()"
+        class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all shadow-lg hover:scale-110">
+        <span class="text-2xl">←</span>
+      </button>
+
+      <h1 class="text-4xl md:text-5xl font-kids text-white drop-shadow-lg">
+        Your Progress
+      </h1>
+
+      <div class="w-12 h-12"></div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Completion Card -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+        <div class="text-center">
+          <div class="text-5xl mb-3">📊</div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Completion</h3>
+          <div class="text-5xl font-bold text-purple-600 mb-2">{{completionPercentage}}%</div>
+          <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div
+              class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+              [style.width.%]="completionPercentage">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stars Card -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+        <div class="text-center">
+          <div class="text-5xl mb-3">⭐</div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Total Stars</h3>
+          <div class="text-5xl font-bold text-yellow-500">{{totalStars}}</div>
+          <p class="text-gray-600 mt-2">Keep tracing to earn more!</p>
+        </div>
+      </div>
+
+      <!-- Streak Card -->
+      <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+        <div class="text-center">
+          <div class="text-5xl mb-3">🔥</div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Day Streak</h3>
+          <div class="text-5xl font-bold text-orange-500">{{currentStreak}}</div>
+          <p class="text-gray-600 mt-2">
+            <span *ngIf="currentStreak === 0">Start your streak today!</span>
+            <span *ngIf="currentStreak === 1">Great start!</span>
+            <span *ngIf="currentStreak > 1">Amazing streak!</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges Section -->
+    <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl mb-8">
+      <h2 class="text-3xl font-kids text-purple-600 mb-6 text-center">
+        🏆 Trophy Case
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          *ngFor="let badge of badges"
+          class="relative p-6 rounded-2xl text-center transition-all"
+          [class.bg-gradient-to-br]="badge.unlocked"
+          [class.from-yellow-200]="badge.unlocked"
+          [class.to-yellow-400]="badge.unlocked"
+          [class.shadow-lg]="badge.unlocked"
+          [class.bg-gray-200]="!badge.unlocked"
+          [class.opacity-50]="!badge.unlocked">
+
+          <!-- Badge Icon -->
+          <div
+            class="text-6xl mb-3"
+            [class.animate-bounce]="badge.unlocked">
+            {{badge.icon}}
+          </div>
+
+          <!-- Badge Name -->
+          <h3
+            class="text-lg font-bold mb-2"
+            [class.text-purple-700]="badge.unlocked"
+            [class.text-gray-500]="!badge.unlocked">
+            {{badge.name}}
+          </h3>
+
+          <!-- Badge Description -->
+          <p
+            class="text-sm"
+            [class.text-gray-700]="badge.unlocked"
+            [class.text-gray-400]="!badge.unlocked">
+            {{badge.description}}
+          </p>
+
+          <!-- Unlocked Badge -->
+          <div
+            *ngIf="badge.unlocked"
+            class="absolute top-2 right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+            <span class="text-white text-sm">✓</span>
+          </div>
+
+          <!-- Locked Overlay -->
+          <div *ngIf="!badge.unlocked" class="absolute inset-0 flex items-center justify-center">
+            <span class="text-6xl opacity-30">🔒</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="badges.length === 0" class="text-center py-12">
+        <div class="text-6xl mb-4">🎯</div>
+        <p class="text-gray-600 text-xl">Complete activities to earn badges!</p>
+      </div>
+    </div>
+
+    <!-- Achievement Summary -->
+    <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl mb-8">
+      <h2 class="text-3xl font-kids text-purple-600 mb-6 text-center">
+        ✨ Achievements
+      </h2>
+
+      <div class="space-y-4">
+        <div class="flex items-center justify-between p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">🎖️</div>
+            <div>
+              <h4 class="font-bold text-gray-800">Badges Earned</h4>
+              <p class="text-gray-600">{{unlockedBadges.length}} / {{badges.length}}</p>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-purple-600">
+            {{unlockedBadges.length}}
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">📝</div>
+            <div>
+              <h4 class="font-bold text-gray-800">Letters Mastered</h4>
+              <p class="text-gray-600">Keep practicing!</p>
+            </div>
+          </div>
+          <div class="text-2xl font-bold text-blue-600">
+            {{completionPercentage}}%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="text-center">
+      <button
+        (click)="goToLetters()"
+        class="px-12 py-6 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 rounded-full text-white text-2xl font-bold shadow-2xl hover:scale-105 transition-all">
+        <span class="flex items-center gap-3">
+          <span class="text-3xl">✏️</span>
+          Continue Learning
+          <span class="text-3xl">→</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'tailwindcss/base';
+@use 'tailwindcss/components';
+@use 'tailwindcss/utilities';
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Neumorphic Button Style */
+.neumorphic {
+  box-shadow: 8px 8px 16px rgba(163, 177, 198, 0.6),
+              -8px -8px 16px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.neumorphic:active {
+  box-shadow: inset 4px 4px 8px rgba(163, 177, 198, 0.6),
+              inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Disable touch callout and text selection for better touch experience */
+* {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Allow text selection only for specific elements */
+input, textarea {
+  -webkit-touch-callout: default;
+  user-select: text;
+}

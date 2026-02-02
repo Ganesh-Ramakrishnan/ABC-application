@@ -1,0 +1,108 @@
+<div class="min-h-screen bg-gradient-to-b from-pink-300 via-purple-300 to-blue-300 p-4 md:p-8 relative overflow-hidden">
+  <!-- Decorative Background Elements -->
+  <div class="absolute top-10 left-10 text-6xl opacity-50 animate-bounce">🎈</div>
+  <div class="absolute top-20 right-10 text-6xl opacity-50 animate-bounce" style="animation-delay: 0.3s;">🎈</div>
+  <div class="absolute bottom-20 left-20 text-6xl opacity-50 animate-bounce" style="animation-delay: 0.6s;">🎈</div>
+  <div class="absolute bottom-10 right-20 text-6xl opacity-50 animate-bounce" style="animation-delay: 0.9s;">🎈</div>
+  <div class="max-w-6xl mx-auto relative z-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <button
+        (click)="goBack()"
+        class="bg-gradient-to-br from-red-400 to-red-600 rounded-full p-4 shadow-xl border-4 border-red-700 hover:scale-110 transition-transform">
+        <span class="text-3xl text-white">←</span>
+      </button>
+
+      <div class="text-center">
+        <div class="flex items-center gap-4">
+          <span class="text-6xl animate-bounce">{{currentMode === 'writing' ? '✍️' : '✏️'}}</span>
+          <h1 class="text-5xl md:text-6xl font-kids text-white drop-shadow-[0_8px_8px_rgba(0,0,0,0.3)]
+                     [text-shadow:_3px_3px_0_rgb(236_72_153),_6px_6px_0_rgb(219_39_119)]">
+            {{currentMode === 'writing' ? 'Write a Letter!' : 'Trace a Letter!'}}
+          </h1>
+          <span class="text-6xl animate-bounce" style="animation-delay: 0.2s;">{{currentMode === 'writing' ? '✍️' : '✏️'}}</span>
+        </div>
+      </div>
+
+      <div class="w-16 h-16"></div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <button
+        (click)="filterLetters('all')"
+        [class.active]="selectedFilter === 'all'"
+        class="filter-btn px-6 py-3 rounded-full font-bold text-lg transition-all shadow-lg hover:scale-105"
+        [class.bg-white]="selectedFilter === 'all'"
+        [class.text-purple-600]="selectedFilter === 'all'"
+        [class.bg-white/30]="selectedFilter !== 'all'"
+        [class.text-white]="selectedFilter !== 'all'">
+        <span class="mr-2">🎨</span> All
+      </button>
+
+      <button
+        (click)="filterLetters('uppercase')"
+        [class.active]="selectedFilter === 'uppercase'"
+        class="filter-btn px-6 py-3 rounded-full font-bold text-lg transition-all shadow-lg hover:scale-105"
+        [class.bg-white]="selectedFilter === 'uppercase'"
+        [class.text-purple-600]="selectedFilter === 'uppercase'"
+        [class.bg-white/30]="selectedFilter !== 'uppercase'"
+        [class.text-white]="selectedFilter !== 'uppercase'">
+        <span class="mr-2">🔤</span> Uppercase
+      </button>
+
+      <button
+        (click)="filterLetters('lowercase')"
+        [class.active]="selectedFilter === 'lowercase'"
+        class="filter-btn px-6 py-3 rounded-full font-bold text-lg transition-all shadow-lg hover:scale-105"
+        [class.bg-white]="selectedFilter === 'lowercase'"
+        [class.text-pink-600]="selectedFilter === 'lowercase'"
+        [class.bg-white/30]="selectedFilter !== 'lowercase'"
+        [class.text-white]="selectedFilter !== 'lowercase'">
+        <span class="mr-2">🔡</span> Lowercase
+      </button>
+
+      <button
+        (click)="filterLetters('number')"
+        [class.active]="selectedFilter === 'number'"
+        class="filter-btn px-6 py-3 rounded-full font-bold text-lg transition-all shadow-lg hover:scale-105"
+        [class.bg-white]="selectedFilter === 'number'"
+        [class.text-blue-600]="selectedFilter === 'number'"
+        [class.bg-white/30]="selectedFilter !== 'number'"
+        [class.text-white]="selectedFilter !== 'number'">
+        <span class="mr-2">🔢</span> Numbers
+      </button>
+    </div>
+
+    <!-- Letter Grid -->
+    <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4">
+      <div
+        *ngFor="let letter of filteredLetters"
+        (click)="selectLetter(letter.letter)"
+        class="letter-card relative rounded-2xl p-4 cursor-pointer transform hover:scale-110 transition-all shadow-xl hover:shadow-2xl"
+        [ngClass]="getLetterColor(letter.type)">
+
+        <!-- Letter -->
+        <div class="text-4xl md:text-5xl font-bold text-white text-center mb-2">
+          {{letter.letter}}
+        </div>
+
+        <!-- Stars -->
+        <div class="flex justify-center gap-1 mb-1">
+          <span *ngFor="let star of getStarsArray(letter.stars)" class="text-yellow-300 text-lg">⭐</span>
+        </div>
+
+        <!-- Completed Badge -->
+        <div *ngIf="letter.completed" class="absolute top-1 right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+          <span class="text-white text-xs">✓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredLetters.length === 0" class="text-center py-16">
+      <div class="text-6xl mb-4">🤔</div>
+      <p class="text-white text-xl font-semibold">No letters found</p>
+    </div>
+  </div>
+</div>

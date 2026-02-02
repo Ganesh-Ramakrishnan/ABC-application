@@ -1,0 +1,323 @@
+<div class="min-h-screen bg-gradient-to-b from-sky-300 via-sky-400 to-green-200 p-4 md:p-8 relative overflow-hidden">
+  <!-- Decorative Background -->
+  <div class="absolute top-10 left-10 text-4xl opacity-70 animate-bounce">🎈</div>
+  <div class="absolute top-20 right-20 text-3xl opacity-60 animate-bounce" style="animation-delay: 0.2s;">⭐</div>
+  <div class="absolute bottom-0 left-0 text-8xl opacity-60">🌳</div>
+  <div class="absolute bottom-0 right-0 text-8xl opacity-60">🌳</div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <button
+        (click)="goBack()"
+        class="bg-gradient-to-br from-red-400 to-red-600 rounded-full p-4 shadow-xl border-4 border-red-700 hover:scale-110 transition-transform">
+        <span class="text-3xl text-white">←</span>
+      </button>
+
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-kids text-white drop-shadow-lg">
+          <ng-container *ngIf="isFreeWriting">Write: {{currentLetter}}</ng-container>
+          <ng-container *ngIf="!isFreeWriting">Trace: {{currentLetter}}</ng-container>
+        </h1>
+      </div>
+
+      <div class="w-16 h-16"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mb-4 max-w-7xl mx-auto">
+      <div class="bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg">
+        <div class="relative h-8 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-3"
+            [style.width.%]="traceProgress">
+            <span class="text-white font-bold text-sm" *ngIf="traceProgress > 10">
+              {{traceProgress}}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div *ngIf="showCelebration" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
+      <div class="text-9xl animate-bounce">🎉</div>
+    </div>
+
+    <!-- SVG Tracing Canvas -->
+    <div class="bg-white rounded-3xl shadow-2xl p-4 md:p-8">
+      <div class="relative w-full" style="aspect-ratio: 1/1; max-width: 800px; margin: 0 auto;">
+
+        <!-- WRITING MODE: Block letter reference + free drawing canvas -->
+        <div *ngIf="isFreeWriting" class="relative w-full h-full" style="aspect-ratio: 1/1;">
+          <!-- Block/Filled letter reference (faint background like the image) -->
+          <svg
+            viewBox="0 0 400 400"
+            class="absolute top-0 left-0 w-full h-full"
+            style="pointer-events: none; z-index: 1;">
+
+            <!-- Solid filled letter with gray fill and darker gray outline -->
+            <text
+              x="200"
+              y="310"
+              font-size="340"
+              font-family="Arial Black, Arial, sans-serif"
+              font-weight="900"
+              text-anchor="middle"
+              fill="#E5E7EB"
+              stroke="#9CA3AF"
+              stroke-width="3">
+              {{currentLetter}}
+            </text>
+
+            <!-- Decoration emoji -->
+            <text x="320" y="90" font-size="50" id="letterDecorWriting">🍎</text>
+          </svg>
+
+          <!-- Drawing canvas for free writing (on top of letter) -->
+          <canvas
+            #drawingCanvas
+            class="absolute top-0 left-0 w-full h-full"
+            style="touch-action: none; pointer-events: auto; z-index: 2; background: transparent;">
+          </canvas>
+        </div>
+
+        <!-- TRACING MODE: Mask reveal system -->
+        <svg
+          *ngIf="!isFreeWriting"
+          #tracingSvg
+          viewBox="0 0 400 400"
+          class="w-full h-full"
+          style="touch-action: none; user-select: none; overflow: hidden;">
+
+          <!-- Definitions -->
+          <defs>
+            <!-- Clipping path to ensure everything stays within canvas -->
+            <clipPath id="canvasClip">
+              <rect x="0" y="0" width="400" height="400"/>
+            </clipPath>
+
+            <!-- Clipping path for letter A - ensures magenta never goes outside gray -->
+            <clipPath id="letterAClip">
+              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z"/>
+              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z"/>
+              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter B - ensures magenta never goes outside gray -->
+            <clipPath id="letterBClip">
+              <!-- Vertical bar -->
+              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z"/>
+              <!-- Upper bump (top to middle) -->
+              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z"/>
+              <!-- Lower bump (middle to bottom) -->
+              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter C - ensures magenta never goes outside gray -->
+            <clipPath id="letterCClip">
+              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
+              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z"/>
+            </clipPath>
+
+            <!-- Mask for revealing the colored letter -->
+            <mask id="traceMask">
+              <rect width="400" height="400" fill="black"/>
+              <!-- White areas will reveal the letter - precise width to match letter thickness -->
+              <path id="maskPath" stroke="white" stroke-width="28" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </mask>
+
+            <!-- Pattern for decorative stars/flowers -->
+            <pattern id="decorPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+              <text x="10" y="20" font-size="20">⭐</text>
+              <text x="30" y="40" font-size="15">✨</text>
+            </pattern>
+
+            <!-- Gradient for sliding cursor -->
+            <radialGradient id="cursorGradient">
+              <stop offset="0%" stop-color="#FEF3C7"/>
+              <stop offset="100%" stop-color="#FCD34D"/>
+            </radialGradient>
+          </defs>
+
+          <!-- All content clipped to canvas boundaries -->
+          <g clip-path="url(#canvasClip)">
+
+          <!-- Letter A using SVG paths (perfect control) -->
+          <g *ngIf="currentLetter === 'A'" id="letterPaths">
+            <!-- Gray outline paths (background) - NO STROKES, only fill -->
+            <g id="grayLetterPaths">
+              <!-- Left stroke of A -->
+              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z" fill="#E5E7EB"/>
+              <!-- Right stroke of A -->
+              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z" fill="#E5E7EB"/>
+              <!-- Crossbar of A -->
+              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z" fill="#E5E7EB"/>
+            </g>
+
+            <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
+            <g mask="url(#traceMask)" clip-path="url(#letterAClip)">
+              <!-- Left stroke of A -->
+              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z" fill="#D946A6"/>
+              <!-- Right stroke of A -->
+              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z" fill="#D946A6"/>
+              <!-- Crossbar of A -->
+              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z" fill="#D946A6"/>
+
+              <!-- Decorative stars -->
+              <text x="150" y="150" font-size="30">⭐</text>
+              <text x="250" y="150" font-size="30">⭐</text>
+              <text x="200" y="230" font-size="30">⭐</text>
+            </g>
+          </g>
+
+          <!-- Letter B using SVG paths (perfect control) -->
+          <g *ngIf="currentLetter === 'B'" id="letterBPaths">
+            <!-- Gray outline paths (background) - NO STROKES, only fill -->
+            <g id="grayLetterBPaths">
+              <!-- Vertical bar -->
+              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z" fill="#E5E7EB"/>
+              <!-- Upper bump (top to middle) - thick stroke with curves -->
+              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z" fill="#E5E7EB"/>
+              <!-- Lower bump (middle to bottom) - thick stroke with curves -->
+              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z" fill="#E5E7EB"/>
+            </g>
+
+            <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
+            <g mask="url(#traceMask)" clip-path="url(#letterBClip)">
+              <!-- Vertical bar -->
+              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z" fill="#D946A6"/>
+              <!-- Upper bump (top to middle) - thick stroke with curves -->
+              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z" fill="#D946A6"/>
+              <!-- Lower bump (middle to bottom) - thick stroke with curves -->
+              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z" fill="#D946A6"/>
+
+              <!-- Decorative stars -->
+              <text x="200" y="105" font-size="30">⭐</text>
+              <text x="210" y="215" font-size="30">⭐</text>
+            </g>
+          </g>
+
+          <!-- Letter C using SVG paths (perfect control) -->
+          <g *ngIf="currentLetter === 'C'" id="letterCPaths">
+            <!-- Gray outline paths (background) - NO STROKES, only fill -->
+            <g id="grayLetterCPaths">
+              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
+              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z" fill="#E5E7EB"/>
+            </g>
+
+            <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
+            <g mask="url(#traceMask)" clip-path="url(#letterCClip)">
+              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
+              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z" fill="#D946A6"/>
+
+              <!-- Decorative stars -->
+              <text x="140" y="140" font-size="30">⭐</text>
+              <text x="140" y="240" font-size="30">⭐</text>
+            </g>
+          </g>
+
+          <!-- Fallback for other letters (will add later) -->
+          <g *ngIf="currentLetter !== 'A' && currentLetter !== 'B' && currentLetter !== 'C'" id="letterText">
+            <text
+              id="grayLetter"
+              x="200"
+              y="280"
+              font-size="300"
+              font-family="Arial Black, Arial, sans-serif"
+              font-weight="900"
+              text-anchor="middle"
+              fill="#E5E7EB"
+              stroke="#D1D5DB"
+              stroke-width="4">
+              {{currentLetter}}
+            </text>
+
+            <g mask="url(#traceMask)">
+              <text
+                x="200"
+                y="280"
+                font-size="300"
+                font-family="Arial Black, Arial, sans-serif"
+                font-weight="900"
+                text-anchor="middle"
+                fill="#D946A6">
+                {{currentLetter}}
+              </text>
+            </g>
+          </g>
+
+          <!-- Guide path for current stroke (hidden by default, shown on hint) -->
+          <path
+            *ngIf="!isFreeWriting"
+            id="guidePath"
+            stroke="#9CA3AF"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+            opacity="0"/>
+
+          <!-- Start/End point indicators -->
+          <g *ngIf="!isFreeWriting" id="arrowsGroup"></g>
+
+          <!-- Letter-specific decoration (dynamically set) -->
+          <text x="310" y="100" font-size="60" id="letterDecor">🍎</text>
+
+          <!-- Sliding cursor/character that follows tracing -->
+          <g *ngIf="showCursor" [attr.transform]="'translate(' + cursorX + ',' + cursorY + ')'" style="transition: transform 0.05s ease-out;">
+            <!-- Glowing pulse behind character -->
+            <circle cx="0" cy="0" r="28" fill="#FCD34D" opacity="0.3">
+              <animate attributeName="r" values="28;35;28" dur="1.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Main character circle -->
+            <circle cx="0" cy="0" r="20" fill="url(#cursorGradient)" stroke="#F59E0B" stroke-width="5" filter="drop-shadow(0 6px 12px rgba(0,0,0,0.4))"/>
+            <!-- Character emoji -->
+            <text x="0" y="8" font-size="26" text-anchor="middle">✏️</text>
+          </g>
+
+          </g><!-- End clipping group -->
+        </svg>
+
+        <!-- Drawing canvas for tracing mode (visible strokes) -->
+        <canvas
+          *ngIf="!isFreeWriting"
+          #drawingCanvas
+          class="absolute top-0 left-0 w-full h-full"
+          style="touch-action: none; pointer-events: auto; background: transparent;">
+        </canvas>
+      </div>
+
+      <!-- Instructions & Actions -->
+      <div class="mt-6 space-y-4">
+        <div class="text-center">
+          <p class="text-2xl md:text-3xl font-bold text-gray-700 mb-2">
+            <span class="text-4xl">✏️</span> <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container><ng-container *ngIf="!isFreeWriting">Slide the pencil to trace!</ng-container>
+          </p>
+          <p class="text-lg md:text-xl text-gray-600" *ngIf="!isFreeWriting">
+            Drag from <span class="text-yellow-600 font-bold">🟡 Yellow</span> to <span class="text-green-600 font-bold">🟢 Green</span> - draw and see your strokes!
+          </p>
+          <p class="text-lg md:text-xl text-gray-600" *ngIf="isFreeWriting">
+            Draw anywhere on the canvas! <span class="text-purple-600 font-bold">Free writing!</span>
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-center gap-4">
+          <button
+            (click)="clearDrawing()"
+            class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full px-8 py-4 shadow-xl border-4 border-yellow-700 hover:scale-110 transition-transform">
+            <span class="text-2xl text-white font-bold">🔄 Clear</span>
+          </button>
+
+          <button
+            *ngIf="!isFreeWriting"
+            (click)="showHint()"
+            class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full px-8 py-4 shadow-xl border-4 border-blue-700 hover:scale-110 transition-transform">
+            <span class="text-2xl text-white font-bold">💡 Hint</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

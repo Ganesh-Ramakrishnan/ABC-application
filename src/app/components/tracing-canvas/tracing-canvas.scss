@@ -1,0 +1,103 @@
+// Animations for better UX
+@keyframes pulse-gentle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+// Smooth scrolling for the entire component
+:host {
+  display: block;
+  overflow-x: hidden;
+}
+
+// Make buttons more engaging
+button {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active {
+    transform: scale(0.95) !important;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// Enhance the canvas container
+.bg-white {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+}
+
+// Make decorative elements animated
+.animate-bounce {
+  animation: float 3s ease-in-out infinite;
+}
+
+// Success state (can be triggered when letter is completed)
+.letter-complete {
+  animation: pulse-gentle 0.6s ease-in-out;
+}
+
+// Guide path glow effect
+#guidePath {
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    stroke-width: 4;
+    opacity: 1;
+  }
+}
+
+// Make arrow groups more visible
+#arrowsGroup circle {
+  transition: all 0.2s ease-in-out;
+}
+
+#arrowsGroup text {
+  pointer-events: none;
+}
+
+// Dot hover effects (though user won't hover, good for visual polish)
+#dotsGroup circle {
+  transition: fill 0.2s ease-in-out;
+}
+
+// Sparkle animation for first arrow
+[font-size="25"] {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  button span {
+    font-size: 1.25rem !important;
+  }
+}

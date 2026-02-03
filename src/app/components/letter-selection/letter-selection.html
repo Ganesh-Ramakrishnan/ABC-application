@@ -24,9 +24,10 @@
       <span class="text-white text-xl md:text-3xl font-bold">←</span>
     </button>
 
-    <!-- Title with bouncing letters -->
+    <!-- Title with bouncing letters - Dynamic based on mode -->
     <h1 class="flex-1 text-center">
-      <span class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
+      <!-- TRACE A LETTER! -->
+      <span *ngIf="currentMode !== 'writing'" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
         <span class="title-letter text-red-500 drop-shadow-lg">T</span>
         <span class="title-letter text-orange-500 drop-shadow-lg">R</span>
         <span class="title-letter text-yellow-400 drop-shadow-lg">A</span>
@@ -43,12 +44,28 @@
         <span class="title-letter text-blue-400 drop-shadow-lg">R</span>
         <span class="title-letter text-purple-400 drop-shadow-lg">!</span>
       </span>
+      <!-- WRITE A LETTER! -->
+      <span *ngIf="currentMode === 'writing'" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
+        <span class="title-letter text-blue-500 drop-shadow-lg">W</span>
+        <span class="title-letter text-purple-500 drop-shadow-lg">R</span>
+        <span class="title-letter text-pink-500 drop-shadow-lg">I</span>
+        <span class="title-letter text-red-500 drop-shadow-lg">T</span>
+        <span class="title-letter text-orange-500 drop-shadow-lg">E</span>
+        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
+        <span class="title-letter text-yellow-400 drop-shadow-lg">A</span>
+        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
+        <span class="title-letter text-green-500 drop-shadow-lg">L</span>
+        <span class="title-letter text-teal-500 drop-shadow-lg">E</span>
+        <span class="title-letter text-cyan-500 drop-shadow-lg">T</span>
+        <span class="title-letter text-blue-400 drop-shadow-lg">T</span>
+        <span class="title-letter text-indigo-500 drop-shadow-lg">E</span>
+        <span class="title-letter text-violet-500 drop-shadow-lg">R</span>
+        <span class="title-letter text-fuchsia-500 drop-shadow-lg">!</span>
+      </span>
     </h1>
 
-    <!-- Settings Button -->
-    <button class="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg border-4 border-white hover:scale-110 transition-transform">
-      <span class="text-xl md:text-3xl">⚙️</span>
-    </button>
+    <!-- Spacer for alignment -->
+    <div class="w-10 h-10 md:w-14 md:h-14"></div>
   </div>
 
   <!-- Filter Tabs -->

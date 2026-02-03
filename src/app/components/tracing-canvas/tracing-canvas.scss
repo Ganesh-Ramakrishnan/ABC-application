@@ -1,5 +1,201 @@
-// Animations for better UX
-@keyframes pulse-gentle {
+// Kids-friendly font
+.font-kids {
+  font-family: 'Fredoka One', cursive;
+}
+
+// Border width utilities
+.border-3 {
+  border-width: 3px;
+}
+
+// ==========================================
+// KEYFRAME ANIMATIONS
+// ==========================================
+
+// Float animation for clouds
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+// Sway animation for leaves
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-5deg) translateX(0);
+  }
+  50% {
+    transform: rotate(5deg) translateX(8px);
+  }
+}
+
+.animate-sway {
+  animation: sway 4s ease-in-out infinite;
+}
+
+// Wiggle animation for animals/emojis
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.animate-wiggle {
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+// Hop animation for animals
+@keyframes hop {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+.animate-hop {
+  animation: hop 1.5s ease-in-out infinite;
+}
+
+// Bounce soft animation for flowers
+@keyframes bounceSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-soft {
+  animation: bounceSoft 2s ease-in-out infinite;
+}
+
+// Sparkle animation for stars
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+// Glow pulse for stars
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1));
+    transform: scale(1.2);
+  }
+}
+
+.animate-glow {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+// Pop in animation for elements
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s ease-out forwards;
+}
+
+// Flutter animation for butterflies
+@keyframes flutter {
+  0%, 100% {
+    transform: translateY(0) translateX(0) rotate(-5deg);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-5px) translateX(10px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(5px) rotate(5deg);
+  }
+}
+
+.animate-flutter {
+  animation: flutter 3s ease-in-out infinite;
+}
+
+// Slow spin for celebration
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 3s linear infinite;
+}
+
+// Title letter bounce
+@keyframes letterBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.title-letter {
+  display: inline-block;
+  animation: letterBounce 1s ease-in-out infinite;
+}
+
+// Stagger delays for title letters
+.title-letter:nth-child(1) { animation-delay: 0s; }
+.title-letter:nth-child(2) { animation-delay: 0.1s; }
+.title-letter:nth-child(3) { animation-delay: 0.2s; }
+.title-letter:nth-child(4) { animation-delay: 0.3s; }
+.title-letter:nth-child(5) { animation-delay: 0.4s; }
+.title-letter:nth-child(6) { animation-delay: 0.5s; }
+.title-letter:nth-child(7) { animation-delay: 0.6s; }
+
+// Pulse gentle for completion
+@keyframes pulseGentle {
   0%, 100% {
     transform: scale(1);
     opacity: 1;
@@ -10,25 +206,9 @@
   }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.2) rotate(180deg);
-  }
-}
+// ==========================================
+// COMPONENT STYLES
+// ==========================================
 
 // Smooth scrolling for the entire component
 :host {
@@ -56,14 +236,9 @@ button {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
 }
 
-// Make decorative elements animated
-.animate-bounce {
-  animation: float 3s ease-in-out infinite;
-}
-
 // Success state (can be triggered when letter is completed)
 .letter-complete {
-  animation: pulse-gentle 0.6s ease-in-out;
+  animation: pulseGentle 0.6s ease-in-out;
 }
 
 // Guide path glow effect
@@ -85,7 +260,7 @@ button {
   pointer-events: none;
 }
 
-// Dot hover effects (though user won't hover, good for visual polish)
+// Dot hover effects
 #dotsGroup circle {
   transition: fill 0.2s ease-in-out;
 }
@@ -95,9 +270,24 @@ button {
   animation: sparkle 2s ease-in-out infinite;
 }
 
-// Responsive adjustments
+// ==========================================
+// RESPONSIVE ADJUSTMENTS
+// ==========================================
+
 @media (max-width: 768px) {
   button span {
     font-size: 1.25rem !important;
+  }
+
+  .title-letter {
+    font-size: 1.25rem;
+  }
+}
+
+// Hide decorative elements on very small screens
+@media (max-width: 480px) {
+  .animate-flutter,
+  .animate-hop {
+    display: none;
   }
 }

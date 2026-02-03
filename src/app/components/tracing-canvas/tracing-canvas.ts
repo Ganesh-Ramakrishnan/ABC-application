@@ -49,6 +49,20 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   showCursor: boolean = false;
   isFreeWriting: boolean = false;
 
+  // Pen customization options
+  penColor: string = '#D946A6'; // Default magenta
+  penWidth: number = 18; // Default width
+  availableColors: { color: string; name: string }[] = [
+    { color: '#D946A6', name: 'Pink' },
+    { color: '#3B82F6', name: 'Blue' },
+    { color: '#10B981', name: 'Green' },
+    { color: '#F59E0B', name: 'Orange' },
+    { color: '#8B5CF6', name: 'Purple' },
+    { color: '#EF4444', name: 'Red' },
+    { color: '#000000', name: 'Black' }
+  ];
+  availableWidths: number[] = [12, 18, 24, 30];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router
@@ -98,31 +112,31 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'B': {
         strokes: [
           {
-            path: 'M 127 60 L 127 280',
-            startPoint: { x: 127, y: 60 },
-            endPoint: { x: 127, y: 280 },
+            path: 'M 110 55 L 110 345',
+            startPoint: { x: 110, y: 55 },
+            endPoint: { x: 110, y: 345 },
             direction: '↓'
           },
           {
-            path: 'M 145 67 L 230 67 Q 265 67 265 105 Q 265 142 230 142 L 145 142',
-            startPoint: { x: 145, y: 67 },
-            endPoint: { x: 145, y: 142 },
-            direction: '→'
+            path: 'M 110 55 L 200 55 Q 280 55 280 127.5 Q 280 200 200 200 L 110 200',
+            startPoint: { x: 110, y: 55 },
+            endPoint: { x: 110, y: 200 },
+            direction: '⟳'
           },
           {
-            path: 'M 145 157 L 235 157 Q 275 157 275 215 Q 275 272 235 272 L 145 272',
-            startPoint: { x: 145, y: 157 },
-            endPoint: { x: 145, y: 272 },
-            direction: '→'
+            path: 'M 110 200 L 200 200 Q 280 200 280 272.5 Q 280 345 200 345 L 110 345',
+            startPoint: { x: 110, y: 200 },
+            endPoint: { x: 110, y: 345 },
+            direction: '⟳'
           }
         ]
       },
       'C': {
         strokes: [
           {
-            path: 'M 267 80 Q 267 67 230 67 Q 160 67 122 122 Q 85 177 85 200 Q 85 223 122 278 Q 160 333 230 333 Q 267 333 267 320',
-            startPoint: { x: 267, y: 80 },
-            endPoint: { x: 267, y: 320 },
+            path: 'M 280 100 Q 280 55 200 55 Q 80 55 80 200 Q 80 345 200 345 Q 280 345 280 300',
+            startPoint: { x: 280, y: 100 },
+            endPoint: { x: 280, y: 300 },
             direction: '↶'
           }
         ]
@@ -130,16 +144,16 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'D': {
         strokes: [
           {
-            path: 'M 100 80 L 100 320',
-            startPoint: { x: 100, y: 80 },
-            endPoint: { x: 100, y: 320 },
+            path: 'M 100 55 L 100 345',
+            startPoint: { x: 100, y: 55 },
+            endPoint: { x: 100, y: 345 },
             direction: '↓'
           },
           {
-            path: 'M 100 80 L 220 80 Q 300 80 300 200 Q 300 320 220 320 L 100 320',
-            startPoint: { x: 100, y: 80 },
-            endPoint: { x: 100, y: 320 },
-            direction: '→'
+            path: 'M 100 55 L 200 55 Q 300 55 300 200 Q 300 345 200 345 L 100 345',
+            startPoint: { x: 100, y: 55 },
+            endPoint: { x: 100, y: 345 },
+            direction: '⟳'
           }
         ]
       },
@@ -971,9 +985,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set drawing style - thicker stroke for writing mode
-    ctx.strokeStyle = '#D946A6'; // Magenta color
-    ctx.lineWidth = 18; // Thicker stroke for better visibility
+    // Set drawing style - use selected pen color and width
+    ctx.strokeStyle = this.penColor;
+    ctx.lineWidth = this.penWidth;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
@@ -999,15 +1013,38 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private updateFreeWritingProgress() {
-    // Estimate progress based on mask path length
-    // Simple heuristic: count the commands in the path
-    const commands = this.maskPath.split(/[ML]/).filter(s => s.trim().length > 0);
-    const estimatedProgress = Math.min(100, (commands.length / 150) * 100);
+    // Calculate progress based on actual canvas coverage
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Get the image data to analyze coverage
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    // Count pixels that have been drawn (non-transparent pixels)
+    let drawnPixels = 0;
+    for (let i = 3; i < data.length; i += 4) {
+      // Check alpha channel - if > 0, pixel has been drawn
+      if (data[i] > 0) {
+        drawnPixels++;
+      }
+    }
+
+    // Calculate total pixels
+    const totalPixels = canvas.width * canvas.height;
+
+    // For free writing, we expect about 5-10% coverage to be "complete" writing
+    // (since letters don't fill the entire canvas)
+    // Set target coverage to around 8% for a well-written letter
+    const targetCoverage = 0.08;
+    const currentCoverage = drawnPixels / totalPixels;
+    const estimatedProgress = Math.min(100, (currentCoverage / targetCoverage) * 100);
 
     this.traceProgress = Math.round(estimatedProgress);
 
     // Show celebration when nearly complete
-    if (this.traceProgress >= 80 && !this.showCelebration) {
+    if (this.traceProgress >= 90 && !this.showCelebration) {
       this.showCelebration = true;
       setTimeout(() => {
         this.showCelebration = false;
@@ -1205,5 +1242,14 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
 
   goBack() {
     this.router.navigate(['/letters']);
+  }
+
+  // Pen customization methods
+  selectColor(color: string) {
+    this.penColor = color;
+  }
+
+  selectWidth(width: number) {
+    this.penWidth = width;
   }
 }

@@ -1,51 +1,105 @@
-<div class="min-h-screen bg-gradient-to-b from-sky-300 via-sky-400 to-green-200 p-2 md:p-4 relative overflow-hidden">
-  <!-- Decorative Background -->
-  <div class="absolute top-4 left-4 text-3xl opacity-70 animate-bounce">🎈</div>
-  <div class="absolute top-8 right-8 text-2xl opacity-60 animate-bounce" style="animation-delay: 0.2s;">⭐</div>
-  <div class="absolute bottom-0 left-0 text-6xl opacity-60">🌳</div>
-  <div class="absolute bottom-0 right-0 text-6xl opacity-60">🌳</div>
+<div class="min-h-screen bg-gradient-to-b from-cyan-400 via-teal-500 to-green-600 p-2 md:p-4 relative overflow-hidden">
+  <!-- Animated Background Elements -->
+
+  <!-- Floating Clouds -->
+  <div class="absolute top-4 left-8 text-5xl md:text-6xl opacity-70 animate-float">☁️</div>
+  <div class="absolute top-12 right-12 text-4xl md:text-5xl opacity-60 animate-float" style="animation-delay: 1s;">☁️</div>
+  <div class="absolute top-24 left-1/3 text-3xl md:text-4xl opacity-50 animate-float" style="animation-delay: 2s;">☁️</div>
+
+  <!-- Twinkling Stars -->
+  <div class="absolute top-8 right-1/4 text-2xl md:text-3xl animate-glow">⭐</div>
+  <div class="absolute top-20 left-16 text-xl md:text-2xl animate-sparkle" style="animation-delay: 0.5s;">✨</div>
+  <div class="absolute top-6 left-1/2 text-2xl md:text-3xl animate-glow" style="animation-delay: 1s;">⭐</div>
+  <div class="absolute top-16 right-8 text-xl md:text-2xl animate-sparkle" style="animation-delay: 1.5s;">✨</div>
+
+  <!-- Swaying Leaves -->
+  <div class="absolute top-0 left-0 text-5xl md:text-6xl opacity-60 -rotate-45 animate-sway">🌿</div>
+  <div class="absolute top-0 right-0 text-5xl md:text-6xl opacity-60 rotate-45 scale-x-[-1] animate-sway" style="animation-delay: 0.5s;">🌿</div>
+  <div class="absolute top-32 left-2 text-3xl md:text-4xl opacity-50 animate-sway" style="animation-delay: 1s;">🍃</div>
+  <div class="absolute top-28 right-4 text-3xl md:text-4xl opacity-50 animate-sway" style="animation-delay: 1.5s;">🍃</div>
+
+  <!-- Animated Animals -->
+  <div class="absolute top-20 right-2 md:right-4 text-4xl md:text-5xl hidden md:block animate-wiggle">🦜</div>
+  <div class="absolute top-40 left-2 md:left-4 text-3xl md:text-4xl hidden md:block animate-hop" style="animation-delay: 0.3s;">🐵</div>
+
+  <!-- Bottom Decorations -->
+  <div class="absolute bottom-0 left-0 text-6xl md:text-7xl opacity-70">🌳</div>
+  <div class="absolute bottom-0 right-0 text-6xl md:text-7xl opacity-70">🌳</div>
+  <div class="absolute bottom-0 left-16 text-4xl md:text-5xl animate-bounce-soft">🌺</div>
+  <div class="absolute bottom-0 right-16 text-4xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.3s;">🌸</div>
+  <div class="absolute bottom-2 left-1/4 text-3xl md:text-4xl animate-bounce-soft" style="animation-delay: 0.6s;">🌼</div>
+  <div class="absolute bottom-2 right-1/4 text-3xl md:text-4xl animate-bounce-soft" style="animation-delay: 0.9s;">🌷</div>
+
+  <!-- Floating Butterflies -->
+  <div class="absolute top-1/3 left-4 text-2xl md:text-3xl animate-flutter">🦋</div>
+  <div class="absolute top-1/2 right-6 text-2xl md:text-3xl animate-flutter" style="animation-delay: 1s;">🦋</div>
 
   <div class="max-w-4xl mx-auto relative z-10">
     <!-- Header -->
     <div class="flex items-center justify-between mb-2">
       <button
         (click)="goBack()"
-        class="bg-gradient-to-br from-red-400 to-red-600 rounded-full p-2 md:p-3 shadow-xl border-3 border-red-700 hover:scale-110 transition-transform">
-        <span class="text-xl md:text-2xl text-white">←</span>
+        class="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center shadow-lg border-4 border-white hover:scale-110 transition-transform animate-pop-in">
+        <span class="text-white text-xl md:text-3xl font-bold">←</span>
       </button>
 
-      <div class="text-center">
-        <h1 class="text-2xl md:text-4xl font-kids text-white drop-shadow-lg">
-          <ng-container *ngIf="isFreeWriting">Write: {{currentLetter}}</ng-container>
-          <ng-container *ngIf="!isFreeWriting">Trace: {{currentLetter}}</ng-container>
+      <div class="text-center animate-pop-in" style="animation-delay: 0.1s;">
+        <h1 class="text-2xl md:text-4xl font-kids tracking-wide">
+          <ng-container *ngIf="isFreeWriting">
+            <span class="title-letter text-blue-500 drop-shadow-lg">W</span>
+            <span class="title-letter text-purple-500 drop-shadow-lg">r</span>
+            <span class="title-letter text-pink-500 drop-shadow-lg">i</span>
+            <span class="title-letter text-red-500 drop-shadow-lg">t</span>
+            <span class="title-letter text-orange-500 drop-shadow-lg">e</span>
+            <span class="text-white drop-shadow-lg">: </span>
+            <span class="title-letter text-yellow-400 drop-shadow-lg animate-pulse">{{currentLetter}}</span>
+          </ng-container>
+          <ng-container *ngIf="!isFreeWriting">
+            <span class="title-letter text-red-500 drop-shadow-lg">T</span>
+            <span class="title-letter text-orange-500 drop-shadow-lg">r</span>
+            <span class="title-letter text-yellow-400 drop-shadow-lg">a</span>
+            <span class="title-letter text-green-500 drop-shadow-lg">c</span>
+            <span class="title-letter text-blue-500 drop-shadow-lg">e</span>
+            <span class="text-white drop-shadow-lg">: </span>
+            <span class="title-letter text-purple-500 drop-shadow-lg animate-pulse">{{currentLetter}}</span>
+          </ng-container>
         </h1>
       </div>
 
-      <div class="w-10 h-10 md:w-12 md:h-12"></div>
+      <div class="w-10 h-10 md:w-14 md:h-14"></div>
     </div>
 
-    <!-- Progress Bar -->
-    <div class="mb-2 max-w-4xl mx-auto">
-      <div class="bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg">
-        <div class="relative h-5 md:h-6 bg-gray-200 rounded-full overflow-hidden">
+    <!-- Progress Bar with Rainbow Effect -->
+    <div class="mb-2 max-w-4xl mx-auto animate-pop-in" style="animation-delay: 0.2s;">
+      <div class="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-xl border-4 border-yellow-400">
+        <div class="relative h-6 md:h-8 bg-gray-200 rounded-full overflow-hidden">
           <div
-            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-2"
+            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-2 rounded-full"
             [style.width.%]="traceProgress">
-            <span class="text-white font-bold text-xs" *ngIf="traceProgress > 10">
+            <span class="text-white font-bold text-sm md:text-base drop-shadow" *ngIf="traceProgress > 10">
               {{traceProgress}}%
             </span>
+          </div>
+          <!-- Star at the end of progress -->
+          <div class="absolute top-1/2 -translate-y-1/2 text-lg md:text-xl transition-all duration-300" [style.left.%]="traceProgress > 5 ? traceProgress - 3 : 2">
+            ⭐
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Celebration Overlay -->
+    <!-- Celebration Overlay with Multiple Elements -->
     <div *ngIf="showCelebration" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-      <div class="text-9xl animate-bounce">🎉</div>
+      <div class="text-8xl md:text-9xl animate-bounce">🎉</div>
+      <div class="absolute top-1/4 left-1/4 text-5xl md:text-6xl animate-spin-slow">⭐</div>
+      <div class="absolute top-1/4 right-1/4 text-5xl md:text-6xl animate-spin-slow" style="animation-delay: 0.2s;">🌟</div>
+      <div class="absolute bottom-1/4 left-1/3 text-4xl md:text-5xl animate-bounce" style="animation-delay: 0.3s;">🎊</div>
+      <div class="absolute bottom-1/4 right-1/3 text-4xl md:text-5xl animate-bounce" style="animation-delay: 0.4s;">🎊</div>
+      <div class="absolute top-1/3 left-1/2 text-6xl md:text-7xl animate-pulse">🏆</div>
     </div>
 
-    <!-- SVG Tracing Canvas -->
-    <div class="bg-white rounded-2xl shadow-2xl p-2 md:p-4">
+    <!-- SVG Tracing Canvas with Decorated Border -->
+    <div class="bg-white rounded-3xl shadow-2xl p-2 md:p-4 border-4 border-yellow-400 animate-pop-in" style="animation-delay: 0.3s;">
       <div class="relative w-full" style="aspect-ratio: 1/1; max-width: 500px; margin: 0 auto;">
 
         <!-- WRITING MODE: Block letter reference + free drawing canvas -->
@@ -104,20 +158,164 @@
               <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z"/>
             </clipPath>
 
-            <!-- Clipping path for letter B - ensures magenta never goes outside gray -->
+            <!-- Clipping path for letter B - matches tracing strokes -->
+            <!-- Vertical: y=55-345, Top bump: y=55-200, Bottom bump: y=200-345 (equal 50/50 split) -->
+            <!-- Using Q curves for smooth rounded bumps like a proper B -->
             <clipPath id="letterBClip">
-              <!-- Vertical bar -->
-              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z"/>
-              <!-- Upper bump (top to middle) -->
-              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z"/>
-              <!-- Lower bump (middle to bottom) -->
-              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z"/>
+              <!-- Vertical stem: x=110 ±14 = 96-124, y=55-345 ±14 = 41-359 -->
+              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z"/>
+              <!-- Top bump with proper rounded curve -->
+              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z"/>
+              <!-- Bottom bump with proper rounded curve -->
+              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z"/>
             </clipPath>
 
-            <!-- Clipping path for letter C - ensures magenta never goes outside gray -->
+            <!-- Clipping path for letter C - proper C shape -->
+            <!-- Tracing: starts at (280,100), curves through (200,55) at top, (80,200) at left, (200,345) at bottom, ends at (280,300) -->
             <clipPath id="letterCClip">
-              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
-              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z"/>
+              <!-- C shape: outer arc then inner arc back, stroke width 28 (±14px) -->
+              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter D - vertical stem + curved bump -->
+            <!-- Tracing: Vertical y=55-345 at x=100, Bump curves to x=300 -->
+            <clipPath id="letterDClip">
+              <!-- Vertical stem: x=100 ±14 = 86-114 -->
+              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z"/>
+              <!-- D bump: outer at x=314, inner at x=286 -->
+              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter E -->
+            <clipPath id="letterEClip">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z"/>
+              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter F -->
+            <clipPath id="letterFClip">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter G -->
+            <clipPath id="letterGClip">
+              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter H -->
+            <clipPath id="letterHClip">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z"/>
+              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter I -->
+            <clipPath id="letterIClip">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z"/>
+              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter J -->
+            <clipPath id="letterJClip">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z"/>
+              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter K -->
+            <clipPath id="letterKClip">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter L -->
+            <clipPath id="letterLClip">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter M -->
+            <clipPath id="letterMClip">
+              <path d="M 66 306 L 94 306 L 94 94 L 66 94 Z"/>
+              <path d="M 66 66 L 200 186 L 94 66 Z"/>
+              <path d="M 200 186 L 306 66 L 334 66 Z"/>
+              <path d="M 306 94 L 334 94 L 334 306 L 306 306 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter N -->
+            <clipPath id="letterNClip">
+              <path d="M 86 306 L 114 306 L 114 94 L 86 94 Z"/>
+              <path d="M 86 66 L 300 290 L 114 66 Z"/>
+              <path d="M 286 306 L 314 306 L 314 110 L 300 94 L 286 110 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter O -->
+            <clipPath id="letterOClip">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter P -->
+            <clipPath id="letterPClip">
+              <path d="M 86 306 L 114 306 L 114 66 L 86 66 Z"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter Q -->
+            <clipPath id="letterQClip">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z"/>
+              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter R -->
+            <clipPath id="letterRClip">
+              <path d="M 86 306 L 114 306 L 114 66 L 86 66 Z"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z"/>
+              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter S -->
+            <clipPath id="letterSClip">
+              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter T -->
+            <clipPath id="letterTClip">
+              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter U -->
+            <clipPath id="letterUClip">
+              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter V -->
+            <clipPath id="letterVClip">
+              <path d="M 66 66 L 200 306 L 334 66 L 306 66 L 200 270 L 94 66 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter W -->
+            <clipPath id="letterWClip">
+              <path d="M 66 66 L 120 306 L 200 146 L 280 306 L 334 66 L 306 66 L 266 260 L 200 120 L 134 260 L 94 66 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter X -->
+            <clipPath id="letterXClip">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 220 200 L 340 310 L 314 334 L 200 214 L 86 334 L 60 310 L 180 200 L 60 90 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter Y -->
+            <clipPath id="letterYClip">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 214 200 L 214 334 L 186 334 L 186 200 L 60 90 Z"/>
+            </clipPath>
+
+            <!-- Clipping path for letter Z -->
+            <clipPath id="letterZClip">
+              <path d="M 86 66 L 314 66 L 314 94 L 134 306 L 314 306 L 314 334 L 86 334 L 86 306 L 266 94 L 86 94 Z"/>
             </clipPath>
 
             <!-- Mask for revealing the colored letter -->
@@ -172,53 +370,330 @@
           </g>
 
           <!-- Letter B using SVG paths (perfect control) -->
+          <!-- Tracing: Vertical y=55-345, Top bump y=55-200, Bottom bump y=200-345 (equal 50/50 split) -->
+          <!-- Using Q curves for smooth rounded B shape -->
           <g *ngIf="currentLetter === 'B'" id="letterBPaths">
-            <!-- Gray outline paths (background) - NO STROKES, only fill -->
+            <!-- Gray outline paths (background) - matches tracing strokes -->
             <g id="grayLetterBPaths">
-              <!-- Vertical bar -->
-              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z" fill="#E5E7EB"/>
-              <!-- Upper bump (top to middle) - thick stroke with curves -->
-              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z" fill="#E5E7EB"/>
-              <!-- Lower bump (middle to bottom) - thick stroke with curves -->
-              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z" fill="#E5E7EB"/>
+              <!-- Vertical stem: x=110 ±14 = 96-124 -->
+              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#E5E7EB"/>
+              <!-- Top bump with proper rounded curve -->
+              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#E5E7EB"/>
+              <!-- Bottom bump with proper rounded curve -->
+              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#E5E7EB"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterBClip)">
-              <!-- Vertical bar -->
-              <path d="M 110 60 L 145 60 L 145 280 L 110 280 Z" fill="#D946A6"/>
-              <!-- Upper bump (top to middle) - thick stroke with curves -->
-              <path d="M 145 60 L 230 60 Q 275 60 275 105 Q 275 150 230 150 L 145 150 L 145 135 L 230 135 Q 255 135 255 105 Q 255 75 230 75 L 145 75 Z" fill="#D946A6"/>
-              <!-- Lower bump (middle to bottom) - thick stroke with curves -->
-              <path d="M 145 150 L 235 150 Q 285 150 285 215 Q 285 280 235 280 L 145 280 L 145 265 L 235 265 Q 265 265 265 215 Q 265 165 235 165 L 145 165 Z" fill="#D946A6"/>
-
-              <!-- Decorative stars -->
-              <text x="200" y="105" font-size="30">⭐</text>
-              <text x="210" y="215" font-size="30">⭐</text>
+              <!-- Vertical stem -->
+              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#D946A6"/>
+              <!-- Top bump with proper rounded curve -->
+              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#D946A6"/>
+              <!-- Bottom bump with proper rounded curve -->
+              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#D946A6"/>
             </g>
           </g>
 
           <!-- Letter C using SVG paths (perfect control) -->
+          <!-- Tracing: starts at (280,100), curves to top (200,55), left (80,200), bottom (200,345), ends at (280,300) -->
           <g *ngIf="currentLetter === 'C'" id="letterCPaths">
-            <!-- Gray outline paths (background) - NO STROKES, only fill -->
+            <!-- Gray outline paths (background) - proper C shape -->
             <g id="grayLetterCPaths">
-              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
-              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z" fill="#E5E7EB"/>
+              <!-- C shape: outer arc (294px from center) then inner arc (266px from center) back -->
+              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#E5E7EB"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterCClip)">
-              <!-- C is a thick arc - drawn as outer arc going one way, then inner arc coming back -->
-              <path d="M 275 85 Q 275 60 230 60 Q 155 60 115 120 Q 75 180 75 200 Q 75 220 115 280 Q 155 340 230 340 Q 275 340 275 315 L 260 315 Q 260 325 230 325 Q 165 325 130 275 Q 95 225 95 200 Q 95 175 130 125 Q 165 75 230 75 Q 260 75 260 85 Z" fill="#D946A6"/>
-
-              <!-- Decorative stars -->
-              <text x="140" y="140" font-size="30">⭐</text>
-              <text x="140" y="240" font-size="30">⭐</text>
+              <!-- C shape: same path as gray -->
+              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#D946A6"/>
             </g>
           </g>
 
-          <!-- Fallback for other letters (will add later) -->
-          <g *ngIf="currentLetter !== 'A' && currentLetter !== 'B' && currentLetter !== 'C'" id="letterText">
+          <!-- Letter D using SVG paths -->
+          <!-- Tracing: Vertical y=55-345 at x=100, Bump from (100,55) curves right to x=300 and back -->
+          <g *ngIf="currentLetter === 'D'" id="letterDPaths">
+            <!-- Gray outline paths (background) -->
+            <g id="grayLetterDPaths">
+              <!-- Vertical stem: x=100 ±14 = 86-114 -->
+              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#E5E7EB"/>
+              <!-- D bump: outer at x=314, inner at x=286 -->
+              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z" fill="#E5E7EB"/>
+            </g>
+
+            <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
+            <g mask="url(#traceMask)" clip-path="url(#letterDClip)">
+              <!-- Vertical stem -->
+              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#D946A6"/>
+              <!-- D bump -->
+              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter E -->
+          <g *ngIf="currentLetter === 'E'" id="letterEPaths">
+            <g id="grayLetterEPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#E5E7EB"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#E5E7EB"/>
+              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterEClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#D946A6"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#D946A6"/>
+              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter F -->
+          <g *ngIf="currentLetter === 'F'" id="letterFPaths">
+            <g id="grayLetterFPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#E5E7EB"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterFClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#D946A6"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter G -->
+          <g *ngIf="currentLetter === 'G'" id="letterGPaths">
+            <g id="grayLetterGPaths">
+              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterGClip)">
+              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter H -->
+          <g *ngIf="currentLetter === 'H'" id="letterHPaths">
+            <g id="grayLetterHPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterHClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#D946A6"/>
+              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter I -->
+          <g *ngIf="currentLetter === 'I'" id="letterIPaths">
+            <g id="grayLetterIPaths">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#E5E7EB"/>
+              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterIClip)">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#D946A6"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#D946A6"/>
+              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter J -->
+          <g *ngIf="currentLetter === 'J'" id="letterJPaths">
+            <g id="grayLetterJPaths">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
+              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterJClip)">
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#D946A6"/>
+              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter K -->
+          <g *ngIf="currentLetter === 'K'" id="letterKPaths">
+            <g id="grayLetterKPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterKClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter L -->
+          <g *ngIf="currentLetter === 'L'" id="letterLPaths">
+            <g id="grayLetterLPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterLClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter M -->
+          <g *ngIf="currentLetter === 'M'" id="letterMPaths">
+            <g id="grayLetterMPaths">
+              <path d="M 66 66 L 94 66 L 94 334 L 66 334 Z" fill="#E5E7EB"/>
+              <path d="M 66 66 L 94 66 L 200 186 L 306 66 L 334 66 L 214 200 L 186 200 Z" fill="#E5E7EB"/>
+              <path d="M 306 66 L 334 66 L 334 334 L 306 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterMClip)">
+              <path d="M 66 66 L 94 66 L 94 334 L 66 334 Z" fill="#D946A6"/>
+              <path d="M 66 66 L 94 66 L 200 186 L 306 66 L 334 66 L 214 200 L 186 200 Z" fill="#D946A6"/>
+              <path d="M 306 66 L 334 66 L 334 334 L 306 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter N -->
+          <g *ngIf="currentLetter === 'N'" id="letterNPaths">
+            <g id="grayLetterNPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 300 290 L 314 290 L 314 334 L 286 334 L 100 110 L 86 110 Z" fill="#E5E7EB"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterNClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 86 66 L 114 66 L 300 290 L 314 290 L 314 334 L 286 334 L 100 110 L 86 110 Z" fill="#D946A6"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter O -->
+          <g *ngIf="currentLetter === 'O'" id="letterOPaths">
+            <g id="grayLetterOPaths">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterOClip)">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#D946A6" fill-rule="evenodd"/>
+            </g>
+          </g>
+
+          <!-- Letter P -->
+          <g *ngIf="currentLetter === 'P'" id="letterPPaths">
+            <g id="grayLetterPPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterPClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter Q -->
+          <g *ngIf="currentLetter === 'Q'" id="letterQPaths">
+            <g id="grayLetterQPaths">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterQClip)">
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#D946A6" fill-rule="evenodd"/>
+              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter R -->
+          <g *ngIf="currentLetter === 'R'" id="letterRPaths">
+            <g id="grayLetterRPaths">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#E5E7EB"/>
+              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterRClip)">
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
+              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#D946A6"/>
+              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter S -->
+          <g *ngIf="currentLetter === 'S'" id="letterSPaths">
+            <g id="grayLetterSPaths">
+              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterSClip)">
+              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter T -->
+          <g *ngIf="currentLetter === 'T'" id="letterTPaths">
+            <g id="grayLetterTPaths">
+              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#E5E7EB"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterTClip)">
+              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#D946A6"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter U -->
+          <g *ngIf="currentLetter === 'U'" id="letterUPaths">
+            <g id="grayLetterUPaths">
+              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterUClip)">
+              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter V -->
+          <g *ngIf="currentLetter === 'V'" id="letterVPaths">
+            <g id="grayLetterVPaths">
+              <path d="M 66 66 L 200 334 L 334 66 L 306 66 L 200 290 L 94 66 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterVClip)">
+              <path d="M 66 66 L 200 334 L 334 66 L 306 66 L 200 290 L 94 66 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter W -->
+          <g *ngIf="currentLetter === 'W'" id="letterWPaths">
+            <g id="grayLetterWPaths">
+              <path d="M 50 66 L 120 334 L 200 160 L 280 334 L 350 66 L 322 66 L 266 280 L 200 130 L 134 280 L 78 66 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterWClip)">
+              <path d="M 50 66 L 120 334 L 200 160 L 280 334 L 350 66 L 322 66 L 266 280 L 200 130 L 134 280 L 78 66 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter X -->
+          <g *ngIf="currentLetter === 'X'" id="letterXPaths">
+            <g id="grayLetterXPaths">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 220 200 L 340 310 L 314 334 L 200 214 L 86 334 L 60 310 L 180 200 L 60 90 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterXClip)">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 220 200 L 340 310 L 314 334 L 200 214 L 86 334 L 60 310 L 180 200 L 60 90 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter Y -->
+          <g *ngIf="currentLetter === 'Y'" id="letterYPaths">
+            <g id="grayLetterYPaths">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 214 214 L 214 334 L 186 334 L 186 214 L 60 90 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterYClip)">
+              <path d="M 86 66 L 200 186 L 314 66 L 340 90 L 214 214 L 214 334 L 186 334 L 186 214 L 60 90 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Letter Z -->
+          <g *ngIf="currentLetter === 'Z'" id="letterZPaths">
+            <g id="grayLetterZPaths">
+              <path d="M 86 66 L 314 66 L 314 94 L 134 306 L 314 306 L 314 334 L 86 334 L 86 306 L 266 94 L 86 94 Z" fill="#E5E7EB"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterZClip)">
+              <path d="M 86 66 L 314 66 L 314 94 L 134 306 L 314 306 L 314 334 L 86 334 L 86 306 L 266 94 L 86 94 Z" fill="#D946A6"/>
+            </g>
+          </g>
+
+          <!-- Fallback for numbers and other characters -->
+          <g *ngIf="!'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(currentLetter)" id="letterText">
             <text
               id="grayLetter"
               x="200"
@@ -288,27 +763,84 @@
         </canvas>
       </div>
 
-      <!-- Instructions & Actions -->
-      <div class="mt-3 space-y-2">
+      <!-- Pen Options (Writing Mode Only) - Colorful Design -->
+      <div *ngIf="isFreeWriting" class="mt-3 bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 rounded-2xl p-3 md:p-4 border-3 border-purple-300 shadow-lg">
+        <div class="flex flex-wrap items-center justify-center gap-3 md:gap-5">
+          <!-- Color Selection -->
+          <div class="flex items-center gap-2 md:gap-3 bg-white/80 rounded-full px-3 py-2 shadow-md">
+            <span class="text-lg md:text-xl animate-wiggle">🎨</span>
+            <div class="flex gap-1.5">
+              <button
+                *ngFor="let c of availableColors; let i = index"
+                (click)="selectColor(c.color)"
+                class="w-7 h-7 md:w-9 md:h-9 rounded-full border-3 transition-all hover:scale-125 hover:rotate-12"
+                [style.backgroundColor]="c.color"
+                [style.animation-delay]="(i * 0.05) + 's'"
+                [class.border-yellow-400]="penColor === c.color"
+                [class.border-white]="penColor !== c.color"
+                [class.ring-2]="penColor === c.color"
+                [class.ring-yellow-400]="penColor === c.color"
+                [class.shadow-xl]="penColor === c.color"
+                [class.scale-110]="penColor === c.color">
+              </button>
+            </div>
+          </div>
+
+          <!-- Width Selection -->
+          <div class="flex items-center gap-2 md:gap-3 bg-white/80 rounded-full px-3 py-2 shadow-md">
+            <span class="text-lg md:text-xl animate-wiggle" style="animation-delay: 0.2s;">📏</span>
+            <div class="flex gap-1.5">
+              <button
+                *ngFor="let w of availableWidths; let i = index"
+                (click)="selectWidth(w)"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border-3 flex items-center justify-center transition-all hover:scale-125"
+                [class.border-yellow-500]="penWidth === w"
+                [class.border-gray-300]="penWidth !== w"
+                [class.bg-yellow-100]="penWidth === w"
+                [class.shadow-xl]="penWidth === w">
+                <div
+                  class="rounded-full transition-all"
+                  [style.backgroundColor]="penColor"
+                  [style.width.px]="w / 2"
+                  [style.height.px]="w / 2">
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions & Action Buttons - Inside White Card -->
+      <div class="mt-3 space-y-3">
+        <!-- Instructions Banner -->
         <div class="text-center">
-          <p class="text-lg md:text-xl font-bold text-gray-700">
-            <span class="text-2xl">✏️</span> <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container><ng-container *ngIf="!isFreeWriting">Trace from 🟡 to 🟢</ng-container>
-          </p>
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full px-4 py-2 shadow-md border-2 border-yellow-300">
+            <span class="text-2xl animate-wiggle">✏️</span>
+            <p class="text-base md:text-lg font-bold text-gray-700">
+              <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container>
+              <ng-container *ngIf="!isFreeWriting">Trace from <span class="text-yellow-500">🟡</span> to <span class="text-green-500">🟢</span></ng-container>
+            </p>
+            <span class="text-2xl animate-wiggle" style="animation-delay: 0.3s;">🖍️</span>
+          </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-center gap-3">
+        <div class="flex justify-center gap-4">
           <button
             (click)="clearDrawing()"
-            class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full px-5 py-2 md:px-6 md:py-3 shadow-xl border-3 border-yellow-700 hover:scale-110 transition-transform">
-            <span class="text-lg md:text-xl text-white font-bold">🔄 Clear</span>
+            class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow-xl border-3 border-yellow-600 hover:scale-110 active:scale-95 transition-all">
+            <span class="text-base md:text-lg text-white font-bold flex items-center gap-1">
+              <span class="animate-spin-slow">🔄</span> Clear
+            </span>
           </button>
 
           <button
             *ngIf="!isFreeWriting"
             (click)="showHint()"
-            class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-full px-5 py-2 md:px-6 md:py-3 shadow-xl border-3 border-blue-700 hover:scale-110 transition-transform">
-            <span class="text-lg md:text-xl text-white font-bold">💡 Hint</span>
+            class="bg-gradient-to-br from-blue-400 to-purple-500 rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow-xl border-3 border-blue-600 hover:scale-110 active:scale-95 transition-all">
+            <span class="text-base md:text-lg text-white font-bold flex items-center gap-1">
+              <span class="animate-glow">💡</span> Hint
+            </span>
           </button>
         </div>
       </div>

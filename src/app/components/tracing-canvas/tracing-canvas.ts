@@ -568,6 +568,554 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
             direction: '→'
           }
         ]
+      },
+      // Numbers 0-9
+      '0': {
+        strokes: [
+          {
+            path: 'M 200 80 Q 100 80 100 200 Q 100 320 200 320 Q 300 320 300 200 Q 300 80 200 80',
+            startPoint: { x: 200, y: 80 },
+            endPoint: { x: 200, y: 80 },
+            direction: '↶'
+          }
+        ]
+      },
+      '1': {
+        strokes: [
+          {
+            path: 'M 160 106 L 200 80',
+            startPoint: { x: 160, y: 106 },
+            endPoint: { x: 200, y: 80 },
+            direction: '↗'
+          },
+          {
+            path: 'M 200 80 L 200 320',
+            startPoint: { x: 200, y: 80 },
+            endPoint: { x: 200, y: 320 },
+            direction: '↓'
+          },
+          {
+            path: 'M 140 320 L 260 320',
+            startPoint: { x: 140, y: 320 },
+            endPoint: { x: 260, y: 320 },
+            direction: '→'
+          }
+        ]
+      },
+      '2': {
+        strokes: [
+          {
+            path: 'M 100 120 Q 100 80 200 80 Q 300 80 300 120 Q 300 180 200 220 L 100 320 L 300 320',
+            startPoint: { x: 100, y: 120 },
+            endPoint: { x: 300, y: 320 },
+            direction: '↷'
+          }
+        ]
+      },
+      '3': {
+        strokes: [
+          {
+            path: 'M 100 100 Q 140 80 200 80 Q 300 80 300 130 Q 300 180 200 200',
+            startPoint: { x: 100, y: 100 },
+            endPoint: { x: 200, y: 200 },
+            direction: '⟳'
+          },
+          {
+            path: 'M 200 200 Q 300 200 300 270 Q 300 320 200 320 Q 140 320 100 300',
+            startPoint: { x: 200, y: 200 },
+            endPoint: { x: 100, y: 300 },
+            direction: '⟳'
+          }
+        ]
+      },
+      '4': {
+        strokes: [
+          {
+            path: 'M 260 320 L 260 80',
+            startPoint: { x: 260, y: 320 },
+            endPoint: { x: 260, y: 80 },
+            direction: '↑'
+          },
+          {
+            path: 'M 260 80 L 100 240',
+            startPoint: { x: 260, y: 80 },
+            endPoint: { x: 100, y: 240 },
+            direction: '↙'
+          },
+          {
+            path: 'M 100 240 L 300 240',
+            startPoint: { x: 100, y: 240 },
+            endPoint: { x: 300, y: 240 },
+            direction: '→'
+          }
+        ]
+      },
+      '5': {
+        strokes: [
+          {
+            path: 'M 280 80 L 120 80',
+            startPoint: { x: 280, y: 80 },
+            endPoint: { x: 120, y: 80 },
+            direction: '←'
+          },
+          {
+            path: 'M 120 80 L 120 170',
+            startPoint: { x: 120, y: 80 },
+            endPoint: { x: 120, y: 170 },
+            direction: '↓'
+          },
+          {
+            path: 'M 120 170 Q 200 150 250 190 Q 290 230 250 290 Q 200 330 120 300',
+            startPoint: { x: 120, y: 170 },
+            endPoint: { x: 120, y: 300 },
+            direction: '⟳'
+          }
+        ]
+      },
+      '6': {
+        strokes: [
+          {
+            path: 'M 280 110 Q 240 80 180 80 Q 100 80 100 200 Q 100 320 200 320 Q 300 320 300 260 Q 300 200 200 200 Q 100 200 100 200',
+            startPoint: { x: 280, y: 110 },
+            endPoint: { x: 100, y: 200 },
+            direction: '↶'
+          }
+        ]
+      },
+      '7': {
+        strokes: [
+          {
+            path: 'M 100 80 L 300 80',
+            startPoint: { x: 100, y: 80 },
+            endPoint: { x: 300, y: 80 },
+            direction: '→'
+          },
+          {
+            path: 'M 300 80 L 180 320',
+            startPoint: { x: 300, y: 80 },
+            endPoint: { x: 180, y: 320 },
+            direction: '↙'
+          }
+        ]
+      },
+      '8': {
+        strokes: [
+          {
+            path: 'M 200 200 Q 100 200 100 130 Q 100 80 200 80 Q 300 80 300 130 Q 300 200 200 200',
+            startPoint: { x: 200, y: 200 },
+            endPoint: { x: 200, y: 200 },
+            direction: '↶'
+          },
+          {
+            path: 'M 200 200 Q 100 200 100 270 Q 100 320 200 320 Q 300 320 300 270 Q 300 200 200 200',
+            startPoint: { x: 200, y: 200 },
+            endPoint: { x: 200, y: 200 },
+            direction: '↷'
+          }
+        ]
+      },
+      '9': {
+        strokes: [
+          {
+            path: 'M 300 200 Q 300 200 200 200 Q 100 200 100 130 Q 100 80 200 80 Q 300 80 300 200 Q 300 320 220 320 Q 140 320 120 290',
+            startPoint: { x: 300, y: 200 },
+            endPoint: { x: 120, y: 290 },
+            direction: '↷'
+          }
+        ]
+      },
+      // Lowercase letters a-z
+      'a': {
+        strokes: [
+          {
+            path: 'M 280 160 Q 280 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 280 280 280 200',
+            startPoint: { x: 280, y: 160 },
+            endPoint: { x: 280, y: 200 },
+            direction: '↶'
+          },
+          {
+            path: 'M 280 120 L 280 280',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 280, y: 280 },
+            direction: '↓'
+          }
+        ]
+      },
+      'b': {
+        strokes: [
+          {
+            path: 'M 120 60 L 120 280',
+            startPoint: { x: 120, y: 60 },
+            endPoint: { x: 120, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 120 160 Q 120 120 200 120 Q 280 120 280 200 Q 280 280 200 280 Q 120 280 120 240',
+            startPoint: { x: 120, y: 160 },
+            endPoint: { x: 120, y: 240 },
+            direction: '⟳'
+          }
+        ]
+      },
+      'c': {
+        strokes: [
+          {
+            path: 'M 280 160 Q 260 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 260 280 280 240',
+            startPoint: { x: 280, y: 160 },
+            endPoint: { x: 280, y: 240 },
+            direction: '↶'
+          }
+        ]
+      },
+      'd': {
+        strokes: [
+          {
+            path: 'M 280 60 L 280 280',
+            startPoint: { x: 280, y: 60 },
+            endPoint: { x: 280, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 280 240 Q 280 280 200 280 Q 120 280 120 200 Q 120 120 200 120 Q 280 120 280 160',
+            startPoint: { x: 280, y: 240 },
+            endPoint: { x: 280, y: 160 },
+            direction: '↶'
+          }
+        ]
+      },
+      'e': {
+        strokes: [
+          {
+            path: 'M 120 200 L 280 200 Q 280 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 260 280 280 250',
+            startPoint: { x: 120, y: 200 },
+            endPoint: { x: 280, y: 250 },
+            direction: '→'
+          }
+        ]
+      },
+      'f': {
+        strokes: [
+          {
+            path: 'M 260 100 Q 260 60 200 60 Q 160 60 160 100 L 160 280',
+            startPoint: { x: 260, y: 100 },
+            endPoint: { x: 160, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 120 160 L 220 160',
+            startPoint: { x: 120, y: 160 },
+            endPoint: { x: 220, y: 160 },
+            direction: '→'
+          }
+        ]
+      },
+      'g': {
+        strokes: [
+          {
+            path: 'M 280 160 Q 280 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 280 280 280 200',
+            startPoint: { x: 280, y: 160 },
+            endPoint: { x: 280, y: 200 },
+            direction: '↶'
+          },
+          {
+            path: 'M 280 120 L 280 340 Q 280 380 200 380 Q 140 380 120 340',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 120, y: 340 },
+            direction: '↓'
+          }
+        ]
+      },
+      'h': {
+        strokes: [
+          {
+            path: 'M 120 60 L 120 280',
+            startPoint: { x: 120, y: 60 },
+            endPoint: { x: 120, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 120 180 Q 120 120 200 120 Q 280 120 280 180 L 280 280',
+            startPoint: { x: 120, y: 180 },
+            endPoint: { x: 280, y: 280 },
+            direction: '⟳'
+          }
+        ]
+      },
+      'i': {
+        strokes: [
+          {
+            path: 'M 200 120 L 200 280',
+            startPoint: { x: 200, y: 120 },
+            endPoint: { x: 200, y: 280 },
+            direction: '↓'
+          }
+        ]
+      },
+      'j': {
+        strokes: [
+          {
+            path: 'M 220 120 L 220 340 Q 220 380 160 380 Q 120 380 120 340',
+            startPoint: { x: 220, y: 120 },
+            endPoint: { x: 120, y: 340 },
+            direction: '↓'
+          }
+        ]
+      },
+      'k': {
+        strokes: [
+          {
+            path: 'M 120 60 L 120 280',
+            startPoint: { x: 120, y: 60 },
+            endPoint: { x: 120, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 260 120 L 120 200',
+            startPoint: { x: 260, y: 120 },
+            endPoint: { x: 120, y: 200 },
+            direction: '↙'
+          },
+          {
+            path: 'M 120 200 L 280 280',
+            startPoint: { x: 120, y: 200 },
+            endPoint: { x: 280, y: 280 },
+            direction: '↘'
+          }
+        ]
+      },
+      'l': {
+        strokes: [
+          {
+            path: 'M 200 60 L 200 280',
+            startPoint: { x: 200, y: 60 },
+            endPoint: { x: 200, y: 280 },
+            direction: '↓'
+          }
+        ]
+      },
+      'm': {
+        strokes: [
+          {
+            path: 'M 80 280 L 80 160 Q 80 120 140 120 Q 200 120 200 160 L 200 280',
+            startPoint: { x: 80, y: 280 },
+            endPoint: { x: 200, y: 280 },
+            direction: '↑'
+          },
+          {
+            path: 'M 200 160 Q 200 120 260 120 Q 320 120 320 160 L 320 280',
+            startPoint: { x: 200, y: 160 },
+            endPoint: { x: 320, y: 280 },
+            direction: '⟳'
+          }
+        ]
+      },
+      'n': {
+        strokes: [
+          {
+            path: 'M 120 280 L 120 160',
+            startPoint: { x: 120, y: 280 },
+            endPoint: { x: 120, y: 160 },
+            direction: '↑'
+          },
+          {
+            path: 'M 120 180 Q 120 120 200 120 Q 280 120 280 180 L 280 280',
+            startPoint: { x: 120, y: 180 },
+            endPoint: { x: 280, y: 280 },
+            direction: '⟳'
+          }
+        ]
+      },
+      'o': {
+        strokes: [
+          {
+            path: 'M 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 280 280 280 200 Q 280 120 200 120',
+            startPoint: { x: 200, y: 120 },
+            endPoint: { x: 200, y: 120 },
+            direction: '↶'
+          }
+        ]
+      },
+      'p': {
+        strokes: [
+          {
+            path: 'M 120 120 L 120 360',
+            startPoint: { x: 120, y: 120 },
+            endPoint: { x: 120, y: 360 },
+            direction: '↓'
+          },
+          {
+            path: 'M 120 160 Q 120 120 200 120 Q 280 120 280 200 Q 280 280 200 280 Q 120 280 120 240',
+            startPoint: { x: 120, y: 160 },
+            endPoint: { x: 120, y: 240 },
+            direction: '⟳'
+          }
+        ]
+      },
+      'q': {
+        strokes: [
+          {
+            path: 'M 280 160 Q 280 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 280 280 280 240',
+            startPoint: { x: 280, y: 160 },
+            endPoint: { x: 280, y: 240 },
+            direction: '↶'
+          },
+          {
+            path: 'M 280 120 L 280 360',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 280, y: 360 },
+            direction: '↓'
+          }
+        ]
+      },
+      'r': {
+        strokes: [
+          {
+            path: 'M 140 280 L 140 160',
+            startPoint: { x: 140, y: 280 },
+            endPoint: { x: 140, y: 160 },
+            direction: '↑'
+          },
+          {
+            path: 'M 140 180 Q 140 120 220 120 Q 280 120 280 160',
+            startPoint: { x: 140, y: 180 },
+            endPoint: { x: 280, y: 160 },
+            direction: '⟳'
+          }
+        ]
+      },
+      's': {
+        strokes: [
+          {
+            path: 'M 260 150 Q 240 120 200 120 Q 140 120 140 160 Q 140 200 200 200 Q 260 200 260 240 Q 260 280 200 280 Q 160 280 140 250',
+            startPoint: { x: 260, y: 150 },
+            endPoint: { x: 140, y: 250 },
+            direction: '↶'
+          }
+        ]
+      },
+      't': {
+        strokes: [
+          {
+            path: 'M 200 60 L 200 280',
+            startPoint: { x: 200, y: 60 },
+            endPoint: { x: 200, y: 280 },
+            direction: '↓'
+          },
+          {
+            path: 'M 140 120 L 260 120',
+            startPoint: { x: 140, y: 120 },
+            endPoint: { x: 260, y: 120 },
+            direction: '→'
+          }
+        ]
+      },
+      'u': {
+        strokes: [
+          {
+            path: 'M 120 120 L 120 220 Q 120 280 200 280 Q 280 280 280 220 L 280 120',
+            startPoint: { x: 120, y: 120 },
+            endPoint: { x: 280, y: 120 },
+            direction: '↓'
+          }
+        ]
+      },
+      'v': {
+        strokes: [
+          {
+            path: 'M 100 120 L 200 280',
+            startPoint: { x: 100, y: 120 },
+            endPoint: { x: 200, y: 280 },
+            direction: '↘'
+          },
+          {
+            path: 'M 200 280 L 300 120',
+            startPoint: { x: 200, y: 280 },
+            endPoint: { x: 300, y: 120 },
+            direction: '↗'
+          }
+        ]
+      },
+      'w': {
+        strokes: [
+          {
+            path: 'M 80 120 L 140 280',
+            startPoint: { x: 80, y: 120 },
+            endPoint: { x: 140, y: 280 },
+            direction: '↘'
+          },
+          {
+            path: 'M 140 280 L 200 180',
+            startPoint: { x: 140, y: 280 },
+            endPoint: { x: 200, y: 180 },
+            direction: '↗'
+          },
+          {
+            path: 'M 200 180 L 260 280',
+            startPoint: { x: 200, y: 180 },
+            endPoint: { x: 260, y: 280 },
+            direction: '↘'
+          },
+          {
+            path: 'M 260 280 L 320 120',
+            startPoint: { x: 260, y: 280 },
+            endPoint: { x: 320, y: 120 },
+            direction: '↗'
+          }
+        ]
+      },
+      'x': {
+        strokes: [
+          {
+            path: 'M 120 120 L 280 280',
+            startPoint: { x: 120, y: 120 },
+            endPoint: { x: 280, y: 280 },
+            direction: '↘'
+          },
+          {
+            path: 'M 280 120 L 120 280',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 120, y: 280 },
+            direction: '↙'
+          }
+        ]
+      },
+      'y': {
+        strokes: [
+          {
+            path: 'M 120 120 L 200 220',
+            startPoint: { x: 120, y: 120 },
+            endPoint: { x: 200, y: 220 },
+            direction: '↘'
+          },
+          {
+            path: 'M 280 120 L 200 220 L 140 360',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 140, y: 360 },
+            direction: '↙'
+          }
+        ]
+      },
+      'z': {
+        strokes: [
+          {
+            path: 'M 120 120 L 280 120',
+            startPoint: { x: 120, y: 120 },
+            endPoint: { x: 280, y: 120 },
+            direction: '→'
+          },
+          {
+            path: 'M 280 120 L 120 280',
+            startPoint: { x: 280, y: 120 },
+            endPoint: { x: 120, y: 280 },
+            direction: '↙'
+          },
+          {
+            path: 'M 120 280 L 280 280',
+            startPoint: { x: 120, y: 280 },
+            endPoint: { x: 280, y: 280 },
+            direction: '→'
+          }
+        ]
       }
     };
   }

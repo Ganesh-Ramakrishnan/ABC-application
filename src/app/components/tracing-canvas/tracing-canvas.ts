@@ -656,9 +656,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
             direction: '↙'
           },
           {
-            path: 'M 100 240 L 300 240',
+            path: 'M 100 240 L 260 240',
             startPoint: { x: 100, y: 240 },
-            endPoint: { x: 300, y: 240 },
+            endPoint: { x: 260, y: 240 },
             direction: '→'
           }
         ]
@@ -783,16 +783,16 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'd': {
         strokes: [
           {
+            path: 'M 280 160 Q 280 120 200 120 Q 120 120 120 200 Q 120 280 200 280 Q 280 280 280 240',
+            startPoint: { x: 280, y: 160 },
+            endPoint: { x: 280, y: 240 },
+            direction: '↶'
+          },
+          {
             path: 'M 280 60 L 280 280',
             startPoint: { x: 280, y: 60 },
             endPoint: { x: 280, y: 280 },
             direction: '↓'
-          },
-          {
-            path: 'M 280 240 Q 280 280 200 280 Q 120 280 120 200 Q 120 120 200 120 Q 280 120 280 160',
-            startPoint: { x: 280, y: 240 },
-            endPoint: { x: 280, y: 160 },
-            direction: '↶'
           }
         ]
       },
@@ -983,15 +983,15 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'r': {
         strokes: [
           {
-            path: 'M 140 280 L 140 160',
-            startPoint: { x: 140, y: 280 },
-            endPoint: { x: 140, y: 160 },
-            direction: '↑'
+            path: 'M 140 120 L 140 280',
+            startPoint: { x: 140, y: 120 },
+            endPoint: { x: 140, y: 280 },
+            direction: '↓'
           },
           {
-            path: 'M 140 180 Q 140 120 220 120 Q 280 120 280 160',
-            startPoint: { x: 140, y: 180 },
-            endPoint: { x: 280, y: 160 },
+            path: 'M 140 160 Q 140 120 200 120 Q 240 120 240 150',
+            startPoint: { x: 140, y: 160 },
+            endPoint: { x: 240, y: 150 },
             direction: '⟳'
           }
         ]
@@ -1009,14 +1009,14 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       't': {
         strokes: [
           {
-            path: 'M 200 60 L 200 280',
+            path: 'M 200 60 L 200 260 Q 200 280 230 280',
             startPoint: { x: 200, y: 60 },
-            endPoint: { x: 200, y: 280 },
+            endPoint: { x: 230, y: 280 },
             direction: '↓'
           },
           {
-            path: 'M 140 120 L 260 120',
-            startPoint: { x: 140, y: 120 },
+            path: 'M 130 120 L 260 120',
+            startPoint: { x: 130, y: 120 },
             endPoint: { x: 260, y: 120 },
             direction: '→'
           }
@@ -1025,9 +1025,15 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'u': {
         strokes: [
           {
-            path: 'M 120 120 L 120 220 Q 120 280 200 280 Q 280 280 280 220 L 280 120',
-            startPoint: { x: 120, y: 120 },
-            endPoint: { x: 280, y: 120 },
+            path: 'M 120 100 L 120 220 Q 120 280 200 280 Q 280 280 280 220',
+            startPoint: { x: 120, y: 100 },
+            endPoint: { x: 280, y: 220 },
+            direction: '↓'
+          },
+          {
+            path: 'M 280 100 L 280 280',
+            startPoint: { x: 280, y: 100 },
+            endPoint: { x: 280, y: 280 },
             direction: '↓'
           }
         ]
@@ -1095,16 +1101,16 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'y': {
         strokes: [
           {
-            path: 'M 120 120 L 200 220',
-            startPoint: { x: 120, y: 120 },
-            endPoint: { x: 200, y: 220 },
-            direction: '↘'
+            path: 'M 140 120 L 140 220 Q 140 260 200 260 Q 260 260 260 220 L 260 120',
+            startPoint: { x: 140, y: 120 },
+            endPoint: { x: 260, y: 120 },
+            direction: '↓'
           },
           {
-            path: 'M 280 120 L 200 220 L 140 360',
-            startPoint: { x: 280, y: 120 },
-            endPoint: { x: 140, y: 360 },
-            direction: '↙'
+            path: 'M 260 120 L 260 340 Q 260 380 200 380 Q 140 380 120 340',
+            startPoint: { x: 260, y: 120 },
+            endPoint: { x: 120, y: 340 },
+            direction: '↓'
           }
         ]
       },
@@ -1805,12 +1811,24 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/letters']);
   }
 
-  private readonly allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  private readonly uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  private readonly lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  private readonly numberLetters = '0123456789'.split('');
+
+  private get currentLetterGroup(): string[] {
+    if (this.lowercaseLetters.includes(this.currentLetter)) {
+      return this.lowercaseLetters;
+    } else if (this.numberLetters.includes(this.currentLetter)) {
+      return this.numberLetters;
+    }
+    return this.uppercaseLetters;
+  }
 
   goToPreviousLetter() {
-    const idx = this.allLetters.indexOf(this.currentLetter);
+    const group = this.currentLetterGroup;
+    const idx = group.indexOf(this.currentLetter);
     if (idx > 0) {
-      const prevLetter = this.allLetters[idx - 1];
+      const prevLetter = group[idx - 1];
       this.router.navigate(['/trace', prevLetter], {
         queryParams: this.isFreeWriting ? { mode: 'writing' } : {}
       });
@@ -1818,9 +1836,10 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   }
 
   goToNextLetter() {
-    const idx = this.allLetters.indexOf(this.currentLetter);
-    if (idx < this.allLetters.length - 1) {
-      const nextLetter = this.allLetters[idx + 1];
+    const group = this.currentLetterGroup;
+    const idx = group.indexOf(this.currentLetter);
+    if (idx < group.length - 1) {
+      const nextLetter = group[idx + 1];
       this.router.navigate(['/trace', nextLetter], {
         queryParams: this.isFreeWriting ? { mode: 'writing' } : {}
       });
@@ -1828,11 +1847,13 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   }
 
   get isFirstLetter(): boolean {
-    return this.allLetters.indexOf(this.currentLetter) === 0;
+    const group = this.currentLetterGroup;
+    return group.indexOf(this.currentLetter) === 0;
   }
 
   get isLastLetter(): boolean {
-    return this.allLetters.indexOf(this.currentLetter) === this.allLetters.length - 1;
+    const group = this.currentLetterGroup;
+    return group.indexOf(this.currentLetter) === group.length - 1;
   }
 
   // Pen customization methods

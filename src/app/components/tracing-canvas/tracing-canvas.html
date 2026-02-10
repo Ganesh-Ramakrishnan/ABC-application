@@ -43,7 +43,15 @@
         <span class="text-white text-xl md:text-3xl font-bold">←</span>
       </button>
 
-      <div class="text-center animate-pop-in" style="animation-delay: 0.1s;">
+      <div class="flex items-center gap-2 md:gap-4 animate-pop-in" style="animation-delay: 0.1s;">
+        <!-- Previous Letter Button -->
+        <button
+          (click)="goToPreviousLetter()"
+          [disabled]="isFirstLetter"
+          class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center shadow-lg border-3 border-white hover:scale-110 active:scale-95 transition-all disabled:opacity-40 disabled:hover:scale-100">
+          <span class="text-white text-lg md:text-2xl font-bold">◀</span>
+        </button>
+
         <h1 class="text-2xl md:text-4xl font-kids tracking-wide">
           <ng-container *ngIf="isFreeWriting">
             <span class="title-letter text-blue-500 drop-shadow-lg">W</span>
@@ -64,6 +72,14 @@
             <span class="title-letter text-purple-500 drop-shadow-lg animate-pulse">{{currentLetter}}</span>
           </ng-container>
         </h1>
+
+        <!-- Next Letter Button -->
+        <button
+          (click)="goToNextLetter()"
+          [disabled]="isLastLetter"
+          class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg border-3 border-white hover:scale-110 active:scale-95 transition-all disabled:opacity-40 disabled:hover:scale-100">
+          <span class="text-white text-lg md:text-2xl font-bold">▶</span>
+        </button>
       </div>
 
       <div class="w-10 h-10 md:w-14 md:h-14"></div>
@@ -182,8 +198,8 @@
             <clipPath id="letterDClip">
               <!-- Vertical stem: x=100 ±14 = 86-114 -->
               <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z"/>
-              <!-- D bump: outer at x=314, inner at x=286 -->
-              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z"/>
+              <!-- D bump: outer at x=314, inner at x=286, joined to stem -->
+              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter E -->
@@ -203,7 +219,10 @@
 
             <!-- Clipping path for letter G -->
             <clipPath id="letterGClip">
-              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z"/>
+              <!-- G shape: C-arc with top opening at y=86-114, right arm from tongue down to bottom curve -->
+              <!-- Outer: starts top-right (294,100), arcs left-down-right to (314,260), down to tongue (314,186), left to (186,186) -->
+              <!-- Inner: tongue bottom (186,214), right to (286,214), up to (286,260), inner arc back to top (266,100) -->
+              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter H -->
@@ -220,16 +239,20 @@
               <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z"/>
             </clipPath>
 
-            <!-- Clipping path for letter J -->
+            <!-- Clipping path for letter J - centered stem at x=200 -->
             <clipPath id="letterJClip">
               <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z"/>
-              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z"/>
+              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter K -->
             <clipPath id="letterKClip">
+              <!-- Vertical stem: x=100 center ±14 -->
               <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
-              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z"/>
+              <!-- Upper diagonal: (300,80)->(100,200), perp offset ±(7,12), correct winding -->
+              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z"/>
+              <!-- Lower diagonal: (100,200)->(300,320), perp offset ±(7,12), correct winding -->
+              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter L -->
@@ -240,17 +263,16 @@
 
             <!-- Clipping path for letter M -->
             <clipPath id="letterMClip">
-              <path d="M 66 306 L 94 306 L 94 94 L 66 94 Z"/>
-              <path d="M 66 66 L 200 186 L 94 66 Z"/>
-              <path d="M 200 186 L 306 66 L 334 66 Z"/>
-              <path d="M 306 94 L 334 94 L 334 306 L 306 306 Z"/>
+              <!-- M shape: stems 28px, diagonals with 36px gap (same as V letter) -->
+              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter N -->
             <clipPath id="letterNClip">
-              <path d="M 86 306 L 114 306 L 114 94 L 86 94 Z"/>
-              <path d="M 86 66 L 300 290 L 114 66 Z"/>
-              <path d="M 286 306 L 314 306 L 314 110 L 300 94 L 286 110 Z"/>
+              <!-- Unified N: stems 28px, diagonal 28px perpendicular width -->
+              <!-- Center diagonal: (100,66)->(300,334), direction (200,268), |n|=334.4 -->
+              <!-- 14px offset each side: outer at (118,66)-(286,292), inner at (114,108)-(283,334) -->
+              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter O -->
@@ -260,26 +282,57 @@
 
             <!-- Clipping path for letter P -->
             <clipPath id="letterPClip">
-              <path d="M 86 306 L 114 306 L 114 66 L 86 66 Z"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z"/>
+              <!-- Unified P: stem 28px (86-114), narrow bowl (66-190), 28px stroke -->
+              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill-rule="evenodd"/>
             </clipPath>
 
-            <!-- Clipping path for letter Q -->
+            <!-- Clipping paths for letter Q -->
+            <clipPath id="letterQClipOval">
+              <!-- Oval ring only -->
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill-rule="evenodd"/>
+            </clipPath>
+            <clipPath id="letterQClipTail">
+              <!-- Tail only -->
+              <path d="M 269 290 L 329 344 L 311 364 L 251 310 Z"/>
+            </clipPath>
+            <!-- Combined Q clip for tracing mask -->
             <clipPath id="letterQClip">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z"/>
-              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z"/>
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill-rule="evenodd"/>
+              <path d="M 269 290 L 329 344 L 311 364 L 251 310 Z"/>
             </clipPath>
 
-            <!-- Clipping path for letter R -->
-            <clipPath id="letterRClip">
-              <path d="M 86 306 L 114 306 L 114 66 L 86 66 Z"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z"/>
-              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z"/>
+            <!-- Clipping paths for letter R -->
+            <clipPath id="letterRClipBody">
+              <!-- R stem: 28px wide, full height -->
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z"/>
+              <!-- R bowl: smooth round bump using cubic bezier, y=66 to y=200 -->
+              <path d="M 86 66 L 190 66 C 290 66 290 200 190 200 L 86 200 L 86 172 L 190 172 C 262 172 262 94 190 94 L 86 94 Z"/>
+            </clipPath>
+            <clipPath id="letterRClipLeg">
+              <!-- R leg: center (190,200)→(280,334), 28px perpendicular width -->
+              <path d="M 202 192 L 292 326 L 268 342 L 178 208 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter S -->
             <clipPath id="letterSClip">
-              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z"/>
+              <!-- Top half of S: C-curve opening right -->
+              <path d="
+                M 270 110 Q 270 66 200 66 Q 110 66 110 138
+                Q 110 214 200 214
+                L 200 186
+                Q 138 186 138 138
+                Q 138 94 200 94 Q 242 94 242 110
+                Z
+              "/>
+              <!-- Bottom half of S: C-curve opening left -->
+              <path d="
+                M 130 290 Q 130 334 200 334 Q 290 334 290 262
+                Q 290 186 200 186
+                L 200 214
+                Q 262 214 262 262
+                Q 262 306 200 306 Q 158 306 158 290
+                Z
+              "/>
             </clipPath>
 
             <!-- Clipping path for letter T -->
@@ -290,7 +343,7 @@
 
             <!-- Clipping path for letter U -->
             <clipPath id="letterUClip">
-              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z"/>
+              <path d="M 86 66 L 114 66 L 114 280 Q 114 348 200 348 Q 286 348 286 280 L 286 66 L 314 66 L 314 280 Q 314 376 200 376 Q 86 376 86 280 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter V -->
@@ -300,7 +353,7 @@
 
             <!-- Clipping path for letter W -->
             <clipPath id="letterWClip">
-              <path d="M 66 66 L 120 306 L 200 146 L 280 306 L 334 66 L 306 66 L 266 260 L 200 120 L 134 260 L 94 66 Z"/>
+              <path d="M 50 66 L 120 334 L 200 160 L 280 334 L 350 66 L 322 66 L 266 280 L 200 130 L 134 280 L 78 66 Z"/>
             </clipPath>
 
             <!-- Clipping path for letter X -->
@@ -579,16 +632,16 @@
             <g id="grayLetterDPaths">
               <!-- Vertical stem: x=100 ±14 = 86-114 -->
               <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#E5E7EB"/>
-              <!-- D bump: outer at x=314, inner at x=286 -->
-              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z" fill="#E5E7EB"/>
+              <!-- D bump: outer at x=314, inner at x=286, joined to stem -->
+              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#E5E7EB"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterDClip)">
               <!-- Vertical stem -->
               <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#D946A6"/>
-              <!-- D bump -->
-              <path d="M 100 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 100 359 L 100 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 100 69 Z" fill="#D946A6"/>
+              <!-- D bump, joined to stem -->
+              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -625,10 +678,12 @@
           <!-- Letter G -->
           <g *ngIf="currentLetter === 'G'" id="letterGPaths">
             <g id="grayLetterGPaths">
-              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z" fill="#E5E7EB"/>
+              <!-- G shape: C-arc with right arm from tongue to bottom curve, even 28px stroke -->
+              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterGClip)">
-              <path d="M 294 106 Q 246 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 294 334 294 254 L 294 186 L 206 186 L 206 214 L 266 214 L 266 254 Q 266 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 232 94 266 120 Z" fill="#D946A6"/>
+              <!-- G shape: C-arc with right arm from tongue to bottom curve, even 28px stroke -->
+              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -660,15 +715,15 @@
             </g>
           </g>
 
-          <!-- Letter J -->
+          <!-- Letter J - centered stem at x=200 -->
           <g *ngIf="currentLetter === 'J'" id="letterJPaths">
             <g id="grayLetterJPaths">
               <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
-              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z" fill="#E5E7EB"/>
+              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterJClip)">
               <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#D946A6"/>
-              <path d="M 206 66 L 234 66 L 234 266 Q 234 334 180 334 Q 126 334 126 266 L 154 266 Q 154 306 180 306 Q 206 306 206 266 Z" fill="#D946A6"/>
+              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -676,11 +731,13 @@
           <g *ngIf="currentLetter === 'K'" id="letterKPaths">
             <g id="grayLetterKPaths">
               <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z" fill="#E5E7EB"/>
+              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#E5E7EB"/>
+              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterKClip)">
               <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
-              <path d="M 100 180 L 290 66 L 314 90 L 140 195 L 314 310 L 290 334 L 100 220 Z" fill="#D946A6"/>
+              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#D946A6"/>
+              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -699,28 +756,20 @@
           <!-- Letter M -->
           <g *ngIf="currentLetter === 'M'" id="letterMPaths">
             <g id="grayLetterMPaths">
-              <path d="M 66 66 L 94 66 L 94 334 L 66 334 Z" fill="#E5E7EB"/>
-              <path d="M 66 66 L 94 66 L 200 186 L 306 66 L 334 66 L 214 200 L 186 200 Z" fill="#E5E7EB"/>
-              <path d="M 306 66 L 334 66 L 334 334 L 306 334 Z" fill="#E5E7EB"/>
+              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterMClip)">
-              <path d="M 66 66 L 94 66 L 94 334 L 66 334 Z" fill="#D946A6"/>
-              <path d="M 66 66 L 94 66 L 200 186 L 306 66 L 334 66 L 214 200 L 186 200 Z" fill="#D946A6"/>
-              <path d="M 306 66 L 334 66 L 334 334 L 306 334 Z" fill="#D946A6"/>
+              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#D946A6"/>
             </g>
           </g>
 
           <!-- Letter N -->
           <g *ngIf="currentLetter === 'N'" id="letterNPaths">
             <g id="grayLetterNPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 86 66 L 114 66 L 300 290 L 314 290 L 314 334 L 286 334 L 100 110 L 86 110 Z" fill="#E5E7EB"/>
-              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterNClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
-              <path d="M 86 66 L 114 66 L 300 290 L 314 290 L 314 334 L 286 334 L 100 110 L 86 110 Z" fill="#D946A6"/>
-              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#D946A6"/>
+              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -737,48 +786,66 @@
           <!-- Letter P -->
           <g *ngIf="currentLetter === 'P'" id="letterPPaths">
             <g id="grayLetterPPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#E5E7EB"/>
+              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#E5E7EB" fill-rule="evenodd"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterPClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#D946A6"/>
+              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#D946A6" fill-rule="evenodd"/>
             </g>
           </g>
 
           <!-- Letter Q -->
           <g *ngIf="currentLetter === 'Q'" id="letterQPaths">
             <g id="grayLetterQPaths">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#E5E7EB" fill-rule="evenodd"/>
-              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z" fill="#E5E7EB"/>
+              <!-- Gray oval ring -->
+              <g clip-path="url(#letterQClipOval)">
+                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              </g>
+              <!-- Gray tail -->
+              <g clip-path="url(#letterQClipTail)">
+                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              </g>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterQClip)">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#D946A6" fill-rule="evenodd"/>
-              <path d="M 226 266 L 334 374 L 314 394 L 206 286 Z" fill="#D946A6"/>
+            <!-- Magenta oval ring -->
+            <g mask="url(#traceMask)" clip-path="url(#letterQClipOval)">
+              <rect x="0" y="0" width="400" height="400" fill="#D946A6"/>
+            </g>
+            <!-- Magenta tail -->
+            <g mask="url(#traceMask)" clip-path="url(#letterQClipTail)">
+              <rect x="0" y="0" width="400" height="400" fill="#D946A6"/>
             </g>
           </g>
 
           <!-- Letter R -->
           <g *ngIf="currentLetter === 'R'" id="letterRPaths">
             <g id="grayLetterRPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#E5E7EB"/>
-              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z" fill="#E5E7EB"/>
+              <g clip-path="url(#letterRClipBody)">
+                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              </g>
+              <g clip-path="url(#letterRClipLeg)">
+                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              </g>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterRClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#D946A6"/>
-              <path d="M 100 66 L 240 66 Q 314 66 314 146 Q 314 254 240 254 L 100 254 L 100 226 L 240 226 Q 286 226 286 146 Q 286 94 240 94 L 100 94 Z" fill="#D946A6"/>
-              <path d="M 166 226 L 314 334 L 290 358 L 142 250 Z" fill="#D946A6"/>
+            <g mask="url(#traceMask)" clip-path="url(#letterRClipBody)">
+              <rect x="0" y="0" width="400" height="400" fill="#D946A6"/>
+            </g>
+            <g mask="url(#traceMask)" clip-path="url(#letterRClipLeg)">
+              <rect x="0" y="0" width="400" height="400" fill="#D946A6"/>
             </g>
           </g>
 
           <!-- Letter S -->
           <g *ngIf="currentLetter === 'S'" id="letterSPaths">
             <g id="grayLetterSPaths">
-              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z" fill="#E5E7EB"/>
+              <!-- Top half of S -->
+              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#E5E7EB"/>
+              <!-- Bottom half of S -->
+              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterSClip)">
-              <path d="M 294 106 Q 260 66 200 66 Q 86 66 86 126 Q 86 214 200 214 Q 314 214 314 274 Q 314 334 200 334 Q 140 334 106 294 L 126 274 Q 154 306 200 306 Q 286 306 286 274 Q 286 214 200 186 Q 114 186 114 126 Q 114 94 200 94 Q 246 94 274 126 Z" fill="#D946A6"/>
+              <!-- Top half of S -->
+              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#D946A6"/>
+              <!-- Bottom half of S -->
+              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#D946A6"/>
             </g>
           </g>
 
@@ -797,10 +864,10 @@
           <!-- Letter U -->
           <g *ngIf="currentLetter === 'U'" id="letterUPaths">
             <g id="grayLetterUPaths">
-              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 280 Q 114 348 200 348 Q 286 348 286 280 L 286 66 L 314 66 L 314 280 Q 314 376 200 376 Q 86 376 86 280 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterUClip)">
-              <path d="M 86 66 L 114 66 L 114 266 Q 114 334 200 334 Q 286 334 286 266 L 286 66 L 314 66 L 314 266 Q 314 362 200 362 Q 86 362 86 266 Z" fill="#D946A6"/>
+              <path d="M 86 66 L 114 66 L 114 280 Q 114 348 200 348 Q 286 348 286 280 L 286 66 L 314 66 L 314 280 Q 314 376 200 376 Q 86 376 86 280 Z" fill="#D946A6"/>
             </g>
           </g>
 

@@ -75,6 +75,19 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     this.currentLetter = this.route.snapshot.paramMap.get('letter') || 'A';
     const mode = this.route.snapshot.queryParamMap.get('mode');
     this.isFreeWriting = mode === 'writing';
+
+    // Subscribe to route param changes for prev/next navigation
+    this.route.paramMap.subscribe(params => {
+      const letter = params.get('letter') || 'A';
+      if (letter !== this.currentLetter) {
+        this.currentLetter = letter;
+        this.clearDrawing();
+        setTimeout(() => {
+          this.setupLetter();
+          this.setupDrawing();
+        }, 100);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -210,9 +223,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'G': {
         strokes: [
           {
-            path: 'M 300 120 Q 260 80 200 80 Q 100 80 100 200 Q 100 320 200 320 Q 280 320 280 240 L 280 200 L 220 200',
-            startPoint: { x: 300, y: 120 },
-            endPoint: { x: 220, y: 200 },
+            path: 'M 280 100 Q 280 80 200 80 Q 100 80 100 200 Q 100 320 200 320 Q 300 320 300 260 L 300 200 L 200 200',
+            startPoint: { x: 280, y: 100 },
+            endPoint: { x: 200, y: 200 },
             direction: '↶'
           }
         ]
@@ -270,9 +283,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
             direction: '→'
           },
           {
-            path: 'M 220 80 L 220 280 Q 220 320 180 320 Q 140 320 140 280',
-            startPoint: { x: 220, y: 80 },
-            endPoint: { x: 140, y: 280 },
+            path: 'M 200 80 L 200 280 Q 200 320 160 320 Q 120 320 120 280',
+            startPoint: { x: 200, y: 80 },
+            endPoint: { x: 120, y: 280 },
             direction: '↓'
           }
         ]
@@ -318,27 +331,27 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'M': {
         strokes: [
           {
-            path: 'M 80 320 L 80 80',
-            startPoint: { x: 80, y: 320 },
-            endPoint: { x: 80, y: 80 },
+            path: 'M 80 334 L 80 66',
+            startPoint: { x: 80, y: 334 },
+            endPoint: { x: 80, y: 66 },
             direction: '↑'
           },
           {
-            path: 'M 80 80 L 200 200',
-            startPoint: { x: 80, y: 80 },
-            endPoint: { x: 200, y: 200 },
+            path: 'M 80 66 L 200 196',
+            startPoint: { x: 80, y: 66 },
+            endPoint: { x: 200, y: 196 },
             direction: '↘'
           },
           {
-            path: 'M 200 200 L 320 80',
-            startPoint: { x: 200, y: 200 },
-            endPoint: { x: 320, y: 80 },
+            path: 'M 200 196 L 320 66',
+            startPoint: { x: 200, y: 196 },
+            endPoint: { x: 320, y: 66 },
             direction: '↗'
           },
           {
-            path: 'M 320 80 L 320 320',
-            startPoint: { x: 320, y: 80 },
-            endPoint: { x: 320, y: 320 },
+            path: 'M 320 66 L 320 334',
+            startPoint: { x: 320, y: 66 },
+            endPoint: { x: 320, y: 334 },
             direction: '↓'
           }
         ]
@@ -346,21 +359,21 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'N': {
         strokes: [
           {
-            path: 'M 100 320 L 100 80',
-            startPoint: { x: 100, y: 320 },
-            endPoint: { x: 100, y: 80 },
+            path: 'M 100 334 L 100 66',
+            startPoint: { x: 100, y: 334 },
+            endPoint: { x: 100, y: 66 },
             direction: '↑'
           },
           {
-            path: 'M 100 80 L 300 320',
-            startPoint: { x: 100, y: 80 },
-            endPoint: { x: 300, y: 320 },
+            path: 'M 100 66 L 300 334',
+            startPoint: { x: 100, y: 66 },
+            endPoint: { x: 300, y: 334 },
             direction: '↘'
           },
           {
-            path: 'M 300 320 L 300 80',
-            startPoint: { x: 300, y: 320 },
-            endPoint: { x: 300, y: 80 },
+            path: 'M 300 334 L 300 66',
+            startPoint: { x: 300, y: 334 },
+            endPoint: { x: 300, y: 66 },
             direction: '↑'
           }
         ]
@@ -378,15 +391,15 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'P': {
         strokes: [
           {
-            path: 'M 100 320 L 100 80',
-            startPoint: { x: 100, y: 320 },
-            endPoint: { x: 100, y: 80 },
+            path: 'M 100 334 L 100 66',
+            startPoint: { x: 100, y: 334 },
+            endPoint: { x: 100, y: 66 },
             direction: '↑'
           },
           {
-            path: 'M 100 80 L 240 80 Q 300 80 300 160 Q 300 240 240 240 L 100 240',
+            path: 'M 100 80 L 210 80 Q 246 80 246 128 Q 246 176 210 176 L 100 176',
             startPoint: { x: 100, y: 80 },
-            endPoint: { x: 100, y: 240 },
+            endPoint: { x: 100, y: 176 },
             direction: '→'
           }
         ]
@@ -400,9 +413,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
             direction: '↶'
           },
           {
-            path: 'M 240 280 L 320 360',
-            startPoint: { x: 240, y: 280 },
-            endPoint: { x: 320, y: 360 },
+            path: 'M 260 300 L 320 354',
+            startPoint: { x: 260, y: 300 },
+            endPoint: { x: 320, y: 354 },
             direction: '↘'
           }
         ]
@@ -410,21 +423,21 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'R': {
         strokes: [
           {
-            path: 'M 100 320 L 100 80',
-            startPoint: { x: 100, y: 320 },
-            endPoint: { x: 100, y: 80 },
+            path: 'M 100 334 L 100 66',
+            startPoint: { x: 100, y: 334 },
+            endPoint: { x: 100, y: 66 },
             direction: '↑'
           },
           {
-            path: 'M 100 80 L 240 80 Q 300 80 300 160 Q 300 240 240 240 L 100 240',
+            path: 'M 100 80 L 190 80 C 276 80 276 186 190 186 L 100 186',
             startPoint: { x: 100, y: 80 },
-            endPoint: { x: 100, y: 240 },
+            endPoint: { x: 100, y: 186 },
             direction: '→'
           },
           {
-            path: 'M 180 240 L 300 320',
-            startPoint: { x: 180, y: 240 },
-            endPoint: { x: 300, y: 320 },
+            path: 'M 190 200 L 280 334',
+            startPoint: { x: 190, y: 200 },
+            endPoint: { x: 280, y: 334 },
             direction: '↘'
           }
         ]
@@ -432,9 +445,9 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'S': {
         strokes: [
           {
-            path: 'M 280 120 Q 260 80 200 80 Q 100 80 100 140 Q 100 200 200 200 Q 300 200 300 260 Q 300 320 200 320 Q 140 320 120 280',
-            startPoint: { x: 280, y: 120 },
-            endPoint: { x: 120, y: 280 },
+            path: 'M 256 110 Q 256 80 200 80 Q 124 80 124 138 Q 124 200 200 200 Q 276 200 276 262 Q 276 320 200 320 Q 144 320 144 290',
+            startPoint: { x: 256, y: 110 },
+            endPoint: { x: 144, y: 290 },
             direction: '↶'
           }
         ]
@@ -458,7 +471,7 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
       'U': {
         strokes: [
           {
-            path: 'M 100 80 L 100 280 Q 100 320 200 320 Q 300 320 300 280 L 300 80',
+            path: 'M 100 80 L 100 280 Q 100 340 200 340 Q 300 340 300 280 L 300 80',
             startPoint: { x: 100, y: 80 },
             endPoint: { x: 300, y: 80 },
             direction: '↓'
@@ -1176,7 +1189,7 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
         path: 'M 200 80 Q 80 80 80 200 Q 80 320 200 320 Q 320 320 320 200 Q 320 80 200 80 M 240 280 Q 280 320 340 360'
       },
       'R': {
-        path: 'M 100 320 L 100 80 Q 280 80 280 160 Q 280 240 100 240 M 180 240 Q 240 280 300 320'
+        path: 'M 100 320 L 100 80 L 190 80 C 276 80 276 186 190 186 L 100 186 M 190 200 L 280 334'
       },
       'S': {
         path: 'M 280 120 Q 240 60 180 80 Q 100 100 100 160 Q 100 200 200 200 Q 300 200 300 260 Q 300 320 200 320 Q 140 320 100 280'
@@ -1790,6 +1803,36 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
 
   goBack() {
     this.router.navigate(['/letters']);
+  }
+
+  private readonly allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+  goToPreviousLetter() {
+    const idx = this.allLetters.indexOf(this.currentLetter);
+    if (idx > 0) {
+      const prevLetter = this.allLetters[idx - 1];
+      this.router.navigate(['/trace', prevLetter], {
+        queryParams: this.isFreeWriting ? { mode: 'writing' } : {}
+      });
+    }
+  }
+
+  goToNextLetter() {
+    const idx = this.allLetters.indexOf(this.currentLetter);
+    if (idx < this.allLetters.length - 1) {
+      const nextLetter = this.allLetters[idx + 1];
+      this.router.navigate(['/trace', nextLetter], {
+        queryParams: this.isFreeWriting ? { mode: 'writing' } : {}
+      });
+    }
+  }
+
+  get isFirstLetter(): boolean {
+    return this.allLetters.indexOf(this.currentLetter) === 0;
+  }
+
+  get isLastLetter(): boolean {
+    return this.allLetters.indexOf(this.currentLetter) === this.allLetters.length - 1;
   }
 
   // Pen customization methods

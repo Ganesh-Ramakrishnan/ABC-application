@@ -1,257 +1,205 @@
-// Kids-friendly font
-.font-kids {
-  font-family: 'Fredoka One', cursive;
-}
-
-// Border width utilities
-.border-3 {
-  border-width: 3px;
-}
-
 // ==========================================
-// KEYFRAME ANIMATIONS
+// Tracing Page — Dark/Light Theme
 // ==========================================
 
-// Float animation for clouds
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-// Sway animation for leaves
-@keyframes sway {
-  0%, 100% {
-    transform: rotate(-5deg) translateX(0);
-  }
-  50% {
-    transform: rotate(5deg) translateX(8px);
-  }
-}
-
-.animate-sway {
-  animation: sway 4s ease-in-out infinite;
-}
-
-// Wiggle animation for animals/emojis
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(-8deg);
-  }
-  50% {
-    transform: rotate(8deg);
-  }
-}
-
-.animate-wiggle {
-  animation: wiggle 1s ease-in-out infinite;
-}
-
-// Hop animation for animals
-@keyframes hop {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-15px) rotate(-5deg);
-  }
-  75% {
-    transform: translateY(-15px) rotate(5deg);
-  }
-}
-
-.animate-hop {
-  animation: hop 1.5s ease-in-out infinite;
-}
-
-// Bounce soft animation for flowers
-@keyframes bounceSoft {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.animate-bounce-soft {
-  animation: bounceSoft 2s ease-in-out infinite;
-}
-
-// Sparkle animation for stars
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.3);
-  }
-}
-
-.animate-sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
-}
-
-// Glow pulse for stars
-@keyframes glowPulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
-    transform: scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1));
-    transform: scale(1.2);
-  }
-}
-
-.animate-glow {
-  animation: glowPulse 2s ease-in-out infinite;
-}
-
-// Pop in animation for elements
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  70% {
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-pop-in {
-  animation: popIn 0.5s ease-out forwards;
-}
-
-// Flutter animation for butterflies
-@keyframes flutter {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(-5deg);
-  }
-  25% {
-    transform: translateY(-10px) translateX(5px) rotate(5deg);
-  }
-  50% {
-    transform: translateY(-5px) translateX(10px) rotate(-5deg);
-  }
-  75% {
-    transform: translateY(-15px) translateX(5px) rotate(5deg);
-  }
-}
-
-.animate-flutter {
-  animation: flutter 3s ease-in-out infinite;
-}
-
-// Slow spin for celebration
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 3s linear infinite;
-}
-
-// Title letter bounce
-@keyframes letterBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-.title-letter {
-  display: inline-block;
-  animation: letterBounce 1s ease-in-out infinite;
-}
-
-// Stagger delays for title letters
-.title-letter:nth-child(1) { animation-delay: 0s; }
-.title-letter:nth-child(2) { animation-delay: 0.1s; }
-.title-letter:nth-child(3) { animation-delay: 0.2s; }
-.title-letter:nth-child(4) { animation-delay: 0.3s; }
-.title-letter:nth-child(5) { animation-delay: 0.4s; }
-.title-letter:nth-child(6) { animation-delay: 0.5s; }
-.title-letter:nth-child(7) { animation-delay: 0.6s; }
-
-// Pulse gentle for completion
-@keyframes pulseGentle {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-// ==========================================
-// COMPONENT STYLES
-// ==========================================
-
-// Smooth scrolling for the entire component
 :host {
   display: block;
   overflow-x: hidden;
 }
 
-// Make buttons more engaging
-button {
+.tracing-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0a0e1a 0%, #0f1629 40%, #141a30 100%);
+  padding: 12px;
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+.tracing-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// ---- Theme Toggle ----
+.theme-toggle {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-
-  &:active {
-    transform: scale(0.95) !important;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-// Enhance the canvas container
-.bg-white {
-  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-}
-
-// Success state (can be triggered when letter is completed)
-.letter-complete {
-  animation: pulseGentle 0.6s ease-in-out;
-}
-
-// Guide path glow effect
-#guidePath {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 
   &:hover {
-    stroke-width: 4;
-    opacity: 1;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
   }
 }
 
-// Make arrow groups more visible
+// ---- Back Button ----
+.back-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+}
+
+// ---- Letter Selector ----
+.letter-selector-scroll {
+  overflow-x: auto;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.letter-selector-track {
+  display: flex;
+  gap: 10px;
+  padding: 4px 2px;
+}
+
+.letter-card {
+  flex-shrink: 0;
+  width: 64px;
+  height: 72px;
+  border-radius: 16px;
+  border: 1px solid rgba(232, 88, 140, 0.25);
+  background: rgba(232, 88, 140, 0.06);
+  color: #E8588C;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #E8588C;
+    background: rgba(232, 88, 140, 0.12);
+  }
+}
+
+.letter-card-active {
+  background: linear-gradient(135deg, #E8588C, #c0356a);
+  border-color: #E8588C;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(232, 88, 140, 0.35);
+}
+
+// ---- Canvas Wrapper ----
+.canvas-wrapper {
+  background: linear-gradient(145deg, #111827 0%, #151d30 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+// ---- Celebration ----
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.celebration-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #f5a623;
+  text-shadow: 0 2px 12px rgba(245, 166, 35, 0.4);
+  animation: celebrationBounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes celebrationBounce {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+// ---- Pen Options (Writing Mode) ----
+.pen-options {
+  background: linear-gradient(145deg, #111827 0%, #151d30 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+// ---- Action Buttons ----
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+
+.action-btn {
+  padding: 10px 24px;
+  border-radius: 100px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+}
+
+.action-btn-primary {
+  background: linear-gradient(135deg, #4a8fe7, #6cb4f0);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(74, 143, 231, 0.3);
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(108, 180, 240, 0.45);
+    transform: translateY(-1px);
+  }
+}
+
+// ---- Guide & Cursor ----
+#guidePath {
+  transition: all 0.3s ease-in-out;
+}
+
 #arrowsGroup circle {
   transition: all 0.2s ease-in-out;
 }
@@ -260,34 +208,76 @@ button {
   pointer-events: none;
 }
 
-// Dot hover effects
 #dotsGroup circle {
   transition: fill 0.2s ease-in-out;
 }
 
-// Sparkle animation for first arrow
-[font-size="25"] {
-  animation: sparkle 2s ease-in-out infinite;
-}
+// ---- Utility ----
+button {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
-// ==========================================
-// RESPONSIVE ADJUSTMENTS
-// ==========================================
-
-@media (max-width: 768px) {
-  button span {
-    font-size: 1.25rem !important;
-  }
-
-  .title-letter {
-    font-size: 1.25rem;
+  &:focus {
+    outline: none;
   }
 }
 
-// Hide decorative elements on very small screens
-@media (max-width: 480px) {
-  .animate-flutter,
-  .animate-hop {
-    display: none;
+// ===== Light Theme =====
+.light-theme {
+  background: #f0f2f5;
+
+  .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #555;
+    &:hover { background: rgba(0, 0, 0, 0.1); color: #222; }
+  }
+
+  .back-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #555;
+    &:hover { background: rgba(0, 0, 0, 0.1); color: #222; }
+  }
+
+  .letter-card {
+    border-color: rgba(232, 88, 140, 0.3);
+    background: #fff;
+    color: #E8588C;
+
+    &:hover {
+      border-color: #E8588C;
+      background: #FFF0F5;
+    }
+  }
+
+  .letter-card-active {
+    background: linear-gradient(135deg, #E8588C, #c0356a);
+    border-color: #E8588C;
+    color: #fff;
+  }
+
+  .canvas-wrapper {
+    background: #fff;
+    border: 1px solid #e0e4ea;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .pen-options {
+    background: #f8f9fa;
+    border: 1px solid #e0e4ea;
+  }
+
+  .action-btn-secondary {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #555;
+    &:hover { background: rgba(0, 0, 0, 0.08); color: #222; }
+  }
+
+  .celebration-text {
+    color: #E8588C;
+    text-shadow: 0 2px 12px rgba(232, 88, 140, 0.3);
   }
 }

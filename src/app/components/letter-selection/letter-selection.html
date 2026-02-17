@@ -1,157 +1,82 @@
-<!-- Jungle Background -->
-<div class="min-h-screen relative overflow-hidden bg-gradient-to-b from-cyan-400 via-teal-500 to-green-600">
+<div class="selection-page" [class.light-theme]="!isDarkTheme">
 
-  <!-- Background Leaves with sway animation -->
-  <div class="absolute top-0 left-0 text-7xl md:text-8xl opacity-60 -rotate-45 animate-sway">🌿</div>
-  <div class="absolute top-0 right-0 text-7xl md:text-8xl opacity-60 rotate-45 scale-x-[-1] animate-sway" style="animation-delay: 0.5s;">🌿</div>
-  <div class="absolute top-20 left-10 text-5xl md:text-6xl opacity-50 animate-sway" style="animation-delay: 1s;">🍃</div>
-  <div class="absolute top-10 right-20 text-4xl md:text-5xl opacity-40 animate-sway" style="animation-delay: 1.5s;">🍃</div>
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" (click)="toggleTheme()">
+    @if (isDarkTheme) {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      </svg>
+    } @else {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+      </svg>
+    }
+  </button>
 
-  <!-- Stars with glow animation -->
-  <div class="absolute top-16 right-1/3 text-3xl md:text-4xl animate-glow">⭐</div>
-  <div class="absolute top-32 left-1/4 text-2xl md:text-3xl animate-sparkle" style="animation-delay: 0.5s;">✨</div>
-  <div class="absolute top-24 left-1/2 text-2xl md:text-3xl animate-glow" style="animation-delay: 1s;">⭐</div>
+  <div class="selection-content">
 
-  <!-- Giraffe on right side with float animation -->
-  <div class="absolute top-20 right-4 md:right-8 text-6xl md:text-8xl hidden md:block animate-float">🦒</div>
-
-  <!-- Header -->
-  <div class="relative z-10 flex items-center justify-between p-3 md:p-6">
-    <!-- Back Button -->
-    <button
-      (click)="goBack()"
-      class="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center shadow-lg border-4 border-white hover:scale-110 transition-transform">
-      <span class="text-white text-xl md:text-3xl font-bold">←</span>
-    </button>
-
-    <!-- Title with bouncing letters - Dynamic based on mode -->
-    <h1 class="flex-1 text-center">
-      <!-- TRACE A LETTER! -->
-      <span *ngIf="currentMode !== 'writing'" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
-        <span class="title-letter text-red-500 drop-shadow-lg">T</span>
-        <span class="title-letter text-orange-500 drop-shadow-lg">R</span>
-        <span class="title-letter text-yellow-400 drop-shadow-lg">A</span>
-        <span class="title-letter text-green-500 drop-shadow-lg">C</span>
-        <span class="title-letter text-blue-500 drop-shadow-lg">E</span>
-        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="title-letter text-purple-500 drop-shadow-lg">A</span>
-        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="title-letter text-pink-500 drop-shadow-lg">L</span>
-        <span class="title-letter text-red-400 drop-shadow-lg">E</span>
-        <span class="title-letter text-orange-400 drop-shadow-lg">T</span>
-        <span class="title-letter text-yellow-300 drop-shadow-lg">T</span>
-        <span class="title-letter text-green-400 drop-shadow-lg">E</span>
-        <span class="title-letter text-blue-400 drop-shadow-lg">R</span>
-        <span class="title-letter text-purple-400 drop-shadow-lg">!</span>
-      </span>
-      <!-- WRITE A LETTER! -->
-      <span *ngIf="currentMode === 'writing'" class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-kids tracking-wide">
-        <span class="title-letter text-blue-500 drop-shadow-lg">W</span>
-        <span class="title-letter text-purple-500 drop-shadow-lg">R</span>
-        <span class="title-letter text-pink-500 drop-shadow-lg">I</span>
-        <span class="title-letter text-red-500 drop-shadow-lg">T</span>
-        <span class="title-letter text-orange-500 drop-shadow-lg">E</span>
-        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="title-letter text-yellow-400 drop-shadow-lg">A</span>
-        <span class="text-white drop-shadow-lg mx-1 md:mx-2"> </span>
-        <span class="title-letter text-green-500 drop-shadow-lg">L</span>
-        <span class="title-letter text-teal-500 drop-shadow-lg">E</span>
-        <span class="title-letter text-cyan-500 drop-shadow-lg">T</span>
-        <span class="title-letter text-blue-400 drop-shadow-lg">T</span>
-        <span class="title-letter text-indigo-500 drop-shadow-lg">E</span>
-        <span class="title-letter text-violet-500 drop-shadow-lg">R</span>
-        <span class="title-letter text-fuchsia-500 drop-shadow-lg">!</span>
-      </span>
-    </h1>
-
-    <!-- Spacer for alignment -->
-    <div class="w-10 h-10 md:w-14 md:h-14"></div>
-  </div>
-
-  <!-- Filter Tabs -->
-  <div class="relative z-10 flex justify-center gap-2 md:gap-4 px-4 mb-4 md:mb-6">
-    <button
-      (click)="filterLetters('uppercase')"
-      class="px-3 sm:px-4 md:px-8 py-2 md:py-3 rounded-full font-bold text-sm sm:text-base md:text-xl transition-all shadow-lg hover:scale-105"
-      [class]="selectedFilter === 'uppercase' ? 'bg-purple-600 text-white border-4 border-purple-800' : 'bg-white text-purple-600 border-4 border-gray-200'">
-      ABC
-    </button>
-
-    <button
-      (click)="filterLetters('lowercase')"
-      class="px-3 sm:px-4 md:px-8 py-2 md:py-3 rounded-full font-bold text-sm sm:text-base md:text-xl transition-all shadow-lg hover:scale-105"
-      [class]="selectedFilter === 'lowercase' ? 'bg-purple-600 text-white border-4 border-purple-800' : 'bg-white text-purple-600 border-4 border-gray-200'">
-      abc
-    </button>
-
-    <button
-      (click)="filterLetters('number')"
-      class="px-3 sm:px-4 md:px-8 py-2 md:py-3 rounded-full font-bold text-sm sm:text-base md:text-xl transition-all shadow-lg hover:scale-105"
-      [class]="selectedFilter === 'number' ? 'bg-purple-600 text-white border-4 border-purple-800' : 'bg-white text-gray-600 border-4 border-gray-200'">
-      # 123
-    </button>
-  </div>
-
-  <!-- Letter Grid -->
-  <div class="relative z-10 px-2 sm:px-4 md:px-8 lg:px-16 pb-36 md:pb-44">
-    <div class="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-2 sm:gap-3 md:gap-4 max-w-5xl mx-auto">
-      <div
-        *ngFor="let letter of filteredLetters; let i = index"
-        (click)="selectLetter(letter.letter)"
-        class="letter-tile animate-pop-in relative aspect-square rounded-xl sm:rounded-2xl md:rounded-3xl cursor-pointer transform hover:scale-110 transition-all duration-200 shadow-xl hover:shadow-2xl flex items-center justify-center border-3 md:border-4 border-white"
-        [ngClass]="getLetterGradient(i)"
-        [style.animation-delay]="(i * 0.03) + 's'">
-
-        <!-- Letter -->
-        <span class="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg">
-          {{letter.letter}}
+    <!-- Header -->
+    <div class="selection-header">
+      <button class="back-btn" (click)="goBack()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <div class="header-text">
+        <span class="page-badge">
+          @if (currentMode === 'writing') {
+            FREE WRITING
+          } @else {
+            LETTER TRACING
+          }
         </span>
+        <h1 class="page-title">
+          @if (currentMode === 'writing') {
+            Pick a <span class="highlight">Letter</span> to Write
+          } @else {
+            Pick a <span class="highlight">Letter</span> to Trace
+          }
+        </h1>
+      </div>
+    </div>
 
-        <!-- Completed Badge -->
-        <div *ngIf="letter.completed" class="absolute -top-1 -right-1 w-4 h-4 md:w-6 md:h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
-          <span class="text-white text-[8px] md:text-xs">✓</span>
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab" [class.filter-tab-active]="selectedFilter === 'uppercase'" (click)="filterLetters('uppercase')">
+        ABC
+      </button>
+      <button class="filter-tab" [class.filter-tab-active]="selectedFilter === 'lowercase'" (click)="filterLetters('lowercase')">
+        abc
+      </button>
+      <button class="filter-tab" [class.filter-tab-active]="selectedFilter === 'number'" (click)="filterLetters('number')">
+        123
+      </button>
+    </div>
+
+    <!-- Letter Grid -->
+    <div class="letter-grid">
+      @for (letter of filteredLetters; track letter.letter; let i = $index) {
+        <div class="letter-tile" [class]="'letter-tile tile-color-' + (i % 8)" (click)="selectLetter(letter.letter)" [style.animation-delay]="(i * 0.03) + 's'">
+          <span class="letter-char">{{ letter.letter }}</span>
+          @if (letter.completed) {
+            <div class="completed-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+          }
         </div>
-      </div>
+      }
     </div>
 
-    <!-- Decorative Animals on Grid with animations -->
-    <div class="absolute top-8 md:top-12 left-0 md:left-2 text-3xl md:text-5xl hidden lg:block animate-hop">🐵</div>
-    <div class="absolute top-1/3 right-0 md:right-2 text-3xl md:text-5xl hidden lg:block animate-float" style="animation-delay: 0.3s;">🦜</div>
-    <div class="absolute bottom-44 left-2 md:left-4 text-3xl md:text-5xl hidden lg:block animate-wiggle">🐍</div>
-    <div class="absolute top-1/2 left-0 md:left-2 text-2xl md:text-4xl hidden lg:block animate-bounce-soft" style="animation-delay: 0.6s;">🦋</div>
-  </div>
-
-  <!-- Bottom Section -->
-  <div class="absolute bottom-0 left-0 right-0 h-28 md:h-40">
-    <!-- Grass -->
-    <div class="absolute bottom-0 left-0 right-0 h-16 md:h-20 bg-gradient-to-t from-green-700 to-transparent"></div>
-
-    <!-- Flowers with bounce animation -->
-    <div class="absolute bottom-0 left-2 md:left-4 text-4xl md:text-6xl animate-bounce-soft">🌺</div>
-    <div class="absolute bottom-2 left-12 md:left-16 text-3xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.3s;">🌸</div>
-    <div class="absolute bottom-0 right-2 md:right-4 text-4xl md:text-6xl animate-bounce-soft" style="animation-delay: 0.6s;">🌸</div>
-    <div class="absolute bottom-2 right-12 md:right-16 text-3xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.9s;">🌺</div>
-
-    <!-- Leaves with sway -->
-    <div class="absolute bottom-6 md:bottom-8 left-20 md:left-24 text-3xl md:text-4xl animate-sway">🌿</div>
-    <div class="absolute bottom-8 md:bottom-10 right-20 md:right-24 text-3xl md:text-4xl animate-sway" style="animation-delay: 0.5s;">🌿</div>
-
-    <!-- Center Banner with Monkey - bouncing -->
-    <div class="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white rounded-full px-4 md:px-6 py-2 md:py-3 shadow-2xl border-4 border-green-600 animate-bounce-soft">
-      <span class="text-2xl md:text-4xl animate-wiggle">🐵</span>
-      <div class="text-center">
-        <p class="text-green-700 font-bold text-sm md:text-xl leading-tight">PICK A</p>
-        <p class="text-green-700 font-bold text-sm md:text-xl leading-tight">LETTER!</p>
+    <!-- Empty State -->
+    @if (filteredLetters.length === 0) {
+      <div class="empty-state">
+        <p class="empty-text">No letters found</p>
       </div>
-    </div>
+    }
 
-    <!-- Tiger peeking with hop animation -->
-    <div class="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 text-5xl md:text-7xl animate-hop" style="animation-delay: 0.2s;">🐯</div>
-  </div>
-
-  <!-- Empty State -->
-  <div *ngIf="filteredLetters.length === 0" class="relative z-10 text-center py-16">
-    <div class="text-6xl mb-4">🤔</div>
-    <p class="text-white text-xl font-semibold">No letters found</p>
   </div>
 </div>

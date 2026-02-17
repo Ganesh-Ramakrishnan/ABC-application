@@ -48,6 +48,7 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   cursorY: number = 0;
   showCursor: boolean = false;
   isFreeWriting: boolean = false;
+  isDarkTheme: boolean = true;
 
   // Pen customization options
   penColor: string = '#D946A6'; // Default magenta
@@ -71,10 +72,20 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     this.initializeCursiveLetterPaths();
   }
 
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    localStorage.setItem('homeTheme', this.isDarkTheme ? 'dark' : 'light');
+  }
+
   ngOnInit() {
     this.currentLetter = this.route.snapshot.paramMap.get('letter') || 'A';
     const mode = this.route.snapshot.queryParamMap.get('mode');
     this.isFreeWriting = mode === 'writing';
+
+    const saved = localStorage.getItem('homeTheme');
+    if (saved !== null) {
+      this.isDarkTheme = saved === 'dark';
+    }
 
     // Subscribe to route param changes for prev/next navigation
     this.route.paramMap.subscribe(params => {
@@ -1811,9 +1822,13 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/letters']);
   }
 
-  private readonly uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  private readonly lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  private readonly numberLetters = '0123456789'.split('');
+  readonly uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  readonly lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  readonly numberLetters = '0123456789'.split('');
+
+  get letterGroup(): string[] {
+    return this.currentLetterGroup;
+  }
 
   private get currentLetterGroup(): string[] {
     if (this.lowercaseLetters.includes(this.currentLetter)) {
@@ -1854,6 +1869,12 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   get isLastLetter(): boolean {
     const group = this.currentLetterGroup;
     return group.indexOf(this.currentLetter) === group.length - 1;
+  }
+
+  goToLetter(letter: string) {
+    this.router.navigate(['/trace', letter], {
+      queryParams: this.isFreeWriting ? { mode: 'writing' } : {}
+    });
   }
 
   // Pen customization methods

@@ -1,121 +1,51 @@
-<div class="min-h-screen bg-gradient-to-b from-cyan-400 via-teal-500 to-green-600 p-2 md:p-4 relative overflow-hidden">
-  <!-- Animated Background Elements -->
+<div class="tracing-page" [class.light-theme]="!isDarkTheme">
 
-  <!-- Floating Clouds -->
-  <div class="absolute top-4 left-8 text-5xl md:text-6xl opacity-70 animate-float">☁️</div>
-  <div class="absolute top-12 right-12 text-4xl md:text-5xl opacity-60 animate-float" style="animation-delay: 1s;">☁️</div>
-  <div class="absolute top-24 left-1/3 text-3xl md:text-4xl opacity-50 animate-float" style="animation-delay: 2s;">☁️</div>
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" (click)="toggleTheme()">
+    @if (isDarkTheme) {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      </svg>
+    } @else {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+      </svg>
+    }
+  </button>
 
-  <!-- Twinkling Stars -->
-  <div class="absolute top-8 right-1/4 text-2xl md:text-3xl animate-glow">⭐</div>
-  <div class="absolute top-20 left-16 text-xl md:text-2xl animate-sparkle" style="animation-delay: 0.5s;">✨</div>
-  <div class="absolute top-6 left-1/2 text-2xl md:text-3xl animate-glow" style="animation-delay: 1s;">⭐</div>
-  <div class="absolute top-16 right-8 text-xl md:text-2xl animate-sparkle" style="animation-delay: 1.5s;">✨</div>
+  <div class="tracing-container">
+    <!-- Back Button -->
+    <button (click)="goBack()" class="back-btn">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+    </button>
 
-  <!-- Swaying Leaves -->
-  <div class="absolute top-0 left-0 text-5xl md:text-6xl opacity-60 -rotate-45 animate-sway">🌿</div>
-  <div class="absolute top-0 right-0 text-5xl md:text-6xl opacity-60 rotate-45 scale-x-[-1] animate-sway" style="animation-delay: 0.5s;">🌿</div>
-  <div class="absolute top-32 left-2 text-3xl md:text-4xl opacity-50 animate-sway" style="animation-delay: 1s;">🍃</div>
-  <div class="absolute top-28 right-4 text-3xl md:text-4xl opacity-50 animate-sway" style="animation-delay: 1.5s;">🍃</div>
-
-  <!-- Animated Animals -->
-  <div class="absolute top-20 right-2 md:right-4 text-4xl md:text-5xl hidden md:block animate-wiggle">🦜</div>
-  <div class="absolute top-40 left-2 md:left-4 text-3xl md:text-4xl hidden md:block animate-hop" style="animation-delay: 0.3s;">🐵</div>
-
-  <!-- Bottom Decorations -->
-  <div class="absolute bottom-0 left-0 text-6xl md:text-7xl opacity-70">🌳</div>
-  <div class="absolute bottom-0 right-0 text-6xl md:text-7xl opacity-70">🌳</div>
-  <div class="absolute bottom-0 left-16 text-4xl md:text-5xl animate-bounce-soft">🌺</div>
-  <div class="absolute bottom-0 right-16 text-4xl md:text-5xl animate-bounce-soft" style="animation-delay: 0.3s;">🌸</div>
-  <div class="absolute bottom-2 left-1/4 text-3xl md:text-4xl animate-bounce-soft" style="animation-delay: 0.6s;">🌼</div>
-  <div class="absolute bottom-2 right-1/4 text-3xl md:text-4xl animate-bounce-soft" style="animation-delay: 0.9s;">🌷</div>
-
-  <!-- Floating Butterflies -->
-  <div class="absolute top-1/3 left-4 text-2xl md:text-3xl animate-flutter">🦋</div>
-  <div class="absolute top-1/2 right-6 text-2xl md:text-3xl animate-flutter" style="animation-delay: 1s;">🦋</div>
-
-  <div class="max-w-4xl mx-auto relative z-10">
-    <!-- Header -->
-    <div class="flex items-center justify-between mb-2">
-      <button
-        (click)="goBack()"
-        class="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center shadow-lg border-4 border-white hover:scale-110 transition-transform animate-pop-in">
-        <span class="text-white text-xl md:text-3xl font-bold">←</span>
-      </button>
-
-      <div class="flex items-center gap-2 md:gap-4 animate-pop-in" style="animation-delay: 0.1s;">
-        <!-- Previous Letter Button -->
-        <button
-          (click)="goToPreviousLetter()"
-          [disabled]="isFirstLetter"
-          class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center shadow-lg border-3 border-white hover:scale-110 active:scale-95 transition-all disabled:opacity-40 disabled:hover:scale-100">
-          <span class="text-white text-lg md:text-2xl font-bold">◀</span>
-        </button>
-
-        <h1 class="text-2xl md:text-4xl font-kids tracking-wide">
-          <ng-container *ngIf="isFreeWriting">
-            <span class="title-letter text-blue-500 drop-shadow-lg">W</span>
-            <span class="title-letter text-purple-500 drop-shadow-lg">r</span>
-            <span class="title-letter text-pink-500 drop-shadow-lg">i</span>
-            <span class="title-letter text-red-500 drop-shadow-lg">t</span>
-            <span class="title-letter text-orange-500 drop-shadow-lg">e</span>
-            <span class="text-white drop-shadow-lg">: </span>
-            <span class="title-letter text-yellow-400 drop-shadow-lg animate-pulse">{{currentLetter}}</span>
-          </ng-container>
-          <ng-container *ngIf="!isFreeWriting">
-            <span class="title-letter text-red-500 drop-shadow-lg">T</span>
-            <span class="title-letter text-orange-500 drop-shadow-lg">r</span>
-            <span class="title-letter text-yellow-400 drop-shadow-lg">a</span>
-            <span class="title-letter text-green-500 drop-shadow-lg">c</span>
-            <span class="title-letter text-blue-500 drop-shadow-lg">e</span>
-            <span class="text-white drop-shadow-lg">: </span>
-            <span class="title-letter text-purple-500 drop-shadow-lg animate-pulse">{{currentLetter}}</span>
-          </ng-container>
-        </h1>
-
-        <!-- Next Letter Button -->
-        <button
-          (click)="goToNextLetter()"
-          [disabled]="isLastLetter"
-          class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg border-3 border-white hover:scale-110 active:scale-95 transition-all disabled:opacity-40 disabled:hover:scale-100">
-          <span class="text-white text-lg md:text-2xl font-bold">▶</span>
-        </button>
-      </div>
-
-      <div class="w-10 h-10 md:w-14 md:h-14"></div>
-    </div>
-
-    <!-- Progress Bar with Rainbow Effect -->
-    <div class="mb-2 max-w-4xl mx-auto animate-pop-in" style="animation-delay: 0.2s;">
-      <div class="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-xl border-4 border-yellow-400">
-        <div class="relative h-6 md:h-8 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 transition-all duration-300 ease-out flex items-center justify-end pr-2 rounded-full"
-            [style.width.%]="traceProgress">
-            <span class="text-white font-bold text-sm md:text-base drop-shadow" *ngIf="traceProgress > 10">
-              {{traceProgress}}%
-            </span>
-          </div>
-          <!-- Star at the end of progress -->
-          <div class="absolute top-1/2 -translate-y-1/2 text-lg md:text-xl transition-all duration-300" [style.left.%]="traceProgress > 5 ? traceProgress - 3 : 2">
-            ⭐
-          </div>
-        </div>
+    <!-- Letter Selector Cards -->
+    <div class="letter-selector-scroll">
+      <div class="letter-selector-track">
+        @for (letter of letterGroup; track letter) {
+          <button
+            class="letter-card"
+            [class.letter-card-active]="letter === currentLetter"
+            (click)="goToLetter(letter)">
+            {{letter}}
+          </button>
+        }
       </div>
     </div>
 
-    <!-- Celebration Overlay with Multiple Elements -->
-    <div *ngIf="showCelebration" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-      <div class="text-8xl md:text-9xl animate-bounce">🎉</div>
-      <div class="absolute top-1/4 left-1/4 text-5xl md:text-6xl animate-spin-slow">⭐</div>
-      <div class="absolute top-1/4 right-1/4 text-5xl md:text-6xl animate-spin-slow" style="animation-delay: 0.2s;">🌟</div>
-      <div class="absolute bottom-1/4 left-1/3 text-4xl md:text-5xl animate-bounce" style="animation-delay: 0.3s;">🎊</div>
-      <div class="absolute bottom-1/4 right-1/3 text-4xl md:text-5xl animate-bounce" style="animation-delay: 0.4s;">🎊</div>
-      <div class="absolute top-1/3 left-1/2 text-6xl md:text-7xl animate-pulse">🏆</div>
-    </div>
+    <!-- Celebration Overlay -->
+    @if (showCelebration) {
+      <div class="celebration-overlay">
+        <div class="celebration-text">Well done!</div>
+      </div>
+    }
 
-    <!-- SVG Tracing Canvas with Decorated Border -->
-    <div class="bg-white rounded-3xl shadow-2xl p-2 md:p-4 border-4 border-yellow-400 animate-pop-in" style="animation-delay: 0.3s;">
+    <!-- SVG Tracing Canvas -->
+    <div class="canvas-wrapper">
       <div class="relative w-full" style="aspect-ratio: 1/1; max-width: 500px; margin: 0 auto;">
 
         <!-- WRITING MODE: Block letter reference + free drawing canvas -->
@@ -140,8 +70,8 @@
               {{currentLetter}}
             </text>
 
-            <!-- Decoration emoji -->
-            <text x="320" y="90" font-size="50" id="letterDecorWriting">🍎</text>
+            <!-- Letter decoration placeholder -->
+            <text x="320" y="90" font-size="50" id="letterDecorWriting" opacity="0"></text>
           </svg>
 
           <!-- Drawing canvas for free writing (on top of letter) -->
@@ -167,11 +97,8 @@
               <rect x="0" y="0" width="400" height="400"/>
             </clipPath>
 
-            <!-- Clipping path for letter A - ensures magenta never goes outside gray -->
             <clipPath id="letterAClip">
-              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z"/>
-              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z"/>
-              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z"/>
+              <rect x="0" y="0" width="400" height="400"/>
             </clipPath>
 
             <!-- Clipping path for letter B - matches tracing strokes -->
@@ -427,7 +354,12 @@
             </clipPath>
 
             <clipPath id="letter5Clip">
-              <path d="M 106 66 L 294 66 L 294 94 L 134 94 L 134 156 Q 180 140 240 180 Q 314 230 250 310 Q 190 350 106 300 L 126 272 Q 180 310 226 280 Q 286 240 226 190 Q 180 156 134 184 L 106 184 Z"/>
+              <!-- Top horizontal bar -->
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z"/>
+              <!-- Vertical stem -->
+              <path d="M 106 66 L 134 66 L 134 184 L 106 184 Z"/>
+              <!-- Belly curve (outer then inner reversed) -->
+              <path d="M 110 160 Q 202 136 262 182 Q 304 229 261 299 Q 202 344 110 310 L 130 290 Q 198 316 239 281 Q 276 231 239 198 Q 198 164 130 180 Z"/>
             </clipPath>
 
             <clipPath id="letter6Clip">
@@ -624,29 +556,32 @@
 
           <!-- Letter A using SVG paths (perfect control) -->
           <g *ngIf="currentLetter === 'A'" id="letterPaths">
-            <!-- Gray outline paths (background) - NO STROKES, only fill -->
             <g id="grayLetterPaths">
-              <!-- Left stroke of A -->
-              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z" fill="#E5E7EB"/>
-              <!-- Right stroke of A -->
-              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z" fill="#E5E7EB"/>
-              <!-- Crossbar of A -->
-              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z" fill="#E5E7EB"/>
+              <line x1="125" y1="280" x2="200" y2="60" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
+              <line x1="200" y1="60" x2="275" y2="280" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
+              <line x1="152" y1="190" x2="248" y2="190" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
+              <circle cx="125" cy="280" r="5" fill="#fff"/>
+              <circle cx="150" cy="212" r="5" fill="#fff"/>
+              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <circle cx="185" cy="110" r="5" fill="#fff"/>
+              <circle cx="218" cy="110" r="5" fill="#fff"/>
+              <circle cx="235" cy="160" r="5" fill="#fff"/>
+              <circle cx="252" cy="212" r="5" fill="#fff"/>
+              <circle cx="275" cy="280" r="5" fill="#fff"/>
             </g>
 
-            <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
-            <g mask="url(#traceMask)" clip-path="url(#letterAClip)">
-              <!-- Left stroke of A -->
-              <path d="M 110 280 L 190 60 L 210 60 L 140 280 Z" fill="#D946A6"/>
-              <!-- Right stroke of A -->
-              <path d="M 190 60 L 210 60 L 290 280 L 260 280 Z" fill="#D946A6"/>
-              <!-- Crossbar of A -->
-              <path d="M 145 180 L 255 180 L 255 200 L 145 200 Z" fill="#D946A6"/>
-
-              <!-- Decorative stars -->
-              <text x="150" y="150" font-size="30">⭐</text>
-              <text x="250" y="150" font-size="30">⭐</text>
-              <text x="200" y="230" font-size="30">⭐</text>
+            <g mask="url(#traceMask)">
+              <line x1="125" y1="280" x2="200" y2="60" stroke="#D946A6" stroke-width="30" stroke-linecap="round"/>
+              <line x1="200" y1="60" x2="275" y2="280" stroke="#D946A6" stroke-width="30" stroke-linecap="round"/>
+              <line x1="152" y1="190" x2="248" y2="190" stroke="#D946A6" stroke-width="30" stroke-linecap="round"/>
+              <circle cx="125" cy="280" r="5" fill="#fff"/>
+              <circle cx="150" cy="212" r="5" fill="#fff"/>
+              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <circle cx="185" cy="110" r="5" fill="#fff"/>
+              <circle cx="218" cy="110" r="5" fill="#fff"/>
+              <circle cx="235" cy="160" r="5" fill="#fff"/>
+              <circle cx="252" cy="212" r="5" fill="#fff"/>
+              <circle cx="275" cy="280" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1075,7 +1010,11 @@
           <g *ngIf="currentLetter === '5'" id="letter5Paths">
             <g id="grayLetter5Paths">
               <!-- Top horizontal bar -->
-              <path d="M 106 66 L 294 66 L 294 94 L 134 94 L 134 156 Q 180 140 240 180 Q 314 230 250 310 Q 190 350 106 300 L 126 272 Q 180 310 226 280 Q 286 240 226 190 Q 180 156 134 184 L 106 184 Z" fill="#E5E7EB"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
+              <!-- Vertical stem -->
+              <path d="M 106 66 L 134 66 L 134 184 L 106 184 Z" fill="#E5E7EB"/>
+              <!-- Belly curve -->
+              <path d="M 110 160 Q 202 136 262 182 Q 304 229 261 299 Q 202 344 110 310 L 130 290 Q 198 316 239 281 Q 276 231 239 198 Q 198 164 130 180 Z" fill="#E5E7EB"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letter5Clip)">
               <rect x="0" y="0" width="400" height="400" fill="#D946A6"/>
@@ -1478,20 +1417,18 @@
           <!-- Start/End point indicators -->
           <g *ngIf="!isFreeWriting" id="arrowsGroup"></g>
 
-          <!-- Letter-specific decoration (dynamically set) -->
-          <text x="310" y="100" font-size="60" id="letterDecor">🍎</text>
+          <!-- Letter decoration (hidden) -->
+          <text x="310" y="100" font-size="60" id="letterDecor" opacity="0"></text>
 
-          <!-- Sliding cursor/character that follows tracing -->
+          <!-- Sliding cursor that follows tracing -->
           <g *ngIf="showCursor" [attr.transform]="'translate(' + cursorX + ',' + cursorY + ')'" style="transition: transform 0.05s ease-out;">
-            <!-- Glowing pulse behind character -->
-            <circle cx="0" cy="0" r="28" fill="#FCD34D" opacity="0.3">
-              <animate attributeName="r" values="28;35;28" dur="1.2s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.2s" repeatCount="indefinite"/>
+            <!-- Glow -->
+            <circle cx="0" cy="0" r="22" fill="#2196F3" opacity="0.15">
+              <animate attributeName="r" values="22;28;22" dur="1.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.15;0.05;0.15" dur="1.2s" repeatCount="indefinite"/>
             </circle>
-            <!-- Main character circle -->
-            <circle cx="0" cy="0" r="20" fill="url(#cursorGradient)" stroke="#F59E0B" stroke-width="5" filter="drop-shadow(0 6px 12px rgba(0,0,0,0.4))"/>
-            <!-- Character emoji -->
-            <text x="0" y="8" font-size="26" text-anchor="middle">✏️</text>
+            <!-- Main cursor dot -->
+            <circle cx="0" cy="0" r="14" fill="#2196F3" filter="drop-shadow(0 2px 6px rgba(33,150,243,0.4))"/>
           </g>
 
           </g><!-- End clipping group -->
@@ -1506,41 +1443,36 @@
         </canvas>
       </div>
 
-      <!-- Pen Options (Writing Mode Only) - Colorful Design -->
-      <div *ngIf="isFreeWriting" class="mt-3 bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 rounded-2xl p-3 md:p-4 border-3 border-purple-300 shadow-lg">
+      <!-- Pen Options (Writing Mode Only) -->
+      <div *ngIf="isFreeWriting" class="mt-3 bg-gray-50 rounded-xl p-3 md:p-4 border border-gray-200">
         <div class="flex flex-wrap items-center justify-center gap-3 md:gap-5">
           <!-- Color Selection -->
-          <div class="flex items-center gap-2 md:gap-3 bg-white/80 rounded-full px-3 py-2 shadow-md">
-            <span class="text-lg md:text-xl animate-wiggle">🎨</span>
+          <div class="flex items-center gap-2 md:gap-3 bg-white rounded-full px-3 py-2 shadow-sm">
             <div class="flex gap-1.5">
               <button
                 *ngFor="let c of availableColors; let i = index"
                 (click)="selectColor(c.color)"
-                class="w-7 h-7 md:w-9 md:h-9 rounded-full border-3 transition-all hover:scale-125 hover:rotate-12"
+                class="w-7 h-7 md:w-9 md:h-9 rounded-full border-2 transition-all hover:scale-110"
                 [style.backgroundColor]="c.color"
-                [style.animation-delay]="(i * 0.05) + 's'"
-                [class.border-yellow-400]="penColor === c.color"
-                [class.border-white]="penColor !== c.color"
+                [class.border-gray-800]="penColor === c.color"
+                [class.border-gray-200]="penColor !== c.color"
                 [class.ring-2]="penColor === c.color"
-                [class.ring-yellow-400]="penColor === c.color"
-                [class.shadow-xl]="penColor === c.color"
+                [class.ring-gray-400]="penColor === c.color"
                 [class.scale-110]="penColor === c.color">
               </button>
             </div>
           </div>
 
           <!-- Width Selection -->
-          <div class="flex items-center gap-2 md:gap-3 bg-white/80 rounded-full px-3 py-2 shadow-md">
-            <span class="text-lg md:text-xl animate-wiggle" style="animation-delay: 0.2s;">📏</span>
+          <div class="flex items-center gap-2 md:gap-3 bg-white rounded-full px-3 py-2 shadow-sm">
             <div class="flex gap-1.5">
               <button
                 *ngFor="let w of availableWidths; let i = index"
                 (click)="selectWidth(w)"
-                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border-3 flex items-center justify-center transition-all hover:scale-125"
-                [class.border-yellow-500]="penWidth === w"
-                [class.border-gray-300]="penWidth !== w"
-                [class.bg-yellow-100]="penWidth === w"
-                [class.shadow-xl]="penWidth === w">
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border-2 flex items-center justify-center transition-all hover:scale-110"
+                [class.border-gray-800]="penWidth === w"
+                [class.border-gray-200]="penWidth !== w"
+                [class.bg-gray-100]="penWidth === w">
                 <div
                   class="rounded-full transition-all"
                   [style.backgroundColor]="penColor"
@@ -1553,39 +1485,14 @@
         </div>
       </div>
 
-      <!-- Instructions & Action Buttons - Inside White Card -->
-      <div class="mt-3 space-y-3">
-        <!-- Instructions Banner -->
-        <div class="text-center">
-          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full px-4 py-2 shadow-md border-2 border-yellow-300">
-            <span class="text-2xl animate-wiggle">✏️</span>
-            <p class="text-base md:text-lg font-bold text-gray-700">
-              <ng-container *ngIf="isFreeWriting">Write on your own!</ng-container>
-              <ng-container *ngIf="!isFreeWriting">Trace from <span class="text-yellow-500">🟡</span> to <span class="text-green-500">🟢</span></ng-container>
-            </p>
-            <span class="text-2xl animate-wiggle" style="animation-delay: 0.3s;">🖍️</span>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex justify-center gap-4">
-          <button
-            (click)="clearDrawing()"
-            class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow-xl border-3 border-yellow-600 hover:scale-110 active:scale-95 transition-all">
-            <span class="text-base md:text-lg text-white font-bold flex items-center gap-1">
-              <span class="animate-spin-slow">🔄</span> Clear
-            </span>
-          </button>
-
-          <button
-            *ngIf="!isFreeWriting"
-            (click)="showHint()"
-            class="bg-gradient-to-br from-blue-400 to-purple-500 rounded-full px-5 py-2 md:px-6 md:py-2.5 shadow-xl border-3 border-blue-600 hover:scale-110 active:scale-95 transition-all">
-            <span class="text-base md:text-lg text-white font-bold flex items-center gap-1">
-              <span class="animate-glow">💡</span> Hint
-            </span>
-          </button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button (click)="clearDrawing()" class="action-btn action-btn-secondary">
+          Clear
+        </button>
+        <button *ngIf="!isFreeWriting" (click)="showHint()" class="action-btn action-btn-primary">
+          Hint
+        </button>
       </div>
     </div>
   </div>

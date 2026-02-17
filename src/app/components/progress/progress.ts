@@ -16,6 +16,7 @@ export class ProgressComponent implements OnInit {
   currentStreak: number = 0;
   badges: Badge[] = [];
   unlockedBadges: Badge[] = [];
+  isDarkTheme: boolean = true;
 
   constructor(
     private router: Router,
@@ -30,6 +31,16 @@ export class ProgressComponent implements OnInit {
     this.currentStreak = this.progressService.getCurrentStreak();
     this.badges = this.progressService.getBadges();
     this.unlockedBadges = this.progressService.getUnlockedBadges();
+
+    const saved = localStorage.getItem('homeTheme');
+    if (saved !== null) {
+      this.isDarkTheme = saved === 'dark';
+    }
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    localStorage.setItem('homeTheme', this.isDarkTheme ? 'dark' : 'light');
   }
 
   goBack() {

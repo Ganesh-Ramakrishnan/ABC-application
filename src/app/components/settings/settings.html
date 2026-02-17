@@ -1,53 +1,72 @@
-<div class="min-h-screen bg-gradient-to-br from-orange-400 via-red-400 to-pink-500 p-4 md:p-8">
-  <div class="max-w-4xl mx-auto">
+<div class="settings-page" [class.light-theme]="!isDarkTheme">
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" (click)="toggleTheme()">
+    @if (isDarkTheme) {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      </svg>
+    } @else {
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+      </svg>
+    }
+  </button>
+
+  <div class="settings-content">
+
     <!-- Header -->
-    <div class="flex items-center justify-between mb-8">
-      <button
-        (click)="goBack()"
-        class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all shadow-lg hover:scale-110">
-        <span class="text-2xl">←</span>
+    <div class="settings-header">
+      <button class="back-btn" (click)="goBack()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
       </button>
-
-      <h1 class="text-4xl md:text-5xl font-kids text-white drop-shadow-lg">
-        Settings
-      </h1>
-
-      <div class="w-12 h-12"></div>
+      <div class="header-text">
+        <span class="page-badge">CONFIGURATION</span>
+        <h1 class="page-title">App <span class="highlight">Settings</span></h1>
+      </div>
     </div>
 
-    <!-- Settings Container -->
-    <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl space-y-6">
+    <!-- Settings Sections -->
+    <div class="settings-sections">
 
       <!-- Sound Setting -->
-      <div class="flex items-center justify-between p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
-        <div class="flex items-center gap-4">
-          <div class="text-4xl">🔊</div>
+      <div class="setting-row">
+        <div class="setting-left">
+          <div class="setting-icon setting-icon-blue">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+            </svg>
+          </div>
           <div>
-            <h3 class="text-xl font-bold text-gray-800">Sound Effects</h3>
-            <p class="text-gray-600">Enable or disable sounds</p>
+            <h3 class="setting-name">Sound Effects</h3>
+            <p class="setting-desc">Enable or disable sounds</p>
           </div>
         </div>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input
-            type="checkbox"
-            [(ngModel)]="soundEnabled"
-            (change)="onSoundToggle()"
-            class="sr-only peer">
-          <div class="w-14 h-8 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-purple-600"></div>
+        <label class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="soundEnabled" (change)="onSoundToggle()">
+          <span class="toggle-slider"></span>
         </label>
       </div>
 
       <!-- Stroke Width Setting -->
-      <div class="p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="text-4xl">✏️</div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-gray-800">Pen Width</h3>
-            <p class="text-gray-600">Adjust the thickness of your pen</p>
+      <div class="setting-block">
+        <div class="setting-block-header">
+          <div class="setting-icon setting-icon-pink">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="setting-name">Pen Width</h3>
+            <p class="setting-desc">Adjust the thickness of your pen</p>
           </div>
         </div>
-        <div class="flex items-center gap-4">
-          <span class="text-gray-700 font-semibold w-12">Thin</span>
+        <div class="range-row">
+          <span class="range-label">Thin</span>
           <input
             type="range"
             [(ngModel)]="strokeWidth"
@@ -55,107 +74,81 @@
             min="10"
             max="40"
             step="5"
-            class="flex-1 h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-          <span class="text-gray-700 font-semibold w-12">Thick</span>
+            class="range-input">
+          <span class="range-label">Thick</span>
         </div>
-        <div class="text-center mt-3">
-          <span class="text-lg font-bold text-purple-600">{{strokeWidth}}px</span>
-        </div>
+        <div class="range-value">{{ strokeWidth }}px</div>
       </div>
 
       <!-- Difficulty Setting -->
-      <div class="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="text-4xl">🎯</div>
+      <div class="setting-block">
+        <div class="setting-block-header">
+          <div class="setting-icon setting-icon-orange">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+          </div>
           <div>
-            <h3 class="text-xl font-bold text-gray-800">Difficulty Level</h3>
-            <p class="text-gray-600">Choose your learning level</p>
+            <h3 class="setting-name">Difficulty Level</h3>
+            <p class="setting-desc">Choose your learning level</p>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-3">
-          <button
-            (click)="onDifficultyChange('easy')"
-            class="px-6 py-4 rounded-xl font-bold text-lg transition-all"
-            [class.bg-green-500]="difficulty === 'easy'"
-            [class.text-white]="difficulty === 'easy'"
-            [class.shadow-lg]="difficulty === 'easy'"
-            [class.bg-white]="difficulty !== 'easy'"
-            [class.text-gray-700]="difficulty !== 'easy'">
-            😊 Easy
+        <div class="difficulty-row">
+          <button class="diff-btn" [class.diff-btn-active]="difficulty === 'easy'" [class.diff-easy]="difficulty === 'easy'" (click)="onDifficultyChange('easy')">
+            Easy
           </button>
-          <button
-            (click)="onDifficultyChange('medium')"
-            class="px-6 py-4 rounded-xl font-bold text-lg transition-all"
-            [class.bg-yellow-500]="difficulty === 'medium'"
-            [class.text-white]="difficulty === 'medium'"
-            [class.shadow-lg]="difficulty === 'medium'"
-            [class.bg-white]="difficulty !== 'medium'"
-            [class.text-gray-700]="difficulty !== 'medium'">
-            🙂 Medium
+          <button class="diff-btn" [class.diff-btn-active]="difficulty === 'medium'" [class.diff-medium]="difficulty === 'medium'" (click)="onDifficultyChange('medium')">
+            Medium
           </button>
-          <button
-            (click)="onDifficultyChange('hard')"
-            class="px-6 py-4 rounded-xl font-bold text-lg transition-all"
-            [class.bg-red-500]="difficulty === 'hard'"
-            [class.text-white]="difficulty === 'hard'"
-            [class.shadow-lg]="difficulty === 'hard'"
-            [class.bg-white]="difficulty !== 'hard'"
-            [class.text-gray-700]="difficulty !== 'hard'">
-            😎 Hard
+          <button class="diff-btn" [class.diff-btn-active]="difficulty === 'hard'" [class.diff-hard]="difficulty === 'hard'" (click)="onDifficultyChange('hard')">
+            Hard
           </button>
         </div>
       </div>
 
-      <!-- Parent Gate Section -->
-      <div class="p-6 bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl border-2 border-red-200">
-        <div class="flex items-center gap-4 mb-4">
-          <div class="text-4xl">👨‍👩‍👧‍👦</div>
+      <!-- Parent Section -->
+      <div class="setting-block danger-block">
+        <div class="setting-block-header">
+          <div class="setting-icon setting-icon-red">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
           <div>
-            <h3 class="text-xl font-bold text-red-700">Parent Section</h3>
-            <p class="text-gray-600">Reset all progress and data</p>
+            <h3 class="setting-name danger-name">Parent Section</h3>
+            <p class="setting-desc">Reset all progress and data</p>
           </div>
         </div>
-        <button
-          (click)="confirmReset()"
-          class="w-full px-6 py-4 bg-red-500 hover:bg-red-600 rounded-xl text-white font-bold text-lg shadow-lg hover:scale-105 transition-all">
-          <span class="text-2xl mr-2">🗑️</span> Reset All Progress
+        <button class="reset-btn" (click)="confirmReset()">
+          Reset All Progress
         </button>
       </div>
 
       <!-- App Info -->
-      <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl text-center">
-        <h3 class="text-2xl font-kids text-purple-600 mb-2">ABC Tracing Fun</h3>
-        <p class="text-gray-600">Version 1.0.0</p>
-        <p class="text-gray-500 text-sm mt-2">Made with ❤️ for young learners</p>
+      <div class="app-info">
+        <h3 class="app-info-title">ABC Tracing App</h3>
+        <p class="app-info-version">Version 1.0.0</p>
       </div>
+
     </div>
   </div>
 </div>
 
 <!-- Reset Confirmation Modal -->
-<div
-  *ngIf="showConfirmReset"
-  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-    <div class="text-center mb-6">
-      <div class="text-6xl mb-4">⚠️</div>
-      <h2 class="text-3xl font-bold text-red-600 mb-2">Are you sure?</h2>
-      <p class="text-gray-700 text-lg">
-        This will delete all progress, badges, and stars. This action cannot be undone.
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-3">
-      <button
-        (click)="resetProgress()"
-        class="w-full px-6 py-4 bg-red-500 hover:bg-red-600 rounded-full text-white font-bold text-lg shadow-lg hover:scale-105 transition-all">
-        Yes, Reset Everything
-      </button>
-      <button
-        (click)="cancelReset()"
-        class="w-full px-6 py-4 bg-gray-300 hover:bg-gray-400 rounded-full text-gray-800 font-bold text-lg shadow-lg hover:scale-105 transition-all">
-        Cancel
-      </button>
+@if (showConfirmReset) {
+  <div class="modal-overlay">
+    <div class="modal-card" [class.modal-light]="!isDarkTheme">
+      <div class="modal-icon">
+        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        </svg>
+      </div>
+      <h2 class="modal-title">Are you sure?</h2>
+      <p class="modal-desc">This will delete all progress, badges, and stars. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-danger" (click)="resetProgress()">Yes, Reset Everything</button>
+        <button class="modal-btn modal-btn-cancel" (click)="cancelReset()">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
+}

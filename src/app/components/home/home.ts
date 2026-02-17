@@ -12,6 +12,7 @@ import { LetterService } from '../../services/letter';
 export class HomeComponent implements OnInit {
   completionPercentage: number = 0;
   animatedLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
+  isDarkTheme: boolean = true;
 
   constructor(
     private router: Router,
@@ -21,6 +22,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.letterService.loadProgress();
     this.completionPercentage = this.letterService.getCompletionPercentage();
+    const saved = localStorage.getItem('homeTheme');
+    if (saved !== null) {
+      this.isDarkTheme = saved === 'dark';
+    }
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
+    localStorage.setItem('homeTheme', this.isDarkTheme ? 'dark' : 'light');
   }
 
   startLearning() {

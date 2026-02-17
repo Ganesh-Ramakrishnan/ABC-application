@@ -1,198 +1,303 @@
-.font-kids {
-  font-family: 'Fredoka One', cursive;
+/* ===== Letter Selection — Dark/Light Theme ===== */
+
+.selection-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0a0e1a 0%, #0f1629 40%, #141a30 100%);
+  color: #fff;
+  position: relative;
+  transition: background 0.4s ease, color 0.4s ease;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
-.border-3 {
-  border-width: 3px;
+/* ---- Theme Toggle ---- */
+.theme-toggle {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
 }
 
-/* Letter tile hover effect */
-.letter-tile {
-  box-shadow:
-    0 8px 0 rgba(0, 0, 0, 0.2),
-    0 12px 20px rgba(0, 0, 0, 0.3);
+/* ---- Content ---- */
+.selection-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* ---- Header ---- */
+.selection-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.back-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
   transition: all 0.2s ease;
-}
 
-.letter-tile:hover {
-  box-shadow:
-    0 4px 0 rgba(0, 0, 0, 0.2),
-    0 8px 15px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1) translateY(4px);
-}
-
-.letter-tile:active {
-  box-shadow:
-    0 2px 0 rgba(0, 0, 0, 0.2),
-    0 4px 10px rgba(0, 0, 0, 0.3);
-  transform: scale(1.05) translateY(6px);
-}
-
-/* Wiggle animation for animals */
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(-5deg);
-  }
-  50% {
-    transform: rotate(5deg);
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
   }
 }
 
-.animate-wiggle {
-  animation: wiggle 1s ease-in-out infinite;
+.header-text {
+  flex: 1;
 }
 
-/* Float animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Sway animation for leaves */
-@keyframes sway {
-  0%, 100% {
-    transform: rotate(-5deg) translateX(0);
-  }
-  50% {
-    transform: rotate(5deg) translateX(5px);
-  }
-}
-
-.animate-sway {
-  animation: sway 4s ease-in-out infinite;
-}
-
-/* Pop in animation for letters */
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  70% {
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-pop-in {
-  animation: popIn 0.4s ease-out forwards;
-}
-
-/* Sparkle animation */
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.3);
-  }
-}
-
-.animate-sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
-}
-
-/* Bounce soft animation */
-@keyframes bounceSoft {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-.animate-bounce-soft {
-  animation: bounceSoft 2s ease-in-out infinite;
-}
-
-/* Swing animation for hanging elements */
-@keyframes swing {
-  0%, 100% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-}
-
-.animate-swing {
-  animation: swing 2s ease-in-out infinite;
-  transform-origin: top center;
-}
-
-/* Title letter bounce */
-@keyframes letterBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.title-letter {
+.page-badge {
   display: inline-block;
-  animation: letterBounce 1s ease-in-out infinite;
+  background: rgba(232, 88, 140, 0.15);
+  color: #E8588C;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(232, 88, 140, 0.25);
+  margin-bottom: 0.75rem;
 }
 
-/* Stagger delays for title letters */
-.title-letter:nth-child(1) { animation-delay: 0s; }
-.title-letter:nth-child(2) { animation-delay: 0.1s; }
-.title-letter:nth-child(3) { animation-delay: 0.2s; }
-.title-letter:nth-child(4) { animation-delay: 0.3s; }
-.title-letter:nth-child(5) { animation-delay: 0.4s; }
-.title-letter:nth-child(6) { animation-delay: 0.5s; }
-.title-letter:nth-child(7) { animation-delay: 0.6s; }
-.title-letter:nth-child(8) { animation-delay: 0.7s; }
-.title-letter:nth-child(9) { animation-delay: 0.8s; }
-.title-letter:nth-child(10) { animation-delay: 0.9s; }
-.title-letter:nth-child(11) { animation-delay: 1s; }
-.title-letter:nth-child(12) { animation-delay: 1.1s; }
-.title-letter:nth-child(13) { animation-delay: 1.2s; }
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
 
-/* Glow pulse for stars */
-@keyframes glowPulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+.highlight {
+  color: #E8588C;
+}
+
+/* ---- Filter Tabs ---- */
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.filter-tab {
+  padding: 0.55rem 1.5rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.filter-tab-active {
+  background: #E8588C;
+  border-color: #E8588C;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(232, 88, 140, 0.3);
+}
+
+/* ---- Letter Grid ---- */
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .letter-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.6rem;
+  }
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .letter-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---- Letter Tile ---- */
+.letter-tile {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  animation: tileAppear 0.35s ease-out both;
+  border: none;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---- Tile Colors (8 rotating gradient pairs) ---- */
+.tile-color-0 { background: linear-gradient(135deg, #e74c6f, #c0392b); }   /* Rose-Red */
+.tile-color-1 { background: linear-gradient(135deg, #e08a38, #d4721a); }   /* Orange */
+.tile-color-2 { background: linear-gradient(135deg, #f5c842, #e0a820); }   /* Gold */
+.tile-color-3 { background: linear-gradient(135deg, #27ae60, #1e8449); }   /* Green */
+.tile-color-4 { background: linear-gradient(135deg, #2eafc2, #1a8a9e); }   /* Teal */
+.tile-color-5 { background: linear-gradient(135deg, #4a8fe7, #2d6dc4); }   /* Blue */
+.tile-color-6 { background: linear-gradient(135deg, #8e5cf6, #6c3ec9); }   /* Purple */
+.tile-color-7 { background: linear-gradient(135deg, #E8588C, #c0356a); }   /* Pink */
+
+.letter-char {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 641px) {
+  .letter-char {
+    font-size: 1.75rem;
+  }
+}
+
+/* ---- Completed Badge ---- */
+.completed-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0a0e1a;
+  color: #fff;
+}
+
+/* ---- Empty State ---- */
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---- Animation ---- */
+@keyframes tileAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
     transform: scale(1);
   }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1));
-    transform: scale(1.2);
-  }
 }
 
-.animate-glow {
-  animation: glowPulse 2s ease-in-out infinite;
-}
+/* ===== Light Theme ===== */
+.light-theme {
+  background: #f0f2f5;
+  color: #1a1a2e;
 
-/* Hop animation for animals */
-@keyframes hop {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-15px) rotate(-5deg);
-  }
-  75% {
-    transform: translateY(-15px) rotate(5deg);
-  }
-}
+  .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #555;
 
-.animate-hop {
-  animation: hop 1.5s ease-in-out infinite;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #222;
+    }
+  }
+
+  .back-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #555;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #222;
+    }
+  }
+
+  .page-title {
+    color: #1a1a2e;
+  }
+
+  .filter-tab {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.45);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  .filter-tab-active {
+    background: #E8588C;
+    border-color: #E8588C;
+    color: #fff;
+  }
+
+  .letter-tile {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .completed-badge {
+    border-color: #f0f2f5;
+  }
+
+  .empty-text {
+    color: rgba(0, 0, 0, 0.4);
+  }
 }

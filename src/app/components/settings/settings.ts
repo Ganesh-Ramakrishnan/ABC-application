@@ -16,7 +16,6 @@ export class SettingsComponent implements OnInit {
   strokeWidth: number = 20;
   difficulty: 'easy' | 'medium' | 'hard' = 'medium';
   showConfirmReset: boolean = false;
-  isDarkTheme: boolean = true;
 
   constructor(
     private router: Router,
@@ -26,15 +25,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.loadSettings();
-    const saved = localStorage.getItem('homeTheme');
-    if (saved !== null) {
-      this.isDarkTheme = saved === 'dark';
-    }
-  }
-
-  toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    localStorage.setItem('homeTheme', this.isDarkTheme ? 'dark' : 'light');
   }
 
   private loadSettings() {

@@ -48,13 +48,12 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
   cursorY: number = 0;
   showCursor: boolean = false;
   isFreeWriting: boolean = false;
-  isDarkTheme: boolean = true;
 
   // Pen customization options
-  penColor: string = '#D946A6'; // Default magenta
+  penColor: string = '#F97316'; // Default orange
   penWidth: number = 18; // Default width
   availableColors: { color: string; name: string }[] = [
-    { color: '#D946A6', name: 'Pink' },
+    { color: '#F97316', name: 'Pink' },
     { color: '#3B82F6', name: 'Blue' },
     { color: '#10B981', name: 'Green' },
     { color: '#F59E0B', name: 'Orange' },
@@ -72,20 +71,10 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
     this.initializeCursiveLetterPaths();
   }
 
-  toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-    localStorage.setItem('homeTheme', this.isDarkTheme ? 'dark' : 'light');
-  }
-
   ngOnInit() {
     this.currentLetter = this.route.snapshot.paramMap.get('letter') || 'A';
     const mode = this.route.snapshot.queryParamMap.get('mode');
     this.isFreeWriting = mode === 'writing';
-
-    const saved = localStorage.getItem('homeTheme');
-    if (saved !== null) {
-      this.isDarkTheme = saved === 'dark';
-    }
 
     // Subscribe to route param changes for prev/next navigation
     this.route.paramMap.subscribe(params => {
@@ -1884,5 +1873,203 @@ export class TracingCanvasComponent implements OnInit, AfterViewInit {
 
   selectWidth(width: number) {
     this.penWidth = width;
+  }
+
+  // Word / phonetic info for bottom card
+  private wordMap: Record<string, { word: string; phonetic: string; sound: string }> = {
+    A: { word: 'Apple',   phonetic: '/ˈæp.əl/',  sound: 'Ah-Ah-Apple'  },
+    B: { word: 'Bear',    phonetic: '/bɛr/',      sound: 'Buh-Buh-Bear'  },
+    C: { word: 'Cat',     phonetic: '/kæt/',      sound: 'Kuh-Kuh-Cat'   },
+    D: { word: 'Dog',     phonetic: '/dɒɡ/',      sound: 'Duh-Duh-Dog'   },
+    E: { word: 'Egg',     phonetic: '/ɛɡ/',       sound: 'Eh-Eh-Egg'     },
+    F: { word: 'Fish',    phonetic: '/fɪʃ/',      sound: 'Fuh-Fuh-Fish'  },
+    G: { word: 'Goat',    phonetic: '/ɡoʊt/',     sound: 'Guh-Guh-Goat'  },
+    H: { word: 'Hat',     phonetic: '/hæt/',      sound: 'Huh-Huh-Hat'   },
+    I: { word: 'Igloo',   phonetic: '/ˈɪɡ.luː/', sound: 'Ih-Ih-Igloo'  },
+    J: { word: 'Jam',     phonetic: '/dʒæm/',     sound: 'Juh-Juh-Jam'   },
+    K: { word: 'Kite',    phonetic: '/kaɪt/',     sound: 'Kuh-Kuh-Kite'  },
+    L: { word: 'Lion',    phonetic: '/ˈlaɪ.ən/', sound: 'Luh-Luh-Lion'  },
+    M: { word: 'Moon',    phonetic: '/muːn/',     sound: 'Muh-Muh-Moon'  },
+    N: { word: 'Nest',    phonetic: '/nɛst/',     sound: 'Nuh-Nuh-Nest'  },
+    O: { word: 'Owl',     phonetic: '/aʊl/',      sound: 'Ow-Ow-Owl'     },
+    P: { word: 'Pig',     phonetic: '/pɪɡ/',      sound: 'Puh-Puh-Pig'   },
+    Q: { word: 'Queen',   phonetic: '/kwiːn/',    sound: 'Kwuh-Kwuh-Queen'},
+    R: { word: 'Rose',    phonetic: '/roʊz/',     sound: 'Ruh-Ruh-Rose'  },
+    S: { word: 'Sun',     phonetic: '/sʌn/',      sound: 'Suh-Suh-Sun'   },
+    T: { word: 'Tree',    phonetic: '/triː/',     sound: 'Tuh-Tuh-Tree'  },
+    U: { word: 'Under',   phonetic: '/ˈʌn.dər/', sound: 'Uh-Uh-Under'   },
+    V: { word: 'Van',     phonetic: '/væn/',      sound: 'Vuh-Vuh-Van'   },
+    W: { word: 'Wolf',    phonetic: '/wʊlf/',     sound: 'Wuh-Wuh-Wolf'  },
+    X: { word: 'X-Ray',   phonetic: '/ˈɛks.reɪ/',sound: 'Eks-Eks-X-Ray' },
+    Y: { word: 'Yak',     phonetic: '/jæk/',      sound: 'Yuh-Yuh-Yak'   },
+    Z: { word: 'Zebra',   phonetic: '/ˈziː.brə/',sound: 'Zuh-Zuh-Zebra' },
+    a: { word: 'apple',   phonetic: '/ˈæp.əl/',  sound: 'Ah-Ah-Apple'   },
+    b: { word: 'ball',    phonetic: '/bɔːl/',     sound: 'Buh-Buh-Ball'  },
+    c: { word: 'cat',     phonetic: '/kæt/',      sound: 'Kuh-Kuh-Cat'   },
+    d: { word: 'dog',     phonetic: '/dɒɡ/',      sound: 'Duh-Duh-Dog'   },
+    e: { word: 'egg',     phonetic: '/ɛɡ/',       sound: 'Eh-Eh-Egg'     },
+    f: { word: 'frog',    phonetic: '/frɒɡ/',     sound: 'Fuh-Fuh-Frog'  },
+    g: { word: 'goat',    phonetic: '/ɡoʊt/',     sound: 'Guh-Guh-Goat'  },
+    h: { word: 'hen',     phonetic: '/hɛn/',      sound: 'Huh-Huh-Hen'   },
+    i: { word: 'ice',     phonetic: '/aɪs/',      sound: 'Ih-Ih-Ice'     },
+    j: { word: 'jug',     phonetic: '/dʒʌɡ/',     sound: 'Juh-Juh-Jug'   },
+    k: { word: 'key',     phonetic: '/kiː/',      sound: 'Kuh-Kuh-Key'   },
+    l: { word: 'lamp',    phonetic: '/læmp/',     sound: 'Luh-Luh-Lamp'  },
+    m: { word: 'map',     phonetic: '/mæp/',      sound: 'Muh-Muh-Map'   },
+    n: { word: 'net',     phonetic: '/nɛt/',      sound: 'Nuh-Nuh-Net'   },
+    o: { word: 'owl',     phonetic: '/aʊl/',      sound: 'Ow-Ow-Owl'     },
+    p: { word: 'pen',     phonetic: '/pɛn/',      sound: 'Puh-Puh-Pen'   },
+    q: { word: 'queen',   phonetic: '/kwiːn/',    sound: 'Kwuh-Queen'    },
+    r: { word: 'rat',     phonetic: '/ræt/',      sound: 'Ruh-Ruh-Rat'   },
+    s: { word: 'sun',     phonetic: '/sʌn/',      sound: 'Suh-Suh-Sun'   },
+    t: { word: 'top',     phonetic: '/tɒp/',      sound: 'Tuh-Tuh-Top'   },
+    u: { word: 'up',      phonetic: '/ʌp/',       sound: 'Uh-Uh-Up'      },
+    v: { word: 'van',     phonetic: '/væn/',      sound: 'Vuh-Vuh-Van'   },
+    w: { word: 'web',     phonetic: '/wɛb/',      sound: 'Wuh-Wuh-Web'   },
+    x: { word: 'x-ray',  phonetic: '/ˈɛks.reɪ/',sound: 'Eks-X-Ray'     },
+    y: { word: 'yak',     phonetic: '/jæk/',      sound: 'Yuh-Yuh-Yak'   },
+    z: { word: 'zero',    phonetic: '/ˈzɪr.oʊ/', sound: 'Zuh-Zuh-Zero'  },
+    '0': { word: 'Zero',  phonetic: '/ˈzɪr.oʊ/', sound: 'Zero'          },
+    '1': { word: 'One',   phonetic: '/wʌn/',      sound: 'One'           },
+    '2': { word: 'Two',   phonetic: '/tuː/',      sound: 'Two'           },
+    '3': { word: 'Three', phonetic: '/θriː/',     sound: 'Three'         },
+    '4': { word: 'Four',  phonetic: '/fɔːr/',     sound: 'Four'          },
+    '5': { word: 'Five',  phonetic: '/faɪv/',     sound: 'Five'          },
+    '6': { word: 'Six',   phonetic: '/sɪks/',     sound: 'Six'           },
+    '7': { word: 'Seven', phonetic: '/ˈsɛv.ən/', sound: 'Seven'         },
+    '8': { word: 'Eight', phonetic: '/eɪt/',      sound: 'Eight'         },
+    '9': { word: 'Nine',  phonetic: '/naɪn/',     sound: 'Nine'          },
+  };
+
+  getWordInfo() {
+    return this.wordMap[this.currentLetter] || { word: this.currentLetter, phonetic: '', sound: '' };
+  }
+
+  getWordFirst(): string {
+    const w = this.getWordInfo().word;
+    return w.charAt(0);
+  }
+
+  getWordRest(): string {
+    const w = this.getWordInfo().word;
+    return w.slice(1);
+  }
+
+  getPhonetic(): string {
+    return this.getWordInfo().phonetic;
+  }
+
+  getSoundText(): string {
+    return '"' + this.getWordInfo().sound + '"';
+  }
+
+  get starScore(): number {
+    return this.completedStrokes.filter(Boolean).length * 4;
+  }
+
+  private funFactMap: Record<string, string> = {
+    A: 'A is the 1st letter & most used vowel in English!',
+    B: 'B makes a soft "buh" sound, like a bouncing ball!',
+    C: 'C can sound like "k" in cat or "s" in city!',
+    D: 'D is for dance — feel the rhythm when you write it!',
+    E: 'E is the most used letter in English!',
+    F: 'F sounds like air rushing through your teeth!',
+    G: 'G can be hard like "go" or soft like "gem"!',
+    H: 'H is a silent helper in words like "ghost"!',
+    I: 'I is a vowel that can be long or short!',
+    J: 'J makes the "juh" sound, like jumping for joy!',
+    K: 'K is often silent before N, like in "knee"!',
+    L: 'L flows smoothly — your tongue touches the top!',
+    M: 'M hums! Try saying "mmm" — that\'s the M sound!',
+    N: 'N is a nasal sound — air goes through your nose!',
+    O: 'O is a round letter that makes a round sound!',
+    P: 'P is a "popping" sound made with both lips!',
+    Q: 'Q almost always needs a U beside it!',
+    R: 'R is tricky — it\'s called a "rhotic" sound!',
+    S: 'S makes a hissing sound, like a sneaky snake!',
+    T: 'T is one of the most common letters in English!',
+    U: 'U is a vowel with both long and short sounds!',
+    V: 'V vibrates! Touch your throat and say "vvv"!',
+    W: 'W is called "double-u" — two U\'s together!',
+    X: 'X can sound like "ks" or even "z" in xylophone!',
+    Y: 'Y can be a vowel too, like in "gym" or "baby"!',
+    Z: 'Z is the last letter — the end of the alphabet!',
+    a: 'Lowercase a is one of the trickiest letters to write!',
+    b: 'Watch out — b and d look similar but are different!',
+    c: 'C is like a circle that didn\'t quite close up!',
+    d: 'D is like a b but facing the other way!',
+    e: 'Lowercase e starts from the middle — try it!',
+    f: 'F has a cross — don\'t forget that little line!',
+    g: 'Lowercase g has a tail that drops below the line!',
+    h: 'H starts tall and then dips down like a hill!',
+    i: 'Don\'t forget the dot on the i!',
+    j: 'J also gets a dot — and a curly tail!',
+    k: 'K has two diagonal strokes — like kicking legs!',
+    l: 'L is the simplest — just one tall straight line!',
+    m: 'M has two humps — like a camel!',
+    n: 'N has just one hump — like a hill!',
+    o: 'O is a perfect circle — can you draw it?',
+    p: 'P has a tail that drops below the line!',
+    q: 'Q also drops below — with a tail on the right!',
+    r: 'Lowercase r is like a tiny bump!',
+    s: 'S curves twice — one up, one down!',
+    t: 'T is a tall stick with a little cross!',
+    u: 'U is like a little cup that holds water!',
+    v: 'V is a sharp dip down and back up!',
+    w: 'W is like two V\'s joined together!',
+    x: 'X is two lines crossing in the middle!',
+    y: 'Y drops its tail below the line!',
+    z: 'Z uses three strokes — top, diagonal, bottom!',
+    '0': 'Zero was invented in ancient India!',
+    '1': 'One is the only number that divides everything!',
+    '2': 'Two is the only even prime number!',
+    '3': 'Three sides make a triangle — a strong shape!',
+    '4': 'Four seasons, four directions — 4 is everywhere!',
+    '5': 'High five! 5 fingers on each hand!',
+    '6': 'Six is a perfect number in mathematics!',
+    '7': 'Lucky 7 is the most popular favorite number!',
+    '8': 'Eight looks like the infinity sign on its side!',
+    '9': 'Nine is 3 × 3 — the square of three!',
+  };
+
+  getFunFact(): string {
+    return this.funFactMap[this.currentLetter] || 'Keep practising — you\'re doing great!';
+  }
+
+  getLetterPosition(): string {
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const nums  = '0123456789';
+    const ui = upper.indexOf(this.currentLetter);
+    if (ui !== -1) return `Letter ${ui + 1} of 26`;
+    const li = lower.indexOf(this.currentLetter);
+    if (li !== -1) return `Letter ${li + 1} of 26`;
+    const ni = nums.indexOf(this.currentLetter);
+    if (ni !== -1) return `Number ${ni} of 0–9`;
+    return '';
+  }
+
+  getStrokeCount(): number {
+    const letter = this.currentLetter;
+    const paths = (this as any).letterPaths as { [key: string]: LetterPath };
+    return paths[letter]?.strokes?.length ?? 0;
+  }
+
+  getCompletedStrokeCount(): number {
+    return this.completedStrokes.filter(Boolean).length;
+  }
+
+  getNextLetter(): string {
+    const group = this.currentLetterGroup;
+    const idx = group.indexOf(this.currentLetter);
+    return idx < group.length - 1 ? group[idx + 1] : '';
+  }
+
+  getEncouragement(): string {
+    if (this.traceProgress === 0) return 'Start tracing! You can do it! 🚀';
+    if (this.traceProgress < 30) return 'Great start! Keep going! 💪';
+    if (this.traceProgress < 60) return 'Halfway there! Looking good! ⭐';
+    if (this.traceProgress < 90) return 'Almost done! Stay focused! 🎯';
+    return 'Amazing! You nailed it! 🎉';
   }
 }

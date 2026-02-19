@@ -1,113 +1,131 @@
-<div class="home-page" [class.light-theme]="!isDarkTheme">
+<div class="home-page">
 
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode'">
-    @if (isDarkTheme) {
-      <!-- Moon icon (shown in dark mode) -->
-      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-      </svg>
-    } @else {
-      <!-- Sun icon (shown in light mode) -->
-      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-      </svg>
-    }
-  </button>
+  <!-- ── Ambient Background Orbs ── -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
 
-  <!-- Main Content -->
+  <!-- ── Main Content ── -->
   <div class="main-content">
 
-    <!-- Header Section -->
-    <div class="header-section">
-      <span class="mission-badge">MISSION BRIEFING</span>
-      <h1 class="main-title">Choose Your <span class="highlight">Learning Mode</span></h1>
-      <p class="main-subtitle">Ready to level up your skills, explorer? Pick a training module to start your daily mission.</p>
+    <!-- Hero -->
+    <div class="hero-section">
+      <h1 class="hero-title">
+        Learn <span class="hero-highlight">A–Z</span>, One Letter at a Time!
+      </h1>
     </div>
 
     <!-- Mode Cards -->
     <div class="cards-container">
 
       <!-- Master Tracing Card -->
-      <div class="mode-card" (click)="startLearning()">
-        <!-- Letter A preview — thick rounded strokes like reference app -->
-        <div class="letter-preview-svg">
-          <svg viewBox="60 20 280 300" width="160" height="160">
-            <!-- Left stroke -->
-            <line x1="125" y1="280" x2="200" y2="60" stroke="#F9A8C9" stroke-width="32" stroke-linecap="round"/>
-            <!-- Right stroke -->
-            <line x1="200" y1="60" x2="275" y2="280" stroke="#F9A8C9" stroke-width="32" stroke-linecap="round"/>
-            <!-- Crossbar -->
-            <line x1="152" y1="190" x2="248" y2="190" stroke="#F9A8C9" stroke-width="32" stroke-linecap="round"/>
-            <!-- Dot guides along left stroke -->
-            <circle cx="125" cy="280" r="6" fill="#fff"/>
-            <circle cx="150" cy="212" r="6" fill="#fff"/>
-            <circle cx="168" cy="160" r="6" fill="#fff"/>
-            <circle cx="185" cy="110" r="6" fill="#fff"/>
-            <!-- Dot guides along right stroke -->
-            <circle cx="218" cy="110" r="6" fill="#fff"/>
-            <circle cx="235" cy="160" r="6" fill="#fff"/>
-            <circle cx="252" cy="212" r="6" fill="#fff"/>
-            <circle cx="275" cy="280" r="6" fill="#fff"/>
-            <!-- Blue start indicator dot -->
-            <circle cx="200" cy="55" r="12" fill="#2196F3"/>
-          </svg>
+      <div class="mode-card tracing-card" (click)="startLearning()">
+
+        <!-- Glow ring -->
+        <div class="card-glow tracing-glow"></div>
+
+        <div class="card-visual tracing-visual">
+          <!-- Grid pattern overlay -->
+          <div class="visual-grid"></div>
+          <!-- Decorative blobs -->
+          <div class="blob blob-tr"></div>
+          <div class="blob blob-bl"></div>
+          <!-- Inner glow circle -->
+          <div class="letter-glow-ring"></div>
+          <!-- Big letter A -->
+          <span class="card-letter">A</span>
+          <!-- Floating dots -->
+          <div class="float-dot fd-1"></div>
+          <div class="float-dot fd-2"></div>
+          <div class="float-dot fd-3"></div>
+          <!-- Carousel dots -->
+          <div class="card-dots">
+            <span class="dot dot-active"></span>
+            <span class="dot"></span>
+            <span class="dot dot-faint"></span>
+          </div>
         </div>
-        <h2 class="card-title">Master Tracing</h2>
-        <p class="card-desc">Follow the dots to master your letters!</p>
-        <button class="card-btn tracing-btn">
-          Start Tracing
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-          </svg>
-        </button>
-        <span class="card-badge tracing-badge">3 DAY STREAK</span>
+
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon-wrap tracing-icon-wrap">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </div>
+            <span class="card-tag tracing-tag">Tracing</span>
+          </div>
+          <h2 class="card-title">Master Tracing</h2>
+          <p class="card-desc">Follow the dotted lines and build perfect letter shapes step by step!</p>
+          <button class="card-btn tracing-btn">
+            Start Tracing
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Free Writing Card -->
-      <div class="mode-card" (click)="startWriting()">
-        <div class="card-icon writing-icon-box">
-          <svg width="36" height="36" fill="none" stroke="#4a8fe7" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 6h16M4 10h16M4 14h10M4 18h7" />
-          </svg>
-        </div>
-        <h2 class="card-title">Free Writing</h2>
-        <p class="card-desc">Express yourself on a blank canvas!</p>
-        <button class="card-btn writing-btn">
-          Start Writing
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-          </svg>
-        </button>
-        <span class="card-badge writing-badge">NEW TOOLS UNLOCKED</span>
-      </div>
+      <div class="mode-card writing-card" (click)="startWriting()">
 
-    </div>
+        <!-- Glow ring -->
+        <div class="card-glow writing-glow"></div>
 
-    <!-- Progress Section -->
-    <div class="progress-section">
-      <div class="progress-left">
-        <div class="progress-icon-ring">
-          <span class="progress-level">Lv.1</span>
-        </div>
-        <div class="progress-info">
-          <p class="progress-title">You've mastered {{completionPercentage > 0 ? (completionPercentage * 26 / 100 | number:'1.0-0') : '0'}} letters so far!</p>
-          <p class="progress-sub">Next milestone: Master 15 letters to earn a Star Pilot badge.</p>
-          <div class="progress-bar-track">
-            <div class="progress-bar-fill" [style.width.%]="completionPercentage"></div>
+        <div class="card-visual writing-visual">
+          <!-- Grid pattern overlay -->
+          <div class="visual-grid visual-grid-blue"></div>
+          <!-- Decorative blobs -->
+          <div class="blob blob-tl-blue"></div>
+          <div class="blob blob-br-blue"></div>
+          <!-- Writing illustration -->
+          <div class="writing-illustration">
+            <div class="paper-card">
+              <div class="paper-line-header"></div>
+              <div class="paper-line"></div>
+              <div class="paper-line paper-line-short"></div>
+              <div class="paper-line paper-line-shorter"></div>
+            </div>
+            <div class="pencil-wrap">
+              <div class="pencil">✏️</div>
+            </div>
           </div>
+          <!-- Floating dots -->
+          <div class="float-dot fd-b1 blue-dot"></div>
+          <div class="float-dot fd-b2 blue-dot"></div>
+          <div class="float-dot fd-b3 blue-dot"></div>
+        </div>
+
+        <div class="card-body">
+          <div class="card-icon-row">
+            <div class="card-icon-wrap writing-icon-wrap">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+              </svg>
+            </div>
+            <span class="card-tag writing-tag">Writing</span>
+          </div>
+          <h2 class="card-title">Free Writing</h2>
+          <p class="card-desc">Express yourself freely and develop your own unique writing style!</p>
+          <button class="card-btn writing-btn">
+            Start Writing
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+            </svg>
+          </button>
         </div>
       </div>
-      <div class="progress-right">
-        <span class="progress-count">{{completionPercentage > 0 ? (completionPercentage * 26 / 100 | number:'1.0-0') : '0'}}/26</span>
-        <button class="keep-going-btn">Keep going, explorer!</button>
-      </div>
+
     </div>
+
+    <!-- Bottom hint -->
+    <p class="bottom-hint">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      Tap a card to begin your learning adventure
+    </p>
 
   </div>
-
 
 </div>

@@ -57,7 +57,7 @@
               font-family="Arial Black, Arial, sans-serif"
               font-weight="900"
               text-anchor="middle"
-              fill="#E5E7EB"
+              fill="#FED7AA"
               stroke="#9CA3AF"
               stroke-width="3">
               {{currentLetter}}
@@ -542,6 +542,12 @@
               <stop offset="0%" stop-color="#FEF3C7"/>
               <stop offset="100%" stop-color="#FCD34D"/>
             </radialGradient>
+
+            <!-- Round-corner filter: erode then dilate to smooth sharp polygon corners -->
+            <filter id="roundCorners" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+              <feMorphology operator="erode" radius="3" in="SourceGraphic" result="eroded"/>
+              <feMorphology operator="dilate" radius="3" in="eroded" result="rounded"/>
+            </filter>
           </defs>
 
           <!-- All content clipped to canvas boundaries -->
@@ -550,31 +556,40 @@
           <!-- Letter A using SVG paths (perfect control) -->
           <g *ngIf="currentLetter === 'A'" id="letterPaths">
             <g id="grayLetterPaths">
-              <line x1="125" y1="280" x2="200" y2="60" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
-              <line x1="200" y1="60" x2="275" y2="280" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
-              <line x1="152" y1="190" x2="248" y2="190" stroke="#F9C5D5" stroke-width="30" stroke-linecap="round"/>
-              <circle cx="125" cy="280" r="5" fill="#fff"/>
-              <circle cx="150" cy="212" r="5" fill="#fff"/>
-              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <line x1="200" y1="60" x2="125" y2="280" stroke="#FED7AA" stroke-width="30" stroke-linecap="round"/>
+              <line x1="200" y1="60" x2="275" y2="280" stroke="#FED7AA" stroke-width="30" stroke-linecap="round"/>
+              <line x1="152" y1="190" x2="248" y2="190" stroke="#FED7AA" stroke-width="30" stroke-linecap="round"/>
+              <!-- Guide dots: stroke 1 top→down-left, stroke 2 top→down-right, stroke 3 crossbar left→right -->
+              <circle cx="200" cy="60"  r="5" fill="#fff"/>
               <circle cx="185" cy="110" r="5" fill="#fff"/>
+              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="212" r="5" fill="#fff"/>
+              <circle cx="125" cy="280" r="5" fill="#fff"/>
               <circle cx="218" cy="110" r="5" fill="#fff"/>
               <circle cx="235" cy="160" r="5" fill="#fff"/>
               <circle cx="252" cy="212" r="5" fill="#fff"/>
               <circle cx="275" cy="280" r="5" fill="#fff"/>
+              <circle cx="152" cy="190" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="248" cy="190" r="5" fill="#fff"/>
             </g>
 
             <g mask="url(#traceMask)">
-              <line x1="125" y1="280" x2="200" y2="60" stroke="#F97316" stroke-width="30" stroke-linecap="round"/>
+              <line x1="200" y1="60" x2="125" y2="280" stroke="#F97316" stroke-width="30" stroke-linecap="round"/>
               <line x1="200" y1="60" x2="275" y2="280" stroke="#F97316" stroke-width="30" stroke-linecap="round"/>
               <line x1="152" y1="190" x2="248" y2="190" stroke="#F97316" stroke-width="30" stroke-linecap="round"/>
-              <circle cx="125" cy="280" r="5" fill="#fff"/>
-              <circle cx="150" cy="212" r="5" fill="#fff"/>
-              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <circle cx="200" cy="60"  r="5" fill="#fff"/>
               <circle cx="185" cy="110" r="5" fill="#fff"/>
+              <circle cx="168" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="212" r="5" fill="#fff"/>
+              <circle cx="125" cy="280" r="5" fill="#fff"/>
               <circle cx="218" cy="110" r="5" fill="#fff"/>
               <circle cx="235" cy="160" r="5" fill="#fff"/>
               <circle cx="252" cy="212" r="5" fill="#fff"/>
               <circle cx="275" cy="280" r="5" fill="#fff"/>
+              <circle cx="152" cy="190" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="248" cy="190" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -585,21 +600,66 @@
             <!-- Gray outline paths (background) - matches tracing strokes -->
             <g id="grayLetterBPaths">
               <!-- Vertical stem: x=110 ±14 = 96-124 -->
-              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#E5E7EB"/>
+              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Top bump with proper rounded curve -->
-              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#E5E7EB"/>
+              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom bump with proper rounded curve -->
-              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#E5E7EB"/>
+              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 top bump, stroke 3 bottom bump -->
+              <circle cx="110" cy="41" r="5" fill="#fff"/>
+              <circle cx="110" cy="100" r="5" fill="#fff"/>
+              <circle cx="110" cy="160" r="5" fill="#fff"/>
+              <circle cx="110" cy="200" r="5" fill="#fff"/>
+              <circle cx="110" cy="260" r="5" fill="#fff"/>
+              <circle cx="110" cy="320" r="5" fill="#fff"/>
+              <circle cx="110" cy="359" r="5" fill="#fff"/>
+              <circle cx="160" cy="55" r="5" fill="#fff"/>
+              <circle cx="200" cy="55" r="5" fill="#fff"/>
+              <circle cx="250" cy="70" r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="280" cy="128" r="5" fill="#fff"/>
+              <circle cx="280" cy="155" r="5" fill="#fff"/>
+              <circle cx="250" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="220" r="5" fill="#fff"/>
+              <circle cx="280" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="273" r="5" fill="#fff"/>
+              <circle cx="280" cy="300" r="5" fill="#fff"/>
+              <circle cx="250" cy="330" r="5" fill="#fff"/>
+              <circle cx="200" cy="345" r="5" fill="#fff"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterBClip)">
               <!-- Vertical stem -->
-              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#F97316"/>
+              <path d="M 96 41 L 124 41 L 124 359 L 96 359 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <!-- Top bump with proper rounded curve -->
-              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#F97316"/>
+              <path d="M 110 41 L 200 41 Q 294 41 294 127.5 Q 294 214 200 214 L 110 214 L 110 186 L 200 186 Q 266 186 266 127.5 Q 266 69 200 69 L 110 69 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <!-- Bottom bump with proper rounded curve -->
-              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#F97316"/>
+              <path d="M 110 186 L 200 186 Q 294 186 294 272.5 Q 294 359 200 359 L 110 359 L 110 331 L 200 331 Q 266 331 266 272.5 Q 266 214 200 214 L 110 214 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="110" cy="41" r="5" fill="#fff"/>
+              <circle cx="110" cy="100" r="5" fill="#fff"/>
+              <circle cx="110" cy="160" r="5" fill="#fff"/>
+              <circle cx="110" cy="200" r="5" fill="#fff"/>
+              <circle cx="110" cy="260" r="5" fill="#fff"/>
+              <circle cx="110" cy="320" r="5" fill="#fff"/>
+              <circle cx="110" cy="359" r="5" fill="#fff"/>
+              <circle cx="160" cy="55" r="5" fill="#fff"/>
+              <circle cx="200" cy="55" r="5" fill="#fff"/>
+              <circle cx="250" cy="70" r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="280" cy="128" r="5" fill="#fff"/>
+              <circle cx="280" cy="155" r="5" fill="#fff"/>
+              <circle cx="250" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="220" r="5" fill="#fff"/>
+              <circle cx="280" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="273" r="5" fill="#fff"/>
+              <circle cx="280" cy="300" r="5" fill="#fff"/>
+              <circle cx="250" cy="330" r="5" fill="#fff"/>
+              <circle cx="200" cy="345" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -609,13 +669,38 @@
             <!-- Gray outline paths (background) - proper C shape -->
             <g id="grayLetterCPaths">
               <!-- C shape: outer arc (294px from center) then inner arc (266px from center) back -->
-              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#E5E7EB"/>
+              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: C-curve from top-right → top → left → bottom → bottom-right -->
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="240" cy="65"  r="5" fill="#fff"/>
+              <circle cx="200" cy="55"  r="5" fill="#fff"/>
+              <circle cx="140" cy="65"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="120" r="5" fill="#fff"/>
+              <circle cx="80"  cy="200" r="5" fill="#fff"/>
+              <circle cx="95"  cy="280" r="5" fill="#fff"/>
+              <circle cx="140" cy="335" r="5" fill="#fff"/>
+              <circle cx="200" cy="345" r="5" fill="#fff"/>
+              <circle cx="240" cy="335" r="5" fill="#fff"/>
+              <circle cx="280" cy="300" r="5" fill="#fff"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterCClip)">
               <!-- C shape: same path as gray -->
-              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#F97316"/>
+              <path d="M 294 100 Q 294 41 200 41 Q 66 41 66 200 Q 66 359 200 359 Q 294 359 294 300 L 266 300 Q 266 331 200 331 Q 94 331 94 200 Q 94 69 200 69 Q 266 69 266 100 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="240" cy="65"  r="5" fill="#fff"/>
+              <circle cx="200" cy="55"  r="5" fill="#fff"/>
+              <circle cx="140" cy="65"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="120" r="5" fill="#fff"/>
+              <circle cx="80"  cy="200" r="5" fill="#fff"/>
+              <circle cx="95"  cy="280" r="5" fill="#fff"/>
+              <circle cx="140" cy="335" r="5" fill="#fff"/>
+              <circle cx="200" cy="345" r="5" fill="#fff"/>
+              <circle cx="240" cy="335" r="5" fill="#fff"/>
+              <circle cx="280" cy="300" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -625,47 +710,142 @@
             <!-- Gray outline paths (background) -->
             <g id="grayLetterDPaths">
               <!-- Vertical stem: x=100 ±14 = 86-114 -->
-              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#E5E7EB"/>
+              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- D bump: outer at x=314, inner at x=286, joined to stem -->
-              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#E5E7EB"/>
+              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 bump clockwise -->
+              <circle cx="100" cy="41"  r="5" fill="#fff"/>
+              <circle cx="100" cy="100" r="5" fill="#fff"/>
+              <circle cx="100" cy="165" r="5" fill="#fff"/>
+              <circle cx="100" cy="230" r="5" fill="#fff"/>
+              <circle cx="100" cy="300" r="5" fill="#fff"/>
+              <circle cx="100" cy="359" r="5" fill="#fff"/>
+              <circle cx="200" cy="41"  r="5" fill="#fff"/>
+              <circle cx="270" cy="80"  r="5" fill="#fff"/>
+              <circle cx="300" cy="140" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="260" r="5" fill="#fff"/>
+              <circle cx="270" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="359" r="5" fill="#fff"/>
             </g>
 
             <!-- Colorful magenta paths (revealed by mask AND clipped to letter shape) -->
             <g mask="url(#traceMask)" clip-path="url(#letterDClip)">
               <!-- Vertical stem -->
-              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#F97316"/>
+              <path d="M 86 41 L 114 41 L 114 359 L 86 359 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <!-- D bump, joined to stem -->
-              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#F97316"/>
+              <path d="M 86 41 L 200 41 Q 314 41 314 200 Q 314 359 200 359 L 86 359 L 86 331 L 200 331 Q 286 331 286 200 Q 286 69 200 69 L 86 69 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="41"  r="5" fill="#fff"/>
+              <circle cx="100" cy="100" r="5" fill="#fff"/>
+              <circle cx="100" cy="165" r="5" fill="#fff"/>
+              <circle cx="100" cy="230" r="5" fill="#fff"/>
+              <circle cx="100" cy="300" r="5" fill="#fff"/>
+              <circle cx="100" cy="359" r="5" fill="#fff"/>
+              <circle cx="200" cy="41"  r="5" fill="#fff"/>
+              <circle cx="270" cy="80"  r="5" fill="#fff"/>
+              <circle cx="300" cy="140" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="260" r="5" fill="#fff"/>
+              <circle cx="270" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="359" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter E -->
           <g *ngIf="currentLetter === 'E'" id="letterEPaths">
             <g id="grayLetterEPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#E5E7EB"/>
-              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#E5E7EB"/>
-              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 top bar, stroke 3 mid bar, stroke 4 bottom bar -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="200" r="5" fill="#fff"/>
+              <circle cx="235" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="200" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="250" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterEClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316"/>
-              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#F97316"/>
-              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#F97316"/>
-              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 100 306 L 294 306 L 294 334 L 100 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="200" r="5" fill="#fff"/>
+              <circle cx="235" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="200" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="250" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter F -->
           <g *ngIf="currentLetter === 'F'" id="letterFPaths">
             <g id="grayLetterFPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#E5E7EB"/>
-              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 top bar left→right, stroke 3 mid bar left→right -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="200" r="5" fill="#fff"/>
+              <circle cx="235" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="200" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterFClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316"/>
-              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#F97316"/>
-              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 100 66 L 294 66 L 294 94 L 100 94 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 100 186 L 274 186 L 274 214 L 100 214 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="200" r="5" fill="#fff"/>
+              <circle cx="235" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="200" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -673,117 +853,397 @@
           <g *ngIf="currentLetter === 'G'" id="letterGPaths">
             <g id="grayLetterGPaths">
               <!-- G shape: C-arc with right arm from tongue to bottom curve, even 28px stroke -->
-              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#E5E7EB"/>
+              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: C-curve top→left→bottom→right, then tongue left→center -->
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="240" cy="75"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="75"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="95"  cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="325" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="325" r="5" fill="#fff"/>
+              <circle cx="314" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="246" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterGClip)">
               <!-- G shape: C-arc with right arm from tongue to bottom curve, even 28px stroke -->
-              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#F97316"/>
+              <path d="M 294 100 Q 294 66 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 246 L 314 186 L 186 186 L 186 214 L 286 214 L 286 246 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Q 266 94 266 100 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="240" cy="75"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="75"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="95"  cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="325" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="325" r="5" fill="#fff"/>
+              <circle cx="314" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="246" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter H -->
           <g *ngIf="currentLetter === 'H'" id="letterHPaths">
             <g id="grayLetterHPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#E5E7EB"/>
-              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem, stroke 2 right stem, stroke 3 crossbar -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="300" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="200" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterHClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316"/>
-              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#F97316"/>
-              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 286 66 L 314 66 L 314 334 L 286 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 86 186 L 314 186 L 314 214 L 86 214 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="300" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="200" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter I -->
           <g *ngIf="currentLetter === 'I'" id="letterIPaths">
             <g id="grayLetterIPaths">
-              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
-              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#E5E7EB"/>
-              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#E5E7EB"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top bar left→right, stroke 2 stem top→bottom, stroke 3 bottom bar left→right -->
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="160" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="240" cy="80"  r="5" fill="#fff"/>
+              <circle cx="280" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="267" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="120" cy="320" r="5" fill="#fff"/>
+              <circle cx="160" cy="320" r="5" fill="#fff"/>
+              <circle cx="240" cy="320" r="5" fill="#fff"/>
+              <circle cx="280" cy="320" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterIClip)">
-              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#F97316"/>
-              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#F97316"/>
-              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#F97316"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 106 306 L 294 306 L 294 334 L 106 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="160" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="240" cy="80"  r="5" fill="#fff"/>
+              <circle cx="280" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="267" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="120" cy="320" r="5" fill="#fff"/>
+              <circle cx="160" cy="320" r="5" fill="#fff"/>
+              <circle cx="240" cy="320" r="5" fill="#fff"/>
+              <circle cx="280" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter J - centered stem at x=200 -->
           <g *ngIf="currentLetter === 'J'" id="letterJPaths">
             <g id="grayLetterJPaths">
-              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
-              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#E5E7EB"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top bar left→right, stroke 2 stem top→down→hook left -->
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="170" cy="80"  r="5" fill="#fff"/>
+              <circle cx="220" cy="80"  r="5" fill="#fff"/>
+              <circle cx="280" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="270" r="5" fill="#fff"/>
+              <circle cx="175" cy="305" r="5" fill="#fff"/>
+              <circle cx="160" cy="320" r="5" fill="#fff"/>
+              <circle cx="130" cy="300" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterJClip)">
-              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#F97316"/>
-              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#F97316"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 280 Q 214 334 160 334 Q 106 334 106 280 L 134 280 Q 134 306 160 306 Q 186 306 186 280 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="170" cy="80"  r="5" fill="#fff"/>
+              <circle cx="220" cy="80"  r="5" fill="#fff"/>
+              <circle cx="280" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="270" r="5" fill="#fff"/>
+              <circle cx="175" cy="305" r="5" fill="#fff"/>
+              <circle cx="160" cy="320" r="5" fill="#fff"/>
+              <circle cx="130" cy="300" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter K -->
           <g *ngIf="currentLetter === 'K'" id="letterKPaths">
             <g id="grayLetterKPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#E5E7EB"/>
-              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 upper diagonal, stroke 3 lower diagonal -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="140" r="5" fill="#fff"/>
+              <circle cx="130" cy="185" r="5" fill="#fff"/>
+              <circle cx="130" cy="215" r="5" fill="#fff"/>
+              <circle cx="200" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterKClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316"/>
-              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#F97316"/>
-              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 293 68 L 307 92 L 107 212 L 93 188 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 107 188 L 93 212 L 293 332 L 307 308 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="140" r="5" fill="#fff"/>
+              <circle cx="130" cy="185" r="5" fill="#fff"/>
+              <circle cx="130" cy="215" r="5" fill="#fff"/>
+              <circle cx="200" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter L -->
           <g *ngIf="currentLetter === 'L'" id="letterLPaths">
             <g id="grayLetterLPaths">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#E5E7EB"/>
-              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 base left→right -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="250" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterLClip)">
-              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316"/>
-              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 86 306 L 294 306 L 294 334 L 86 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="250" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter M -->
           <g *ngIf="currentLetter === 'M'" id="letterMPaths">
             <g id="grayLetterMPaths">
-              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#E5E7EB"/>
+              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem ↓, stroke 2 diag ↘, stroke 3 diag ↗, stroke 4 right stem ↓ -->
+              <circle cx="80"  cy="66"  r="5" fill="#fff"/>
+              <circle cx="80"  cy="130" r="5" fill="#fff"/>
+              <circle cx="80"  cy="200" r="5" fill="#fff"/>
+              <circle cx="80"  cy="267" r="5" fill="#fff"/>
+              <circle cx="80"  cy="334" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="160" cy="145" r="5" fill="#fff"/>
+              <circle cx="200" cy="196" r="5" fill="#fff"/>
+              <circle cx="240" cy="145" r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="320" cy="66"  r="5" fill="#fff"/>
+              <circle cx="320" cy="130" r="5" fill="#fff"/>
+              <circle cx="320" cy="200" r="5" fill="#fff"/>
+              <circle cx="320" cy="267" r="5" fill="#fff"/>
+              <circle cx="320" cy="334" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterMClip)">
-              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#F97316"/>
+              <path d="M 66 66 L 66 334 L 94 334 L 94 102 L 200 214 L 306 102 L 306 334 L 334 334 L 334 66 L 306 66 L 200 178 L 94 66 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="80"  cy="66"  r="5" fill="#fff"/>
+              <circle cx="80"  cy="130" r="5" fill="#fff"/>
+              <circle cx="80"  cy="200" r="5" fill="#fff"/>
+              <circle cx="80"  cy="267" r="5" fill="#fff"/>
+              <circle cx="80"  cy="334" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="160" cy="145" r="5" fill="#fff"/>
+              <circle cx="200" cy="196" r="5" fill="#fff"/>
+              <circle cx="240" cy="145" r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="320" cy="66"  r="5" fill="#fff"/>
+              <circle cx="320" cy="130" r="5" fill="#fff"/>
+              <circle cx="320" cy="200" r="5" fill="#fff"/>
+              <circle cx="320" cy="267" r="5" fill="#fff"/>
+              <circle cx="320" cy="334" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter N -->
           <g *ngIf="currentLetter === 'N'" id="letterNPaths">
             <g id="grayLetterNPaths">
-              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem ↓, stroke 2 diagonal ↘, stroke 3 right stem ↑→↓ -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="267" r="5" fill="#fff"/>
+              <circle cx="300" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="267" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterNClip)">
-              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#F97316"/>
+              <path d="M 86 334 L 86 66 L 118 66 L 286 292 L 286 66 L 314 66 L 314 334 L 283 334 L 114 108 L 114 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="267" r="5" fill="#fff"/>
+              <circle cx="300" cy="334" r="5" fill="#fff"/>
+              <circle cx="300" cy="267" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter O -->
           <g *ngIf="currentLetter === 'O'" id="letterOPaths">
             <g id="grayLetterOPaths">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: oval counterclockwise from top -->
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="80"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterOClip)">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#F97316" fill-rule="evenodd"/>
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#F97316" filter="url(#roundCorners)" fill-rule="evenodd"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="80"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter P -->
           <g *ngIf="currentLetter === 'P'" id="letterPPaths">
             <g id="grayLetterPPaths">
-              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 bump clockwise -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="240" cy="90"  r="5" fill="#fff"/>
+              <circle cx="248" cy="128" r="5" fill="#fff"/>
+              <circle cx="240" cy="165" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="150" cy="176" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterPClip)">
-              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#F97316" fill-rule="evenodd"/>
+              <path d="M 86 334 L 86 66 L 210 66 Q 260 66 260 128 Q 260 190 210 190 L 114 190 L 114 334 Z M 114 94 L 210 94 Q 232 94 232 128 Q 232 162 210 162 L 114 162 Z" fill="#F97316" filter="url(#roundCorners)" fill-rule="evenodd"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="240" cy="90"  r="5" fill="#fff"/>
+              <circle cx="248" cy="128" r="5" fill="#fff"/>
+              <circle cx="240" cy="165" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="150" cy="176" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -791,39 +1251,106 @@
           <g *ngIf="currentLetter === 'Q'" id="letterQPaths">
             <g id="grayLetterQPaths">
               <!-- Gray oval ring -->
-              <g clip-path="url(#letterQClipOval)">
-                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              <g clip-path="url(#letterQClipOval)" filter="url(#roundCorners)">
+                <rect x="0" y="0" width="400" height="400" fill="#FED7AA"/>
               </g>
               <!-- Gray tail -->
-              <g clip-path="url(#letterQClipTail)">
-                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              <g clip-path="url(#letterQClipTail)" filter="url(#roundCorners)">
+                <rect x="0" y="0" width="400" height="400" fill="#FED7AA"/>
               </g>
+              <!-- Guide dots: oval counterclockwise from top, then tail -->
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="80"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
+              <!-- Tail dots -->
+              <circle cx="270" cy="300" r="5" fill="#fff"/>
+              <circle cx="290" cy="317" r="5" fill="#fff"/>
+              <circle cx="310" cy="340" r="5" fill="#fff"/>
             </g>
             <!-- Magenta oval ring -->
-            <g mask="url(#traceMask)" clip-path="url(#letterQClipOval)">
+            <g mask="url(#traceMask)" clip-path="url(#letterQClipOval)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
             </g>
             <!-- Magenta tail -->
-            <g mask="url(#traceMask)" clip-path="url(#letterQClipTail)">
+            <g mask="url(#traceMask)" clip-path="url(#letterQClipTail)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="140" cy="80"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="140" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="314" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
+              <circle cx="270" cy="300" r="5" fill="#fff"/>
+              <circle cx="290" cy="317" r="5" fill="#fff"/>
+              <circle cx="310" cy="340" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter R -->
           <g *ngIf="currentLetter === 'R'" id="letterRPaths">
             <g id="grayLetterRPaths">
-              <g clip-path="url(#letterRClipBody)">
-                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              <g clip-path="url(#letterRClipBody)" filter="url(#roundCorners)">
+                <rect x="0" y="0" width="400" height="400" fill="#FED7AA"/>
               </g>
-              <g clip-path="url(#letterRClipLeg)">
-                <rect x="0" y="0" width="400" height="400" fill="#E5E7EB"/>
+              <g clip-path="url(#letterRClipLeg)" filter="url(#roundCorners)">
+                <rect x="0" y="0" width="400" height="400" fill="#FED7AA"/>
               </g>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 bump, stroke 3 leg -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="248" cy="100" r="5" fill="#fff"/>
+              <circle cx="248" cy="128" r="5" fill="#fff"/>
+              <circle cx="248" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="220" cy="220" r="5" fill="#fff"/>
+              <circle cx="245" cy="260" r="5" fill="#fff"/>
+              <circle cx="265" cy="300" r="5" fill="#fff"/>
+              <circle cx="280" cy="334" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterRClipBody)">
+            <g mask="url(#traceMask)" clip-path="url(#letterRClipBody)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterRClipLeg)">
+            <g mask="url(#traceMask)" clip-path="url(#letterRClipLeg)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="267" r="5" fill="#fff"/>
+              <circle cx="100" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="248" cy="100" r="5" fill="#fff"/>
+              <circle cx="248" cy="128" r="5" fill="#fff"/>
+              <circle cx="248" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="190" r="5" fill="#fff"/>
+              <circle cx="220" cy="220" r="5" fill="#fff"/>
+              <circle cx="245" cy="260" r="5" fill="#fff"/>
+              <circle cx="265" cy="300" r="5" fill="#fff"/>
+              <circle cx="280" cy="334" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -831,37 +1358,120 @@
           <g *ngIf="currentLetter === 'S'" id="letterSPaths">
             <g id="grayLetterSPaths">
               <!-- Top half of S -->
-              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#E5E7EB"/>
+              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom half of S -->
-              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#E5E7EB"/>
+              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: S-curve from top-right → top → left → center → right → bottom → bottom-left -->
+              <circle cx="255" cy="100" r="5" fill="#fff"/>
+              <circle cx="235" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="160" cy="80"  r="5" fill="#fff"/>
+              <circle cx="125" cy="110" r="5" fill="#fff"/>
+              <circle cx="115" cy="140" r="5" fill="#fff"/>
+              <circle cx="130" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="220" r="5" fill="#fff"/>
+              <circle cx="285" cy="262" r="5" fill="#fff"/>
+              <circle cx="270" cy="300" r="5" fill="#fff"/>
+              <circle cx="240" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="165" cy="320" r="5" fill="#fff"/>
+              <circle cx="145" cy="300" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterSClip)">
               <!-- Top half of S -->
-              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#F97316"/>
+              <path d="M 270 110 Q 270 66 200 66 Q 110 66 110 138 Q 110 214 200 214 L 200 186 Q 138 186 138 138 Q 138 94 200 94 Q 242 94 242 110 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <!-- Bottom half of S -->
-              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#F97316"/>
+              <path d="M 130 290 Q 130 334 200 334 Q 290 334 290 262 Q 290 186 200 186 L 200 214 Q 262 214 262 262 Q 262 306 200 306 Q 158 306 158 290 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="255" cy="100" r="5" fill="#fff"/>
+              <circle cx="235" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="160" cy="80"  r="5" fill="#fff"/>
+              <circle cx="125" cy="110" r="5" fill="#fff"/>
+              <circle cx="115" cy="140" r="5" fill="#fff"/>
+              <circle cx="130" cy="180" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="220" r="5" fill="#fff"/>
+              <circle cx="285" cy="262" r="5" fill="#fff"/>
+              <circle cx="270" cy="300" r="5" fill="#fff"/>
+              <circle cx="240" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="165" cy="320" r="5" fill="#fff"/>
+              <circle cx="145" cy="300" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter T -->
           <g *ngIf="currentLetter === 'T'" id="letterTPaths">
             <g id="grayLetterTPaths">
-              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#E5E7EB"/>
-              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top bar left→right, stroke 2 stem down -->
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="267" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterTClip)">
-              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#F97316"/>
-              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#F97316"/>
+              <path d="M 86 66 L 314 66 L 314 94 L 86 94 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="80"  r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="267" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter U -->
           <g *ngIf="currentLetter === 'U'" id="letterUPaths">
             <g id="grayLetterUPaths">
-              <path d="M 86 66 L 114 66 L 114 280 Q 114 326 200 326 Q 286 326 286 280 L 286 66 L 314 66 L 314 280 Q 314 354 200 354 Q 86 354 86 280 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 114 66 L 114 280 Q 114 326 200 326 Q 286 326 286 280 L 286 66 L 314 66 L 314 280 Q 314 354 200 354 Q 86 354 86 280 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem down→curve, stroke 2 right stem up -->
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="130" cy="310" r="5" fill="#fff"/>
+              <circle cx="165" cy="335" r="5" fill="#fff"/>
+              <circle cx="200" cy="340" r="5" fill="#fff"/>
+              <circle cx="235" cy="335" r="5" fill="#fff"/>
+              <circle cx="270" cy="310" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterUClip)">
-              <path d="M 86 66 L 114 66 L 114 280 Q 114 326 200 326 Q 286 326 286 280 L 286 66 L 314 66 L 314 280 Q 314 354 200 354 Q 86 354 86 280 Z" fill="#F97316"/>
+              <path d="M 86 66 L 114 66 L 114 280 Q 114 326 200 326 Q 286 326 286 280 L 286 66 L 314 66 L 314 280 Q 314 354 200 354 Q 86 354 86 280 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="66"  r="5" fill="#fff"/>
+              <circle cx="100" cy="130" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="100" cy="270" r="5" fill="#fff"/>
+              <circle cx="130" cy="310" r="5" fill="#fff"/>
+              <circle cx="165" cy="335" r="5" fill="#fff"/>
+              <circle cx="200" cy="340" r="5" fill="#fff"/>
+              <circle cx="235" cy="335" r="5" fill="#fff"/>
+              <circle cx="270" cy="310" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="300" cy="66"  r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -869,80 +1479,218 @@
           <!-- Letter V -->
           <g *ngIf="currentLetter === 'V'" id="letterVPaths">
             <g id="grayLetterVPaths">
-              <path d="M 68 86 L 188 326 L 212 326 L 332 86 L 308 74 L 200 290 L 92 74 Z" fill="#E5E7EB"/>
+              <path d="M 68 86 L 188 326 L 212 326 L 332 86 L 308 74 L 200 290 L 92 74 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="80"  cy="80"  r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="320" cy="80"  r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterVClip)">
-              <path d="M 68 86 L 188 326 L 212 326 L 332 86 L 308 74 L 200 290 L 92 74 Z" fill="#F97316"/>
+              <path d="M 68 86 L 188 326 L 212 326 L 332 86 L 308 74 L 200 290 L 92 74 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="80"  cy="80"  r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="320" cy="80"  r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter W -->
           <g *ngIf="currentLetter === 'W'" id="letterWPaths">
             <g id="grayLetterWPaths">
-              <path d="M 66 82 L 106 322 L 134 318 L 94 78 Z" fill="#E5E7EB"/>
-              <path d="M 133 326 L 213 166 L 187 154 L 107 314 Z" fill="#E5E7EB"/>
-              <path d="M 187 166 L 267 326 L 293 314 L 213 154 Z" fill="#E5E7EB"/>
-              <path d="M 294 322 L 334 82 L 306 78 L 266 318 Z" fill="#E5E7EB"/>
-              <path d="M 106 322 L 134 318 L 133 326 Z" fill="#E5E7EB"/>
-              <path d="M 107 314 L 106 322 L 133 326 Z" fill="#E5E7EB"/>
-              <path d="M 213 166 L 187 154 L 187 166 Z" fill="#E5E7EB"/>
-              <path d="M 213 166 L 213 154 L 187 154 Z" fill="#E5E7EB"/>
-              <path d="M 267 326 L 293 314 L 294 322 Z" fill="#E5E7EB"/>
-              <path d="M 266 318 L 267 326 L 293 314 Z" fill="#E5E7EB"/>
+              <path d="M 66 82 L 106 322 L 134 318 L 94 78 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 133 326 L 213 166 L 187 154 L 107 314 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 187 166 L 267 326 L 293 314 L 213 154 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 294 322 L 334 82 L 306 78 L 266 318 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 106 322 L 134 318 L 133 326 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 107 314 L 106 322 L 133 326 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 213 166 L 187 154 L 187 166 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 213 166 L 213 154 L 187 154 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 267 326 L 293 314 L 294 322 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 266 318 L 267 326 L 293 314 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 ↘, stroke 2 ↗, stroke 3 ↘, stroke 4 ↗ -->
+              <circle cx="80"  cy="80"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="160" r="5" fill="#fff"/>
+              <circle cx="110" cy="240" r="5" fill="#fff"/>
+              <circle cx="120" cy="320" r="5" fill="#fff"/>
+              <circle cx="145" cy="270" r="5" fill="#fff"/>
+              <circle cx="170" cy="215" r="5" fill="#fff"/>
+              <circle cx="200" cy="160" r="5" fill="#fff"/>
+              <circle cx="230" cy="215" r="5" fill="#fff"/>
+              <circle cx="255" cy="270" r="5" fill="#fff"/>
+              <circle cx="280" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="240" r="5" fill="#fff"/>
+              <circle cx="305" cy="160" r="5" fill="#fff"/>
+              <circle cx="320" cy="80"  r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterWClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterWClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="80"  cy="80"  r="5" fill="#fff"/>
+              <circle cx="95"  cy="160" r="5" fill="#fff"/>
+              <circle cx="110" cy="240" r="5" fill="#fff"/>
+              <circle cx="120" cy="320" r="5" fill="#fff"/>
+              <circle cx="145" cy="270" r="5" fill="#fff"/>
+              <circle cx="170" cy="215" r="5" fill="#fff"/>
+              <circle cx="200" cy="160" r="5" fill="#fff"/>
+              <circle cx="230" cy="215" r="5" fill="#fff"/>
+              <circle cx="255" cy="270" r="5" fill="#fff"/>
+              <circle cx="280" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="240" r="5" fill="#fff"/>
+              <circle cx="305" cy="160" r="5" fill="#fff"/>
+              <circle cx="320" cy="80"  r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter X -->
           <g *ngIf="currentLetter === 'X'" id="letterXPaths">
             <g id="grayLetterXPaths">
-              <path d="M 89 89 L 289 329 L 311 311 L 111 71 Z" fill="#E5E7EB"/>
-              <path d="M 289 71 L 89 311 L 111 329 L 311 89 Z" fill="#E5E7EB"/>
+              <path d="M 89 89 L 289 329 L 311 311 L 111 71 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 289 71 L 89 311 L 111 329 L 311 89 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top-left→bottom-right ↘, stroke 2 top-right→bottom-left ↙ -->
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="140" r="5" fill="#fff"/>
+              <circle cx="150" cy="260" r="5" fill="#fff"/>
+              <circle cx="100" cy="320" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterXClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterXClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="250" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="140" r="5" fill="#fff"/>
+              <circle cx="150" cy="260" r="5" fill="#fff"/>
+              <circle cx="100" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter Y -->
           <g *ngIf="currentLetter === 'Y'" id="letterYPaths">
             <g id="grayLetterYPaths">
-              <path d="M 89 89 L 189 209 L 211 191 L 111 71 Z" fill="#E5E7EB"/>
-              <path d="M 289 71 L 189 191 L 211 209 L 311 89 Z" fill="#E5E7EB"/>
-              <path d="M 186 200 L 186 320 L 214 320 L 214 200 Z" fill="#E5E7EB"/>
-              <path d="M 186 200 L 189 209 L 211 209 L 214 200 Z" fill="#E5E7EB"/>
-              <path d="M 189 191 L 186 200 L 214 200 L 211 191 Z" fill="#E5E7EB"/>
+              <path d="M 89 89 L 189 209 L 211 191 L 111 71 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 289 71 L 189 191 L 211 209 L 311 89 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 186 200 L 186 320 L 214 320 L 214 200 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 186 200 L 189 209 L 211 209 L 214 200 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 189 191 L 186 200 L 214 200 L 211 191 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left diag ↘, stroke 2 right diag ↙, stroke 3 stem ↓ -->
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="240" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterYClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterYClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="150" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="80"  r="5" fill="#fff"/>
+              <circle cx="250" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="240" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Letter Z -->
           <g *ngIf="currentLetter === 'Z'" id="letterZPaths">
             <g id="grayLetterZPaths">
-              <path d="M 100 66 L 300 66 L 300 94 L 100 94 Z" fill="#E5E7EB"/>
-              <path d="M 289 71 L 89 311 L 111 329 L 311 89 Z" fill="#E5E7EB"/>
-              <path d="M 100 306 L 300 306 L 300 334 L 100 334 Z" fill="#E5E7EB"/>
-              <path d="M 300 66 L 311 89 L 300 94 Z" fill="#E5E7EB"/>
-              <path d="M 289 71 L 300 66 L 300 94 Z" fill="#E5E7EB"/>
-              <path d="M 89 311 L 100 306 L 100 334 Z" fill="#E5E7EB"/>
-              <path d="M 100 306 L 111 329 L 100 334 Z" fill="#E5E7EB"/>
+              <path d="M 100 66 L 300 66 L 300 94 L 100 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 289 71 L 89 311 L 111 329 L 311 89 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 306 L 300 306 L 300 334 L 100 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 300 66 L 311 89 L 300 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 289 71 L 300 66 L 300 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 89 311 L 100 306 L 100 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 100 306 L 111 329 L 100 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top bar, stroke 2 diagonal, stroke 3 bottom bar -->
+              <circle cx="110" cy="80"  r="5" fill="#fff"/>
+              <circle cx="155" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="245" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="260" r="5" fill="#fff"/>
+              <circle cx="110" cy="320" r="5" fill="#fff"/>
+              <circle cx="155" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="245" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterZClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterZClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="110" cy="80"  r="5" fill="#fff"/>
+              <circle cx="155" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="245" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="260" r="5" fill="#fff"/>
+              <circle cx="110" cy="320" r="5" fill="#fff"/>
+              <circle cx="155" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="245" cy="320" r="5" fill="#fff"/>
+              <circle cx="290" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Number 0 -->
           <g *ngIf="currentLetter === '0'" id="letter0Paths">
             <g id="grayLetter0Paths">
-              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 200 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 200 Q 314 66 200 66 M 200 94 Q 286 94 286 200 Q 286 306 200 306 Q 114 306 114 200 Q 114 94 200 94 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: oval counterclockwise from top -->
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="95"  r="5" fill="#fff"/>
+              <circle cx="105" cy="140" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="105" cy="260" r="5" fill="#fff"/>
+              <circle cx="145" cy="305" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="255" cy="305" r="5" fill="#fff"/>
+              <circle cx="295" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="295" cy="140" r="5" fill="#fff"/>
+              <circle cx="255" cy="95"  r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter0Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter0Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="145" cy="95"  r="5" fill="#fff"/>
+              <circle cx="105" cy="140" r="5" fill="#fff"/>
+              <circle cx="100" cy="200" r="5" fill="#fff"/>
+              <circle cx="105" cy="260" r="5" fill="#fff"/>
+              <circle cx="145" cy="305" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="255" cy="305" r="5" fill="#fff"/>
+              <circle cx="295" cy="260" r="5" fill="#fff"/>
+              <circle cx="300" cy="200" r="5" fill="#fff"/>
+              <circle cx="295" cy="140" r="5" fill="#fff"/>
+              <circle cx="255" cy="95"  r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -950,14 +1698,37 @@
           <g *ngIf="currentLetter === '1'" id="letter1Paths">
             <g id="grayLetter1Paths">
               <!-- Vertical stem -->
-              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#E5E7EB"/>
+              <path d="M 186 66 L 214 66 L 214 334 L 186 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Flag diagonal with proper 28px perpendicular width -->
-              <path d="M 152 94 L 192 68 L 208 92 L 168 118 Z" fill="#E5E7EB"/>
+              <path d="M 152 94 L 192 68 L 208 92 L 168 118 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom bar -->
-              <path d="M 126 306 L 274 306 L 274 334 L 126 334 Z" fill="#E5E7EB"/>
+              <path d="M 126 306 L 274 306 L 274 334 L 126 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 flag→stem ↓, stroke 2 bottom bar -->
+              <circle cx="165" cy="95" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="175" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="285" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter1Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter1Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="165" cy="95" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="175" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="285" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="150" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="260" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -965,22 +1736,56 @@
           <g *ngIf="currentLetter === '2'" id="letter2Paths">
             <g id="grayLetter2Paths">
               <!-- Top curve + diagonal -->
-              <path d="M 86 120 Q 86 66 200 66 Q 314 66 314 120 Q 314 186 210 230 L 110 330 L 90 310 L 190 210 Q 286 166 286 120 Q 286 94 200 94 Q 114 94 114 120 Z" fill="#E5E7EB"/>
+              <path d="M 86 120 Q 86 66 200 66 Q 314 66 314 120 Q 314 186 210 230 L 110 330 L 90 310 L 190 210 Q 286 166 286 120 Q 286 94 200 94 Q 114 94 114 120 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom bar -->
-              <path d="M 86 306 L 314 306 L 314 334 L 86 334 Z" fill="#E5E7EB"/>
+              <path d="M 86 306 L 314 306 L 314 334 L 86 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="100" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="220" r="5" fill="#fff"/>
+              <circle cx="100" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter2Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter2Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="220" r="5" fill="#fff"/>
+              <circle cx="100" cy="320" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="300" cy="320" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Number 3 -->
           <g *ngIf="currentLetter === '3'" id="letter3Paths">
             <g id="grayLetter3Paths">
-              <path d="M 86 100 Q 126 66 200 66 Q 314 66 314 130 Q 314 186 214 200 Q 314 214 314 270 Q 314 334 200 334 Q 126 334 86 300 L 106 272 Q 140 306 200 306 Q 286 306 286 270 Q 286 214 200 214 L 200 186 Q 286 186 286 130 Q 286 94 200 94 Q 140 94 106 128 Z" fill="#E5E7EB"/>
+              <path d="M 86 100 Q 126 66 200 66 Q 314 66 314 130 Q 314 186 214 200 Q 314 214 314 270 Q 314 334 200 334 Q 126 334 86 300 L 106 272 Q 140 306 200 306 Q 286 306 286 270 Q 286 214 200 214 L 200 186 Q 286 186 286 130 Q 286 94 200 94 Q 140 94 106 128 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="100" cy="100" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="100" cy="300" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter3Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter3Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="100" r="5" fill="#fff"/>
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="300" cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="300" cy="270" r="5" fill="#fff"/>
+              <circle cx="200" cy="334" r="5" fill="#fff"/>
+              <circle cx="100" cy="300" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -988,14 +1793,39 @@
           <g *ngIf="currentLetter === '4'" id="letter4Paths">
             <g id="grayLetter4Paths">
               <!-- Vertical stem -->
-              <path d="M 246 66 L 274 66 L 274 334 L 246 334 Z" fill="#E5E7EB"/>
+              <path d="M 246 66 L 274 66 L 274 334 L 246 334 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Diagonal part -->
-              <path d="M 270 90 L 110 250 L 90 230 L 250 70 Z" fill="#E5E7EB"/>
+              <path d="M 270 90 L 110 250 L 90 230 L 250 70 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Horizontal bar -->
-              <path d="M 86 226 L 274 226 L 274 254 L 86 254 Z" fill="#E5E7EB"/>
+              <path d="M 86 226 L 274 226 L 274 254 L 86 254 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 diagonal top→left, stroke 3 bar left→right -->
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="267" r="5" fill="#fff"/>
+              <circle cx="260" cy="334" r="5" fill="#fff"/>
+              <circle cx="220" cy="130" r="5" fill="#fff"/>
+              <circle cx="170" cy="180" r="5" fill="#fff"/>
+              <circle cx="110" cy="230" r="5" fill="#fff"/>
+              <circle cx="100" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="240" r="5" fill="#fff"/>
+              <circle cx="200" cy="240" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter4Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter4Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="260" cy="80"  r="5" fill="#fff"/>
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="267" r="5" fill="#fff"/>
+              <circle cx="260" cy="334" r="5" fill="#fff"/>
+              <circle cx="220" cy="130" r="5" fill="#fff"/>
+              <circle cx="170" cy="180" r="5" fill="#fff"/>
+              <circle cx="110" cy="230" r="5" fill="#fff"/>
+              <circle cx="100" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="240" r="5" fill="#fff"/>
+              <circle cx="200" cy="240" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1003,34 +1833,95 @@
           <g *ngIf="currentLetter === '5'" id="letter5Paths">
             <g id="grayLetter5Paths">
               <!-- Top horizontal bar -->
-              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#E5E7EB"/>
+              <path d="M 106 66 L 294 66 L 294 94 L 106 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Vertical stem -->
-              <path d="M 106 66 L 134 66 L 134 184 L 106 184 Z" fill="#E5E7EB"/>
+              <path d="M 106 66 L 134 66 L 134 184 L 106 184 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Belly curve -->
-              <path d="M 110 160 Q 202 136 262 182 Q 304 229 261 299 Q 202 344 110 310 L 130 290 Q 198 316 239 281 Q 276 231 239 198 Q 198 164 130 180 Z" fill="#E5E7EB"/>
+              <path d="M 110 160 Q 202 136 262 182 Q 304 229 261 299 Q 202 344 110 310 L 130 290 Q 198 316 239 281 Q 276 231 239 198 Q 198 164 130 180 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="290" r="5" fill="#fff"/>
+              <circle cx="120" cy="310" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter5Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter5Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="290" cy="80"  r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="260" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="290" r="5" fill="#fff"/>
+              <circle cx="120" cy="310" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Number 6 -->
           <g *ngIf="currentLetter === '6'" id="letter6Paths">
             <g id="grayLetter6Paths">
-              <path d="M 280 96 Q 240 66 180 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 260 Q 314 186 200 186 Q 114 186 114 230 L 114 186 Q 114 94 180 94 Q 220 94 252 124 Z M 200 214 Q 286 214 286 260 Q 286 306 200 306 Q 114 306 114 260 Q 114 214 200 214 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 280 96 Q 240 66 180 66 Q 86 66 86 200 Q 86 334 200 334 Q 314 334 314 260 Q 314 186 200 186 Q 114 186 114 230 L 114 186 Q 114 94 180 94 Q 220 94 252 124 Z M 200 214 Q 286 214 286 260 Q 286 306 200 306 Q 114 306 114 260 Q 114 214 200 214 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: tail curve then bottom ring -->
+              <circle cx="265" cy="95" r="5" fill="#fff"/>
+              <circle cx="220" cy="75" r="5" fill="#fff"/>
+              <circle cx="180" cy="66"  r="5" fill="#fff"/>
+              <circle cx="130" cy="90"  r="5" fill="#fff"/>
+              <circle cx="100" cy="140" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="225" r="5" fill="#fff"/>
+              <circle cx="275" cy="260" r="5" fill="#fff"/>
+              <circle cx="260" cy="295" r="5" fill="#fff"/>
+              <circle cx="200" cy="306" r="5" fill="#fff"/>
+              <circle cx="130" cy="290" r="5" fill="#fff"/>
+              <circle cx="120" cy="260" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter6Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter6Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="265" cy="95" r="5" fill="#fff"/>
+              <circle cx="220" cy="75" r="5" fill="#fff"/>
+              <circle cx="180" cy="66"  r="5" fill="#fff"/>
+              <circle cx="130" cy="90"  r="5" fill="#fff"/>
+              <circle cx="100" cy="140" r="5" fill="#fff"/>
+              <circle cx="86"  cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="270" cy="225" r="5" fill="#fff"/>
+              <circle cx="275" cy="260" r="5" fill="#fff"/>
+              <circle cx="260" cy="295" r="5" fill="#fff"/>
+              <circle cx="200" cy="306" r="5" fill="#fff"/>
+              <circle cx="130" cy="290" r="5" fill="#fff"/>
+              <circle cx="120" cy="260" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Number 7 -->
           <g *ngIf="currentLetter === '7'" id="letter7Paths">
             <g id="grayLetter7Paths">
-              <path d="M 86 66 L 323 66 L 189 334 L 160 334 L 277 94 L 86 94 Z" fill="#E5E7EB"/>
+              <path d="M 86 66 L 323 66 L 189 334 L 160 334 L 277 94 L 86 94 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="310" cy="80"  r="5" fill="#fff"/>
+              <circle cx="240" cy="200" r="5" fill="#fff"/>
+              <circle cx="175" cy="334" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter7Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter7Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="80"  r="5" fill="#fff"/>
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="310" cy="80"  r="5" fill="#fff"/>
+              <circle cx="240" cy="200" r="5" fill="#fff"/>
+              <circle cx="175" cy="334" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1038,68 +1929,238 @@
           <g *ngIf="currentLetter === '8'" id="letter8Paths">
             <g id="grayLetter8Paths">
               <!-- Top loop -->
-              <path d="M 200 200 Q 86 200 86 130 Q 86 66 200 66 Q 314 66 314 130 Q 314 200 200 200 M 200 172 Q 286 172 286 130 Q 286 94 200 94 Q 114 94 114 130 Q 114 172 200 172 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 200 200 Q 86 200 86 130 Q 86 66 200 66 Q 314 66 314 130 Q 314 200 200 200 M 200 172 Q 286 172 286 130 Q 286 94 200 94 Q 114 94 114 130 Q 114 172 200 172 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
               <!-- Bottom loop -->
-              <path d="M 200 200 Q 86 200 86 270 Q 86 334 200 334 Q 314 334 314 270 Q 314 200 200 200 M 200 228 Q 286 228 286 270 Q 286 306 200 306 Q 114 306 114 270 Q 114 228 200 228 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 200 200 Q 86 200 86 270 Q 86 334 200 334 Q 314 334 314 270 Q 314 200 200 200 M 200 228 Q 286 228 286 270 Q 286 306 200 306 Q 114 306 114 270 Q 114 228 200 228 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: top loop clockwise, then bottom loop clockwise -->
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="255" cy="90"  r="5" fill="#fff"/>
+              <circle cx="290" cy="130" r="5" fill="#fff"/>
+              <circle cx="255" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="186" r="5" fill="#fff"/>
+              <circle cx="145" cy="170" r="5" fill="#fff"/>
+              <circle cx="110" cy="130" r="5" fill="#fff"/>
+              <circle cx="145" cy="90"  r="5" fill="#fff"/>
+              <circle cx="200" cy="214" r="5" fill="#fff"/>
+              <circle cx="145" cy="230" r="5" fill="#fff"/>
+              <circle cx="110" cy="270" r="5" fill="#fff"/>
+              <circle cx="145" cy="300" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="255" cy="300" r="5" fill="#fff"/>
+              <circle cx="290" cy="270" r="5" fill="#fff"/>
+              <circle cx="255" cy="230" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter8Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter8Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="80"  r="5" fill="#fff"/>
+              <circle cx="255" cy="90"  r="5" fill="#fff"/>
+              <circle cx="290" cy="130" r="5" fill="#fff"/>
+              <circle cx="255" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="186" r="5" fill="#fff"/>
+              <circle cx="145" cy="170" r="5" fill="#fff"/>
+              <circle cx="110" cy="130" r="5" fill="#fff"/>
+              <circle cx="145" cy="90"  r="5" fill="#fff"/>
+              <circle cx="200" cy="214" r="5" fill="#fff"/>
+              <circle cx="145" cy="230" r="5" fill="#fff"/>
+              <circle cx="110" cy="270" r="5" fill="#fff"/>
+              <circle cx="145" cy="300" r="5" fill="#fff"/>
+              <circle cx="200" cy="320" r="5" fill="#fff"/>
+              <circle cx="255" cy="300" r="5" fill="#fff"/>
+              <circle cx="290" cy="270" r="5" fill="#fff"/>
+              <circle cx="255" cy="230" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Number 9 -->
           <g *ngIf="currentLetter === '9'" id="letter9Paths">
             <g id="grayLetter9Paths">
-              <path d="M 120 304 Q 140 334 220 334 Q 314 334 314 200 Q 314 66 200 66 Q 86 66 86 130 Q 86 200 200 200 Q 286 200 286 170 L 286 200 Q 286 306 220 306 Q 160 306 140 276 Z M 200 172 Q 114 172 114 130 Q 114 94 200 94 Q 286 94 286 130 Q 286 172 200 172 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 120 304 Q 140 334 220 334 Q 314 334 314 200 Q 314 66 200 66 Q 86 66 86 130 Q 86 200 200 200 Q 286 200 286 170 L 286 200 Q 286 306 220 306 Q 160 306 140 276 Z M 200 172 Q 114 172 114 130 Q 114 94 200 94 Q 286 94 286 130 Q 286 172 200 172 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots -->
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="86"  cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="314" cy="130" r="5" fill="#fff"/>
+              <circle cx="314" cy="260" r="5" fill="#fff"/>
+              <circle cx="220" cy="334" r="5" fill="#fff"/>
+              <circle cx="130" cy="300" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letter9Clip)">
+            <g mask="url(#traceMask)" clip-path="url(#letter9Clip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="66"  r="5" fill="#fff"/>
+              <circle cx="86"  cy="130" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="314" cy="130" r="5" fill="#fff"/>
+              <circle cx="314" cy="260" r="5" fill="#fff"/>
+              <circle cx="220" cy="334" r="5" fill="#fff"/>
+              <circle cx="130" cy="300" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter a -->
           <g *ngIf="currentLetter === 'a'" id="letteraPaths">
             <g id="grayLetteraPaths">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#E5E7EB"/>
-              <path d="M 266 106 L 294 106 L 294 294 L 266 294 Z" fill="#E5E7EB"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 294 L 266 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 bowl counterclockwise from top-right, stroke 2 right stem down -->
+              <circle cx="270" cy="130" r="5" fill="#fff"/>
+              <circle cx="240" cy="115" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="155" cy="115" r="5" fill="#fff"/>
+              <circle cx="125" cy="150" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="125" cy="250" r="5" fill="#fff"/>
+              <circle cx="155" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="245" cy="280" r="5" fill="#fff"/>
+              <circle cx="270" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="106" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="220" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letteraClip)">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#F97316"/>
-              <path d="M 266 106 L 294 106 L 294 294 L 266 294 Z" fill="#F97316"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 294 L 266 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="270" cy="130" r="5" fill="#fff"/>
+              <circle cx="240" cy="115" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="155" cy="115" r="5" fill="#fff"/>
+              <circle cx="125" cy="150" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="125" cy="250" r="5" fill="#fff"/>
+              <circle cx="155" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="245" cy="280" r="5" fill="#fff"/>
+              <circle cx="270" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="106" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="220" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter b -->
           <g *ngIf="currentLetter === 'b'" id="letterbPaths">
             <g id="grayLetterbPaths">
-              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#E5E7EB"/>
-              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#E5E7EB"/>
+              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 bowl clockwise -->
+              <circle cx="120" cy="46"  r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterbClip)">
-              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#F97316"/>
-              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#F97316"/>
+              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="46"  r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter c -->
           <g *ngIf="currentLetter === 'c'" id="lettercPaths">
             <g id="grayLettercPaths">
-              <path d="M 294 146 Q 274 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 274 294 294 254 L 266 240 Q 254 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 246 134 266 160 Z" fill="#E5E7EB"/>
+              <path d="M 294 146 Q 274 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 274 294 294 254 L 266 240 Q 254 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 246 134 266 160 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: C-curve from top-right → top → left → bottom → bottom-right -->
+              <circle cx="270" cy="140" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="240" cy="280" r="5" fill="#fff"/>
+              <circle cx="270" cy="260" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#lettercClip)">
-              <path d="M 294 146 Q 274 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 274 294 294 254 L 266 240 Q 254 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 246 134 266 160 Z" fill="#F97316"/>
+              <path d="M 294 146 Q 274 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 274 294 294 254 L 266 240 Q 254 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 246 134 266 160 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="270" cy="140" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="240" cy="280" r="5" fill="#fff"/>
+              <circle cx="270" cy="260" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter d -->
           <g *ngIf="currentLetter === 'd'" id="letterdPaths">
             <g id="grayLetterdPaths">
-              <path d="M 266 46 L 294 46 L 294 294 L 266 294 Z" fill="#E5E7EB"/>
-              <path d="M 294 226 Q 294 294 200 294 Q 106 294 106 200 Q 106 106 200 106 Q 294 106 294 146 L 266 160 Q 266 134 200 134 Q 134 134 134 200 Q 134 266 200 266 Q 266 266 266 240 Z" fill="#E5E7EB"/>
+              <path d="M 266 46 L 294 46 L 294 294 L 266 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 294 226 Q 294 294 200 294 Q 106 294 106 200 Q 106 106 200 106 Q 294 106 294 146 L 266 160 Q 266 134 200 134 Q 134 134 134 200 Q 134 266 200 266 Q 266 266 266 240 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 right stem top→bottom, stroke 2 bowl counterclockwise -->
+              <circle cx="280" cy="46"  r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="280" cy="170" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterdClip)">
-              <path d="M 266 46 L 294 46 L 294 294 L 266 294 Z" fill="#F97316"/>
-              <path d="M 294 226 Q 294 294 200 294 Q 106 294 106 200 Q 106 106 200 106 Q 294 106 294 146 L 266 160 Q 266 134 200 134 Q 134 134 134 200 Q 134 266 200 266 Q 266 266 266 240 Z" fill="#F97316"/>
+              <path d="M 266 46 L 294 46 L 294 294 L 266 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 294 226 Q 294 294 200 294 Q 106 294 106 200 Q 106 106 200 106 Q 294 106 294 146 L 266 160 Q 266 134 200 134 Q 134 134 134 200 Q 134 266 200 266 Q 266 266 266 240 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="280" cy="46"  r="5" fill="#fff"/>
+              <circle cx="280" cy="100" r="5" fill="#fff"/>
+              <circle cx="280" cy="170" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1107,73 +2168,239 @@
           <g *ngIf="currentLetter === 'e'" id="letterePaths">
             <g id="grayLetterePaths">
               <!-- Top dome ring -->
-              <path d="M 294 186 Q 294 106 200 106 Q 106 106 106 186 L 134 186 Q 134 134 200 134 Q 266 134 266 186 Z" fill="#E5E7EB"/>
+              <path d="M 294 186 Q 294 106 200 106 Q 106 106 106 186 L 134 186 Q 134 134 200 134 Q 266 134 266 186 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom C-shape -->
-              <path d="M 294 254 Q 274 294 200 294 Q 106 294 106 214 L 134 214 Q 134 266 200 266 Q 254 266 266 240 Z" fill="#E5E7EB"/>
+              <path d="M 294 254 Q 274 294 200 294 Q 106 294 106 214 L 134 214 Q 134 266 200 266 Q 254 266 266 240 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Horizontal bar -->
-              <path d="M 106 186 L 294 186 L 294 214 L 106 214 Z" fill="#E5E7EB"/>
+              <path d="M 106 186 L 294 186 L 294 214 L 106 214 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 horizontal bar left→right, stroke 2 dome up→around→bottom C -->
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="160" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="240" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="275" cy="155" r="5" fill="#fff"/>
+              <circle cx="245" cy="125" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="125" r="5" fill="#fff"/>
+              <circle cx="125" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="155" cy="275" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="250" cy="270" r="5" fill="#fff"/>
+              <circle cx="275" cy="250" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#lettereClip)">
+            <g mask="url(#traceMask)" clip-path="url(#lettereClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="160" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="240" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="275" cy="155" r="5" fill="#fff"/>
+              <circle cx="245" cy="125" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="125" r="5" fill="#fff"/>
+              <circle cx="125" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="155" cy="275" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="250" cy="270" r="5" fill="#fff"/>
+              <circle cx="275" cy="250" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter f -->
           <g *ngIf="currentLetter === 'f'" id="letterfPaths">
             <g id="grayLetterfPaths">
-              <path d="M 274 100 Q 274 46 200 46 Q 146 46 146 100 L 146 294 L 174 294 L 174 100 Q 174 74 200 74 Q 246 74 246 100 Z" fill="#E5E7EB"/>
-              <path d="M 106 146 L 234 146 L 234 174 L 106 174 Z" fill="#E5E7EB"/>
+              <path d="M 274 100 Q 274 46 200 46 Q 146 46 146 100 L 146 294 L 174 294 L 174 100 Q 174 74 200 74 Q 246 74 246 100 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 106 146 L 234 146 L 234 174 L 106 174 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 hook top→down stem, stroke 2 crossbar left→right -->
+              <circle cx="250" cy="80" r="5" fill="#fff"/>
+              <circle cx="230" cy="55" r="5" fill="#fff"/>
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="170" cy="55" r="5" fill="#fff"/>
+              <circle cx="160" cy="80" r="5" fill="#fff"/>
+              <circle cx="160" cy="130" r="5" fill="#fff"/>
+              <circle cx="160" cy="180" r="5" fill="#fff"/>
+              <circle cx="160" cy="230" r="5" fill="#fff"/>
+              <circle cx="160" cy="270" r="5" fill="#fff"/>
+              <circle cx="160" cy="294" r="5" fill="#fff"/>
+              <circle cx="106" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="160" r="5" fill="#fff"/>
+              <circle cx="195" cy="160" r="5" fill="#fff"/>
+              <circle cx="234" cy="160" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterfClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterfClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="250" cy="80" r="5" fill="#fff"/>
+              <circle cx="230" cy="55" r="5" fill="#fff"/>
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="170" cy="55" r="5" fill="#fff"/>
+              <circle cx="160" cy="80" r="5" fill="#fff"/>
+              <circle cx="160" cy="130" r="5" fill="#fff"/>
+              <circle cx="160" cy="180" r="5" fill="#fff"/>
+              <circle cx="160" cy="230" r="5" fill="#fff"/>
+              <circle cx="160" cy="270" r="5" fill="#fff"/>
+              <circle cx="160" cy="294" r="5" fill="#fff"/>
+              <circle cx="106" cy="160" r="5" fill="#fff"/>
+              <circle cx="150" cy="160" r="5" fill="#fff"/>
+              <circle cx="195" cy="160" r="5" fill="#fff"/>
+              <circle cx="234" cy="160" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter g -->
           <g *ngIf="currentLetter === 'g'" id="lettergPaths">
             <g id="grayLettergPaths">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#E5E7EB"/>
-              <path d="M 266 106 L 294 106 L 294 354 Q 294 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 266 366 266 340 Z" fill="#E5E7EB"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 354 Q 294 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 266 366 266 340 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 bowl counterclockwise from right, stroke 2 stem down + tail -->
+              <circle cx="270" cy="130" r="5" fill="#fff"/>
+              <circle cx="240" cy="112" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="155" cy="115" r="5" fill="#fff"/>
+              <circle cx="120" cy="150" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="250" r="5" fill="#fff"/>
+              <circle cx="155" cy="285" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="245" cy="285" r="5" fill="#fff"/>
+              <circle cx="270" cy="250" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
+              <circle cx="280" cy="340" r="5" fill="#fff"/>
+              <circle cx="250" cy="375" r="5" fill="#fff"/>
+              <circle cx="200" cy="394" r="5" fill="#fff"/>
+              <circle cx="150" cy="375" r="5" fill="#fff"/>
+              <circle cx="125" cy="350" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#lettergClip)">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#F97316"/>
-              <path d="M 266 106 L 294 106 L 294 354 Q 294 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 266 366 266 340 Z" fill="#F97316"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 L 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 160 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 354 Q 294 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 266 366 266 340 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="270" cy="130" r="5" fill="#fff"/>
+              <circle cx="240" cy="112" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="155" cy="115" r="5" fill="#fff"/>
+              <circle cx="120" cy="150" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="250" r="5" fill="#fff"/>
+              <circle cx="155" cy="285" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="245" cy="285" r="5" fill="#fff"/>
+              <circle cx="270" cy="250" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
+              <circle cx="280" cy="340" r="5" fill="#fff"/>
+              <circle cx="250" cy="375" r="5" fill="#fff"/>
+              <circle cx="200" cy="394" r="5" fill="#fff"/>
+              <circle cx="150" cy="375" r="5" fill="#fff"/>
+              <circle cx="125" cy="350" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter h -->
           <g *ngIf="currentLetter === 'h'" id="letterhPaths">
             <g id="grayLetterhPaths">
-              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#E5E7EB"/>
-              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#E5E7EB"/>
+              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 arch up→over→down -->
+              <circle cx="120" cy="46" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="170" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterhClip)">
-              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#F97316"/>
-              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#F97316"/>
+              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="46" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="170" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter i -->
           <g *ngIf="currentLetter === 'i'" id="letteriPaths">
             <g id="grayLetteriPaths">
-              <path d="M 186 106 L 214 106 L 214 294 L 186 294 Z" fill="#E5E7EB"/>
-              <circle cx="200" cy="60" r="14" fill="#E5E7EB"/>
+              <path d="M 186 106 L 214 106 L 214 294 L 186 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <circle cx="200" cy="60" r="14" fill="#FED7AA"/>
+              <!-- Guide dots: dot then stem top→bottom -->
+              <circle cx="200" cy="60" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="200" cy="150" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="250" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letteriClip)">
-              <path d="M 186 106 L 214 106 L 214 294 L 186 294 Z" fill="#F97316"/>
+              <path d="M 186 106 L 214 106 L 214 294 L 186 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <circle cx="200" cy="60" r="14" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="60" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="200" cy="150" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="250" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter j -->
           <g *ngIf="currentLetter === 'j'" id="letterjPaths">
             <g id="grayLetterjPaths">
-              <path d="M 206 106 L 234 106 L 234 354 Q 234 394 160 394 Q 106 394 106 354 L 134 340 Q 134 366 160 366 Q 206 366 206 340 Z" fill="#E5E7EB"/>
-              <circle cx="220" cy="60" r="14" fill="#E5E7EB"/>
+              <path d="M 206 106 L 234 106 L 234 354 Q 234 394 160 394 Q 106 394 106 354 L 134 340 Q 134 366 160 366 Q 206 366 206 340 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <circle cx="220" cy="60" r="14" fill="#FED7AA"/>
+              <!-- Guide dots: dot then stem top→down→hook left -->
+              <circle cx="220" cy="60" r="5" fill="#fff"/>
+              <circle cx="220" cy="106" r="5" fill="#fff"/>
+              <circle cx="220" cy="156" r="5" fill="#fff"/>
+              <circle cx="220" cy="206" r="5" fill="#fff"/>
+              <circle cx="220" cy="256" r="5" fill="#fff"/>
+              <circle cx="220" cy="306" r="5" fill="#fff"/>
+              <circle cx="220" cy="345" r="5" fill="#fff"/>
+              <circle cx="190" cy="378" r="5" fill="#fff"/>
+              <circle cx="160" cy="394" r="5" fill="#fff"/>
+              <circle cx="130" cy="360" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterjClip)">
-              <path d="M 206 106 L 234 106 L 234 354 Q 234 394 160 394 Q 106 394 106 354 L 134 340 Q 134 366 160 366 Q 206 366 206 340 Z" fill="#F97316"/>
+              <path d="M 206 106 L 234 106 L 234 354 Q 234 394 160 394 Q 106 394 106 354 L 134 340 Q 134 366 160 366 Q 206 366 206 340 Z" fill="#F97316" filter="url(#roundCorners)"/>
               <circle cx="220" cy="60" r="14" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="220" cy="60" r="5" fill="#fff"/>
+              <circle cx="220" cy="106" r="5" fill="#fff"/>
+              <circle cx="220" cy="156" r="5" fill="#fff"/>
+              <circle cx="220" cy="206" r="5" fill="#fff"/>
+              <circle cx="220" cy="256" r="5" fill="#fff"/>
+              <circle cx="220" cy="306" r="5" fill="#fff"/>
+              <circle cx="220" cy="345" r="5" fill="#fff"/>
+              <circle cx="190" cy="378" r="5" fill="#fff"/>
+              <circle cx="160" cy="394" r="5" fill="#fff"/>
+              <circle cx="130" cy="360" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1181,24 +2408,56 @@
           <g *ngIf="currentLetter === 'k'" id="letterkPaths">
             <g id="grayLetterkPaths">
               <!-- Vertical stem -->
-              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#E5E7EB"/>
+              <path d="M 106 46 L 134 46 L 134 294 L 106 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Upper diagonal arm -->
-              <path d="M 253 108 L 267 132 L 134 208 L 134 176 Z" fill="#E5E7EB"/>
+              <path d="M 253 108 L 267 132 L 134 208 L 134 176 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Lower diagonal arm -->
-              <path d="M 134 191 L 286 267 L 274 293 L 134 223 Z" fill="#E5E7EB"/>
+              <path d="M 134 191 L 286 267 L 274 293 L 134 223 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom, stroke 2 upper arm in→tip, stroke 3 lower arm out→tip -->
+              <circle cx="120" cy="46" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="260" cy="120" r="5" fill="#fff"/>
+              <circle cx="190" cy="160" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="280" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterkClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterkClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="46" r="5" fill="#fff"/>
+              <circle cx="120" cy="100" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="260" cy="120" r="5" fill="#fff"/>
+              <circle cx="190" cy="160" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="190" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="280" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter l -->
           <g *ngIf="currentLetter === 'l'" id="letterlPaths">
             <g id="grayLetterlPaths">
-              <path d="M 186 46 L 214 46 L 214 294 L 186 294 Z" fill="#E5E7EB"/>
+              <path d="M 186 46 L 214 46 L 214 294 L 186 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots -->
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="200" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterlClip)">
-              <path d="M 186 46 L 214 46 L 214 294 L 186 294 Z" fill="#F97316"/>
+              <path d="M 186 46 L 214 46 L 214 294 L 186 294 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="200" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1206,69 +2465,233 @@
           <g *ngIf="currentLetter === 'm'" id="lettermPaths">
             <g id="grayLettermPaths">
               <!-- Left n-shape: left stem + first arch + middle stem -->
-              <path d="M 66 294 L 66 160 Q 66 106 140 106 Q 214 106 214 160 L 214 294 L 186 294 L 186 160 Q 186 134 140 134 Q 94 134 94 160 L 94 294 Z" fill="#E5E7EB"/>
+              <path d="M 66 294 L 66 160 Q 66 106 140 106 Q 214 106 214 160 L 214 294 L 186 294 L 186 160 Q 186 134 140 134 Q 94 134 94 160 L 94 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Right n-shape: middle stem + second arch + right stem -->
-              <path d="M 186 294 L 186 160 Q 186 106 260 106 Q 334 106 334 160 L 334 294 L 306 294 L 306 160 Q 306 134 260 134 Q 214 134 214 160 L 214 294 Z" fill="#E5E7EB"/>
+              <path d="M 186 294 L 186 160 Q 186 106 260 106 Q 334 106 334 160 L 334 294 L 306 294 L 306 160 Q 306 134 260 134 Q 214 134 214 160 L 214 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem down, stroke 2 first arch, stroke 3 second arch+stem -->
+              <circle cx="80" cy="106" r="5" fill="#fff"/>
+              <circle cx="80" cy="170" r="5" fill="#fff"/>
+              <circle cx="80" cy="230" r="5" fill="#fff"/>
+              <circle cx="80" cy="294" r="5" fill="#fff"/>
+              <circle cx="110" cy="120" r="5" fill="#fff"/>
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="170" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="230" cy="120" r="5" fill="#fff"/>
+              <circle cx="260" cy="106" r="5" fill="#fff"/>
+              <circle cx="290" cy="120" r="5" fill="#fff"/>
+              <circle cx="320" cy="170" r="5" fill="#fff"/>
+              <circle cx="320" cy="230" r="5" fill="#fff"/>
+              <circle cx="320" cy="294" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#lettermClip)">
+            <g mask="url(#traceMask)" clip-path="url(#lettermClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="80" cy="106" r="5" fill="#fff"/>
+              <circle cx="80" cy="170" r="5" fill="#fff"/>
+              <circle cx="80" cy="230" r="5" fill="#fff"/>
+              <circle cx="80" cy="294" r="5" fill="#fff"/>
+              <circle cx="110" cy="120" r="5" fill="#fff"/>
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="170" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="170" r="5" fill="#fff"/>
+              <circle cx="200" cy="230" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="230" cy="120" r="5" fill="#fff"/>
+              <circle cx="260" cy="106" r="5" fill="#fff"/>
+              <circle cx="290" cy="120" r="5" fill="#fff"/>
+              <circle cx="320" cy="170" r="5" fill="#fff"/>
+              <circle cx="320" cy="230" r="5" fill="#fff"/>
+              <circle cx="320" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter n -->
           <g *ngIf="currentLetter === 'n'" id="letternPaths">
             <g id="grayLetternPaths">
-              <path d="M 106 294 L 134 294 L 134 146 L 106 146 Z" fill="#E5E7EB"/>
-              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#E5E7EB"/>
+              <path d="M 106 294 L 134 294 L 134 146 L 106 146 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem down, stroke 2 arch up→over→right stem down -->
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="166" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letternClip)">
-              <path d="M 106 294 L 134 294 L 134 146 L 106 146 Z" fill="#F97316"/>
-              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#F97316"/>
+              <path d="M 106 294 L 134 294 L 134 146 L 106 146 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 120 166 Q 120 106 200 106 Q 294 106 294 166 L 294 294 L 266 294 L 266 166 Q 266 134 200 134 Q 134 134 134 194 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="230" r="5" fill="#fff"/>
+              <circle cx="120" cy="294" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="166" r="5" fill="#fff"/>
+              <circle cx="280" cy="230" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter o -->
           <g *ngIf="currentLetter === 'o'" id="letteroPaths">
             <g id="grayLetteroPaths">
-              <path d="M 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 Q 294 106 200 106 M 200 134 Q 266 134 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Z" fill="#E5E7EB" fill-rule="evenodd"/>
+              <path d="M 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 Q 294 106 200 106 M 200 134 Q 266 134 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Z" fill="#FED7AA" filter="url(#roundCorners)" fill-rule="evenodd"/>
+              <!-- Guide dots: counterclockwise from top, on ring centerline (radius ~80px) -->
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="130" r="5" fill="#fff"/>
+              <circle cx="125" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="125" cy="245" r="5" fill="#fff"/>
+              <circle cx="155" cy="270" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="245" cy="270" r="5" fill="#fff"/>
+              <circle cx="275" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="275" cy="155" r="5" fill="#fff"/>
+              <circle cx="245" cy="130" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letteroClip)">
-              <path d="M 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 Q 294 106 200 106 M 200 134 Q 266 134 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Z" fill="#F97316" fill-rule="evenodd"/>
+              <path d="M 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 200 Q 294 106 200 106 M 200 134 Q 266 134 266 200 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Z" fill="#F97316" filter="url(#roundCorners)" fill-rule="evenodd"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="130" r="5" fill="#fff"/>
+              <circle cx="125" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="200" r="5" fill="#fff"/>
+              <circle cx="125" cy="245" r="5" fill="#fff"/>
+              <circle cx="155" cy="270" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="245" cy="270" r="5" fill="#fff"/>
+              <circle cx="275" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="275" cy="155" r="5" fill="#fff"/>
+              <circle cx="245" cy="130" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter p -->
           <g *ngIf="currentLetter === 'p'" id="letterpPaths">
             <g id="grayLetterpPaths">
-              <path d="M 106 106 L 134 106 L 134 374 L 106 374 Z" fill="#E5E7EB"/>
-              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#E5E7EB"/>
+              <path d="M 106 106 L 134 106 L 134 374 L 106 374 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→descender, stroke 2 bowl clockwise -->
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="120" cy="310" r="5" fill="#fff"/>
+              <circle cx="120" cy="374" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterpClip)">
-              <path d="M 106 106 L 134 106 L 134 374 L 106 374 Z" fill="#F97316"/>
-              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#F97316"/>
+              <path d="M 106 106 L 134 106 L 134 374 L 106 374 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 120 146 Q 120 106 200 106 Q 294 106 294 200 Q 294 294 200 294 Q 106 294 106 226 L 134 226 Q 134 266 200 266 Q 266 266 266 200 Q 266 134 200 134 Q 134 134 134 174 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="170" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="120" cy="310" r="5" fill="#fff"/>
+              <circle cx="120" cy="374" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="280" cy="160" r="5" fill="#fff"/>
+              <circle cx="280" cy="200" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter q -->
           <g *ngIf="currentLetter === 'q'" id="letterqPaths">
             <g id="grayLetterqPaths">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 226 L 266 226 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 174 Z" fill="#E5E7EB"/>
-              <path d="M 266 106 L 294 106 L 294 374 L 266 374 Z" fill="#E5E7EB"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 226 L 266 226 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 174 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 374 L 266 374 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 bowl counterclockwise, stroke 2 stem down to descender -->
+              <circle cx="280" cy="140" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="280" cy="310" r="5" fill="#fff"/>
+              <circle cx="280" cy="374" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterqClip)">
-              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 226 L 266 226 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 174 Z" fill="#F97316"/>
-              <path d="M 266 106 L 294 106 L 294 374 L 266 374 Z" fill="#F97316"/>
+              <path d="M 294 146 Q 294 106 200 106 Q 106 106 106 200 Q 106 294 200 294 Q 294 294 294 226 L 266 226 Q 266 266 200 266 Q 134 266 134 200 Q 134 134 200 134 Q 266 134 266 174 Z" fill="#F97316" filter="url(#roundCorners)"/>
+              <path d="M 266 106 L 294 106 L 294 374 L 266 374 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="280" cy="140" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="150" cy="120" r="5" fill="#fff"/>
+              <circle cx="120" cy="160" r="5" fill="#fff"/>
+              <circle cx="106" cy="200" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="150" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="280" cy="310" r="5" fill="#fff"/>
+              <circle cx="280" cy="374" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter r -->
           <g *ngIf="currentLetter === 'r'" id="letterrPaths">
             <g id="grayLetterrPaths">
-              <path d="M 126 106 L 126 294 L 154 294 L 154 106 Z" fill="#E5E7EB"/>
-              <path d="M 126 160 Q 126 106 200 106 Q 254 106 254 150 A 14 14 0 0 1 226 150 Q 226 134 200 134 Q 154 134 154 160 Z" fill="#E5E7EB"/>
+              <path d="M 126 106 L 126 294 L 154 294 L 154 106 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 126 160 Q 126 106 200 106 Q 254 106 254 150 A 14 14 0 0 1 226 150 Q 226 134 200 134 Q 154 134 154 160 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem down, stroke 2 arm up→tip -->
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="140" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="250" r="5" fill="#fff"/>
+              <circle cx="140" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="254" cy="150" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterrClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterrClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="140" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="250" r="5" fill="#fff"/>
+              <circle cx="140" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="254" cy="150" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1276,71 +2699,219 @@
           <g *ngIf="currentLetter === 's'" id="lettersPaths">
             <g id="grayLettersPaths">
               <!-- Top half of s -->
-              <path d="M 274 150 Q 274 106 200 106 Q 126 106 126 160 Q 126 214 200 214 L 200 186 Q 154 186 154 160 Q 154 134 200 134 Q 246 134 246 150 Z" fill="#E5E7EB"/>
+              <path d="M 274 150 Q 274 106 200 106 Q 126 106 126 160 Q 126 214 200 214 L 200 186 Q 154 186 154 160 Q 154 134 200 134 Q 246 134 246 150 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Bottom half of s -->
-              <path d="M 126 250 Q 126 294 200 294 Q 274 294 274 240 Q 274 186 200 186 L 200 214 Q 246 214 246 240 Q 246 266 200 266 Q 154 266 154 250 Z" fill="#E5E7EB"/>
+              <path d="M 126 250 Q 126 294 200 294 Q 274 294 274 240 Q 274 186 200 186 L 200 214 Q 246 214 246 240 Q 246 266 200 266 Q 154 266 154 250 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: S-curve top-right → top → left → center → right → bottom → bottom-left -->
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="126" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="186" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="214" r="5" fill="#fff"/>
+              <circle cx="274" cy="250" r="5" fill="#fff"/>
+              <circle cx="240" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="280" r="5" fill="#fff"/>
+              <circle cx="140" cy="260" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#lettersClip)">
+            <g mask="url(#traceMask)" clip-path="url(#lettersClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="260" cy="140" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="106" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="126" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="186" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="260" cy="214" r="5" fill="#fff"/>
+              <circle cx="274" cy="250" r="5" fill="#fff"/>
+              <circle cx="240" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="294" r="5" fill="#fff"/>
+              <circle cx="160" cy="280" r="5" fill="#fff"/>
+              <circle cx="140" cy="260" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter t -->
           <g *ngIf="currentLetter === 't'" id="lettertPaths">
             <g id="grayLettertPaths">
-              <path d="M 186 46 L 186 260 Q 186 294 230 294 A 14 14 0 0 0 230 266 Q 214 266 214 260 L 214 46 Z" fill="#E5E7EB"/>
-              <path d="M 116 106 L 274 106 L 274 134 L 116 134 Z" fill="#E5E7EB"/>
+              <path d="M 186 46 L 186 260 Q 186 294 230 294 A 14 14 0 0 0 230 266 Q 214 266 214 260 L 214 46 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 116 106 L 274 106 L 274 134 L 116 134 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 stem top→bottom+hook, stroke 2 crossbar left→right -->
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="200" cy="100" r="5" fill="#fff"/>
+              <circle cx="200" cy="150" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="250" r="5" fill="#fff"/>
+              <circle cx="215" cy="280" r="5" fill="#fff"/>
+              <circle cx="230" cy="294" r="5" fill="#fff"/>
+              <circle cx="116" cy="120" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="274" cy="120" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#lettertClip)">
+            <g mask="url(#traceMask)" clip-path="url(#lettertClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="200" cy="46" r="5" fill="#fff"/>
+              <circle cx="200" cy="100" r="5" fill="#fff"/>
+              <circle cx="200" cy="150" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="250" r="5" fill="#fff"/>
+              <circle cx="215" cy="280" r="5" fill="#fff"/>
+              <circle cx="230" cy="294" r="5" fill="#fff"/>
+              <circle cx="116" cy="120" r="5" fill="#fff"/>
+              <circle cx="160" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="240" cy="120" r="5" fill="#fff"/>
+              <circle cx="274" cy="120" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter u -->
           <g *ngIf="currentLetter === 'u'" id="letteruPaths">
             <g id="grayLetteruPaths">
-              <path d="M 106 106 L 106 220 Q 106 294 200 294 Q 294 294 294 220 L 294 106 L 266 106 L 266 220 Q 266 266 200 266 Q 134 266 134 220 L 134 106 Z" fill="#E5E7EB"/>
-              <path d="M 266 220 L 294 220 L 294 294 L 266 294 Z" fill="#E5E7EB"/>
+              <path d="M 106 106 L 106 220 Q 106 294 200 294 Q 294 294 294 220 L 294 106 L 266 106 L 266 220 Q 266 266 200 266 Q 134 266 134 220 L 134 106 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 266 220 L 294 220 L 294 294 L 266 294 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem down→curve, stroke 2 right stem down -->
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="210" r="5" fill="#fff"/>
+              <circle cx="145" cy="260" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="255" cy="260" r="5" fill="#fff"/>
+              <circle cx="280" cy="210" r="5" fill="#fff"/>
+              <circle cx="280" cy="155" r="5" fill="#fff"/>
+              <circle cx="280" cy="106" r="5" fill="#fff"/>
+              <circle cx="280" cy="250" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letteruClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letteruClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="106" r="5" fill="#fff"/>
+              <circle cx="120" cy="155" r="5" fill="#fff"/>
+              <circle cx="120" cy="210" r="5" fill="#fff"/>
+              <circle cx="145" cy="260" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="255" cy="260" r="5" fill="#fff"/>
+              <circle cx="280" cy="210" r="5" fill="#fff"/>
+              <circle cx="280" cy="155" r="5" fill="#fff"/>
+              <circle cx="280" cy="106" r="5" fill="#fff"/>
+              <circle cx="280" cy="250" r="5" fill="#fff"/>
+              <circle cx="280" cy="294" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter v -->
           <g *ngIf="currentLetter === 'v'" id="lettervPaths">
             <g id="grayLettervPaths">
-              <path d="M 88 127 L 188 287 L 212 287 L 312 127 L 288 113 L 200 273 L 112 113 Z" fill="#E5E7EB"/>
+              <path d="M 88 127 L 188 287 L 212 287 L 312 127 L 288 113 L 200 273 L 112 113 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top-left→bottom, stroke 2 bottom→top-right -->
+              <circle cx="100" cy="120" r="5" fill="#fff"/>
+              <circle cx="130" cy="170" r="5" fill="#fff"/>
+              <circle cx="160" cy="220" r="5" fill="#fff"/>
+              <circle cx="200" cy="287" r="5" fill="#fff"/>
+              <circle cx="240" cy="220" r="5" fill="#fff"/>
+              <circle cx="270" cy="170" r="5" fill="#fff"/>
+              <circle cx="300" cy="120" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#lettervClip)">
+            <g mask="url(#traceMask)" clip-path="url(#lettervClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="100" cy="120" r="5" fill="#fff"/>
+              <circle cx="130" cy="170" r="5" fill="#fff"/>
+              <circle cx="160" cy="220" r="5" fill="#fff"/>
+              <circle cx="200" cy="287" r="5" fill="#fff"/>
+              <circle cx="240" cy="220" r="5" fill="#fff"/>
+              <circle cx="270" cy="170" r="5" fill="#fff"/>
+              <circle cx="300" cy="120" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter w -->
           <g *ngIf="currentLetter === 'w'" id="letterwPaths">
             <g id="grayLetterwPaths">
-              <path d="M 67 125 L 127 285 L 153 275 L 93 115 Z" fill="#E5E7EB"/>
-              <path d="M 152 287 L 212 187 L 188 173 L 128 273 Z" fill="#E5E7EB"/>
-              <path d="M 188 187 L 248 287 L 272 273 L 212 173 Z" fill="#E5E7EB"/>
-              <path d="M 273 285 L 333 125 L 307 115 L 247 275 Z" fill="#E5E7EB"/>
-              <path d="M 127 285 L 152 287 L 153 275 L 128 273 Z" fill="#E5E7EB"/>
-              <path d="M 212 187 L 188 187 L 188 173 L 212 173 Z" fill="#E5E7EB"/>
-              <path d="M 248 287 L 273 285 L 272 273 L 247 275 Z" fill="#E5E7EB"/>
+              <path d="M 67 125 L 127 285 L 153 275 L 93 115 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 152 287 L 212 187 L 188 173 L 128 273 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 188 187 L 248 287 L 272 273 L 212 173 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 273 285 L 333 125 L 307 115 L 247 275 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 127 285 L 152 287 L 153 275 L 128 273 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 212 187 L 188 187 L 188 173 L 212 173 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 248 287 L 273 285 L 272 273 L 247 275 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: W shape left→down→up→down→up→right -->
+              <circle cx="80" cy="120" r="5" fill="#fff"/>
+              <circle cx="100" cy="180" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="140" cy="280" r="5" fill="#fff"/>
+              <circle cx="160" cy="240" r="5" fill="#fff"/>
+              <circle cx="180" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="180" r="5" fill="#fff"/>
+              <circle cx="220" cy="200" r="5" fill="#fff"/>
+              <circle cx="240" cy="240" r="5" fill="#fff"/>
+              <circle cx="260" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="300" cy="180" r="5" fill="#fff"/>
+              <circle cx="320" cy="120" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterwClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterwClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="80" cy="120" r="5" fill="#fff"/>
+              <circle cx="100" cy="180" r="5" fill="#fff"/>
+              <circle cx="120" cy="240" r="5" fill="#fff"/>
+              <circle cx="140" cy="280" r="5" fill="#fff"/>
+              <circle cx="160" cy="240" r="5" fill="#fff"/>
+              <circle cx="180" cy="200" r="5" fill="#fff"/>
+              <circle cx="200" cy="180" r="5" fill="#fff"/>
+              <circle cx="220" cy="200" r="5" fill="#fff"/>
+              <circle cx="240" cy="240" r="5" fill="#fff"/>
+              <circle cx="260" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="240" r="5" fill="#fff"/>
+              <circle cx="300" cy="180" r="5" fill="#fff"/>
+              <circle cx="320" cy="120" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter x -->
           <g *ngIf="currentLetter === 'x'" id="letterxPaths">
             <g id="grayLetterxPaths">
-              <path d="M 110 130 L 270 290 L 290 270 L 130 110 Z" fill="#E5E7EB"/>
-              <path d="M 270 110 L 110 270 L 130 290 L 290 130 Z" fill="#E5E7EB"/>
+              <path d="M 110 130 L 270 290 L 290 270 L 130 110 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <path d="M 270 110 L 110 270 L 130 290 L 290 130 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top-left→bottom-right, stroke 2 top-right→bottom-left -->
+              <circle cx="120" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="245" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="120" r="5" fill="#fff"/>
+              <circle cx="245" cy="155" r="5" fill="#fff"/>
+              <circle cx="155" cy="245" r="5" fill="#fff"/>
+              <circle cx="120" cy="280" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letterxClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letterxClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="120" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="245" cy="245" r="5" fill="#fff"/>
+              <circle cx="280" cy="280" r="5" fill="#fff"/>
+              <circle cx="280" cy="120" r="5" fill="#fff"/>
+              <circle cx="245" cy="155" r="5" fill="#fff"/>
+              <circle cx="155" cy="245" r="5" fill="#fff"/>
+              <circle cx="120" cy="280" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1348,22 +2919,82 @@
           <g *ngIf="currentLetter === 'y'" id="letteryPaths">
             <g id="grayLetteryPaths">
               <!-- U-shape body -->
-              <path d="M 126 106 L 126 220 Q 126 274 200 274 Q 274 274 274 220 L 274 106 L 246 106 L 246 220 Q 246 246 200 246 Q 154 246 154 220 L 154 106 Z" fill="#E5E7EB"/>
+              <path d="M 126 106 L 126 220 Q 126 274 200 274 Q 274 274 274 220 L 274 106 L 246 106 L 246 220 Q 246 246 200 246 Q 154 246 154 220 L 154 106 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
               <!-- Right stem descender below curve -->
-              <path d="M 274 220 L 274 354 Q 274 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 246 366 246 340 L 246 220 Z" fill="#E5E7EB"/>
+              <path d="M 274 220 L 274 354 Q 274 394 200 394 Q 126 394 106 354 L 134 340 Q 146 366 200 366 Q 246 366 246 340 L 246 220 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 left stem down→curve, stroke 2 right stem down→descender→tail -->
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="140" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="160" cy="250" r="5" fill="#fff"/>
+              <circle cx="200" cy="274" r="5" fill="#fff"/>
+              <circle cx="260" cy="106" r="5" fill="#fff"/>
+              <circle cx="260" cy="160" r="5" fill="#fff"/>
+              <circle cx="260" cy="220" r="5" fill="#fff"/>
+              <circle cx="260" cy="290" r="5" fill="#fff"/>
+              <circle cx="260" cy="354" r="5" fill="#fff"/>
+              <circle cx="220" cy="380" r="5" fill="#fff"/>
+              <circle cx="200" cy="394" r="5" fill="#fff"/>
+              <circle cx="150" cy="380" r="5" fill="#fff"/>
+              <circle cx="120" cy="354" r="5" fill="#fff"/>
             </g>
-            <g mask="url(#traceMask)" clip-path="url(#letteryClip)">
+            <g mask="url(#traceMask)" clip-path="url(#letteryClip)" filter="url(#roundCorners)">
               <rect x="0" y="0" width="400" height="400" fill="#F97316"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="140" cy="106" r="5" fill="#fff"/>
+              <circle cx="140" cy="150" r="5" fill="#fff"/>
+              <circle cx="140" cy="200" r="5" fill="#fff"/>
+              <circle cx="160" cy="250" r="5" fill="#fff"/>
+              <circle cx="200" cy="274" r="5" fill="#fff"/>
+              <circle cx="260" cy="106" r="5" fill="#fff"/>
+              <circle cx="260" cy="160" r="5" fill="#fff"/>
+              <circle cx="260" cy="220" r="5" fill="#fff"/>
+              <circle cx="260" cy="290" r="5" fill="#fff"/>
+              <circle cx="260" cy="354" r="5" fill="#fff"/>
+              <circle cx="220" cy="380" r="5" fill="#fff"/>
+              <circle cx="200" cy="394" r="5" fill="#fff"/>
+              <circle cx="150" cy="380" r="5" fill="#fff"/>
+              <circle cx="120" cy="354" r="5" fill="#fff"/>
             </g>
           </g>
 
           <!-- Lowercase letter z -->
           <g *ngIf="currentLetter === 'z'" id="letterzPaths">
             <g id="grayLetterzPaths">
-              <path d="M 106 106 L 294 106 L 294 134 L 154 266 L 294 266 L 294 294 L 106 294 L 106 266 L 246 134 L 106 134 Z" fill="#E5E7EB"/>
+              <path d="M 106 106 L 294 106 L 294 134 L 154 266 L 294 266 L 294 294 L 106 294 L 106 266 L 246 134 L 106 134 Z" fill="#FED7AA" filter="url(#roundCorners)"/>
+              <!-- Guide dots: stroke 1 top bar left→right, stroke 2 diagonal right→left, stroke 3 bottom bar left→right -->
+              <circle cx="106" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="294" cy="120" r="5" fill="#fff"/>
+              <circle cx="260" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="245" r="5" fill="#fff"/>
+              <circle cx="106" cy="280" r="5" fill="#fff"/>
+              <circle cx="155" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="294" cy="280" r="5" fill="#fff"/>
             </g>
             <g mask="url(#traceMask)" clip-path="url(#letterzClip)">
-              <path d="M 106 106 L 294 106 L 294 134 L 154 266 L 294 266 L 294 294 L 106 294 L 106 266 L 246 134 L 106 134 Z" fill="#F97316"/>
+              <path d="M 106 106 L 294 106 L 294 134 L 154 266 L 294 266 L 294 294 L 106 294 L 106 266 L 246 134 L 106 134 Z" fill="#F97316" filter="url(#roundCorners)"/>
+            </g>
+            <g mask="url(#traceMask)">
+              <circle cx="106" cy="120" r="5" fill="#fff"/>
+              <circle cx="155" cy="120" r="5" fill="#fff"/>
+              <circle cx="200" cy="120" r="5" fill="#fff"/>
+              <circle cx="250" cy="120" r="5" fill="#fff"/>
+              <circle cx="294" cy="120" r="5" fill="#fff"/>
+              <circle cx="260" cy="155" r="5" fill="#fff"/>
+              <circle cx="200" cy="200" r="5" fill="#fff"/>
+              <circle cx="140" cy="245" r="5" fill="#fff"/>
+              <circle cx="106" cy="280" r="5" fill="#fff"/>
+              <circle cx="155" cy="280" r="5" fill="#fff"/>
+              <circle cx="200" cy="280" r="5" fill="#fff"/>
+              <circle cx="250" cy="280" r="5" fill="#fff"/>
+              <circle cx="294" cy="280" r="5" fill="#fff"/>
             </g>
           </g>
 
@@ -1377,7 +3008,7 @@
               font-family="Arial Black, Arial, sans-serif"
               font-weight="900"
               text-anchor="middle"
-              fill="#E5E7EB"
+              fill="#FED7AA"
               stroke="#D1D5DB"
               stroke-width="4">
               {{currentLetter}}
